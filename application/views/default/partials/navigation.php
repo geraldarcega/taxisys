@@ -233,13 +233,13 @@
                     <a <?=$nav == 'dashboard' ? 'class="active"' : '' ?> href="<?=dashboard_url()?>"><i class="fa fa-dashboard fa-fw"></i> DASHBOARD</a>
                 </li>
                 <li>
-                    <a href="tables.html"><i class="fa fa-money fa-fw"></i> BOUNDARY</a>
+                    <a <?=$nav == 'boundary' ? 'class="active"' : '' ?> href="<?=dashboard_url('boundary');?>"><i class="fa fa-money fa-fw"></i> BOUNDARY</a>
                 </li>
                 <li>
                     <a <?=$nav == 'calendar' ? 'class="active"' : '' ?> href="<?=dashboard_url('calendar')?>"><i class="fa fa-calendar fa-fw"></i> CALENDAR</a>
                 </li>
                 <li>
-                    <a href="tables.html"><i class="fa fa-users fa-fw"></i> DRIVERS</a>
+                    <a <?=$nav == 'drivers' ? 'class="active"' : '' ?> href="<?=dashboard_url('drivers')?>"><i class="fa fa-users fa-fw"></i> DRIVERS</a>
                 </li>
                 <li <?=$nav == 'units' ? 'class="active"' : '' ?>>
                     <a href="#"><i class="fa fa-list-alt fa-fw"></i> UNITS<span class="fa arrow"></span></a>

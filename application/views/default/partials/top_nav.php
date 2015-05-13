@@ -17,6 +17,12 @@
                     <button type="button" class="btn btn-default" id="filter" data-container="body" data-toggle="popover" data-placement="bottom"><i class="fa fa-filter"></i> Filter</button>
                 </div>
                 <?php } ?>
+
+                <?php if( $nav == 'boundary' ) { ?>
+                <div class="navbar-left" style="margin-left:10px;color:#fff;">
+                   <span>May 2015</span>
+                </div>
+                <?php } ?>
             </nav>
         </div>
         <div class="col col-xs-3 chatDiv">
