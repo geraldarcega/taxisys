@@ -1,0 +1,25 @@
+<div class="mainNav">
+    <div class="row">
+        <div class="col-lg-9 leftNavi">
+            <nav class="navbar navbar-default ts-navbar-inner" style="margin-bottom: -1px; line-height: 47px;">
+                <?php if( $nav == 'dashboard' ) { ?>
+                <ul class="nav navbar-nav">
+                    <li <?=@$sub_nav=='units' ? 'class="active"' : '';?>><a href="<?=dashboard_url()?>">UNITS</a></li>
+                    <li <?=@$sub_nav=='drivers' ? 'class="active"' : '';?>><a href="<?=dashboard_url('drivers')?>">DRIVERS</a></li>
+                </ul>
+                <?php } ?>
+
+                <?php if( $nav == 'units' ) { ?>
+                <div class="pull-right" style="margin-right:10px;">
+                    <button type="button" class="btn btn-default navbar-btn ts-navbar-btn" data-toggle="modal" data-target="#unitsModal"><i class="fa fa-plus-square"></i> Add new unit</button>
+                </div>
+                <?php } ?>
+            </nav>
+        </div>
+        <div class="col col-xs-3 chatDiv">
+            <ul class="nav navbar-nav navbar-right chat-panel-header">
+                <li><span><i class="fa fa-comments"></i> CHAT</span></li>
+            </ul> 
+        </div>
+    </div><!-- row -->
+</div><!-- mainNav -->
