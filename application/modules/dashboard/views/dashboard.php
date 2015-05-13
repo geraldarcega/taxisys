@@ -1,10 +1,5 @@
 <div id="page-wrapper">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">DASHBOARD</h1>
-        </div>
-        <!-- /.col-lg-12 -->
-    </div>
+    <?=@$page_header;?>
     <!-- /.row -->
     <?=@$top_nav;?>
     <!-- /.row -->
@@ -16,25 +11,25 @@
                     <i class="dashboard-label">On-duty</i>
                     <div class="panel panel-green"> 
                      <div class="updateEditbtn">
-                            <a href="#">UPDATE <i class="fa fa-angle-right"></i></a>
+                            <a href="#unitsModal" data-toggle="modal" data-target="#unitsModal">UPDATE<i class="fa fa-angle-right"></i></a>
                         </div><!-- updateEditbtn -->                       
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-12 dash-units">
-                                    <a href="#unitsModal" data-toggle="modal" data-target="#unitsModal"><i class="fa fa-taxi"></i> <div class="huge">ABC 123</div></a>
+                                    <i class="fa fa-taxi"></i> <div class="huge">ABC 123</div>
                                 </div>
                             </div>
                         </div>
                         <div class="panel-body panel-nametag">Jason Bourne</div>                        
                     </div>
                     <div class="panel panel-green">
-                    <div class="updateEditbtn">
-                            <a href="#">UPDATE <i class="fa fa-angle-right"></i></a>
+                        <div class="updateEditbtn">
+                            <a href="#unitsModal" data-toggle="modal" data-target="#unitsModal">UPDATE<i class="fa fa-angle-right"></i></a>
                         </div><!-- updateEditbtn -->    
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-12 dash-units">
-                                    <a href="#unitsModal" data-toggle="modal" data-target="#unitsModal"><i class="fa fa-taxi"></i> <div class="huge">ABC 123</div></a>
+                                    <i class="fa fa-taxi"></i> <div class="huge">ABC 123</div>
                                 </div>
                             </div>
                         </div>
@@ -42,12 +37,12 @@
                     </div>
                     <div class="panel panel-green">
                     <div class="updateEditbtn">
-                            <a href="#">UPDATE <i class="fa fa-angle-right"></i></a>
+                            <a href="#unitsModal" data-toggle="modal" data-target="#unitsModal">UPDATE<i class="fa fa-angle-right"></i></a>
                         </div><!-- updateEditbtn -->       
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-12 dash-units">
-                                    <a href="#unitsModal" data-toggle="modal" data-target="#unitsModal"><i class="fa fa-taxi"></i> <div class="huge">ABC 123</div></a>
+                                    <i class="fa fa-taxi"></i> <div class="huge">ABC 123</div>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +55,7 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-12 dash-units">
-                                    <a href="#unitsModal" data-toggle="modal" data-target="#unitsModal"><i class="fa fa-taxi"></i> <div class="huge">ABC 123</div></a>
+                                    <i class="fa fa-taxi"></i> <div class="huge">ABC 123</div>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +68,7 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-12 dash-units">
-                                    <a href="#unitsModal" data-toggle="modal" data-target="#unitsModal"><i class="fa fa-taxi"></i> <div class="huge">ABC 123</div></a>
+                                    <i class="fa fa-taxi"></i> <div class="huge">ABC 123</div>
                                 </div>
                             </div>
                         </div>

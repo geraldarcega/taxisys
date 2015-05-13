@@ -11,21 +11,34 @@ class MY_Controller extends MX_Controller {
 
 class MY_Framework extends MY_Controller {
     public $tsdata;
+    private $_class;
+    private $_method;
 
 	function __construct()
     {
         parent::__construct();
 
         $this->tsdata['user_data'] = getSession();
+        $this->load->library('frontend_library');
+
+        $this->_class = $this->router->fetch_class();
+        $this->_method = $this->router->fetch_method();
     }
 
     public function load_view( $views = '', $nav = true, $top_nav = true, $chat = true, $theme = 'default' )
     {
-        $_view_folder = $this->router->fetch_class();
-        
+        $_view_folder = $this->_class;
+
+        # Assets
+        $this->tsdata['css'] = $this->frontend_library->load_css( $this->_class, $this->_method );
+        $this->tsdata['js']  = $this->frontend_library->load_js( $this->_class, $this->_method );
+
         $this->load->view( $theme.'/partials/header', $this->tsdata);
         if( $nav )
-           $this->load->view( $theme.'/partials/navigation', $this->tsdata);
+        {
+            $this->load->view( $theme.'/partials/navigation', $this->tsdata);
+            $this->tsdata['page_header'] = $this->load->view( $theme.'/partials/page_header', $this->tsdata, true);
+        }
 
         if( $top_nav )
            $this->tsdata['top_nav'] = $this->load->view( $theme.'/partials/top_nav', $this->tsdata, true);

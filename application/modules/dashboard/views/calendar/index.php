@@ -1,11 +1,17 @@
 <div id="page-wrapper">
+	<?=@$page_header;?>
     <!-- /.row -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div id="calendar">
+    <main class="mainContainer">
+        <div class="row">
+            <article class="col-xs-9">
+                <div id="calendar">
                 
-            </div>
+            	</div>
+            </article>
+            <aside class="col-xs-3">
+                <?=@$chat;?>
+            </aside>
         </div>
-    </div>
+    </main>
     <!-- /.row -->
 </div>

@@ -238,7 +238,7 @@ body {
   padding-right: 0;
 }
 .mainNav .leftNavi .ts-navbar-inner {
-  /*line-height: 522px;*/
+  line-height: 522px;
   height: 52px;
   margin-bottom: 0;
   -webkit-box-shadow: inset 0 1px 30px #000000;

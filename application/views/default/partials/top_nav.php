@@ -10,8 +10,11 @@
                 <?php } ?>
 
                 <?php if( $nav == 'units' ) { ?>
-                <div class="pull-right" style="margin-right:10px;">
+                <div class="navbar-left" style="margin-left:10px;">
                     <button type="button" class="btn btn-default navbar-btn ts-navbar-btn" data-toggle="modal" data-target="#unitsModal"><i class="fa fa-plus-square"></i> Add new unit</button>
+                </div>
+                <div class="navbar-right" style="margin-right:10px;">
+                    <button type="button" class="btn btn-default" id="filter" data-container="body" data-toggle="popover" data-placement="bottom"><i class="fa fa-filter"></i> Filter</button>
                 </div>
                 <?php } ?>
             </nav>

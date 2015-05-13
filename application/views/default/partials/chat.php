@@ -1,4 +1,11 @@
-<div class="chat-panel panel panel-default">
+<div class="chat-panel panel panel-default" style="border-top: 0;">
+    <?php if( !isset($top_nav) ){ ?>
+    <div class="pannel-heading">
+        <ul class="nav navbar-nav navbar-right chat-panel-header">
+            <li><span><i class="fa fa-comments"></i> CHAT</span></li>
+        </ul>
+    </div>
+    <?php } ?>
     <div id="chat-body" class="panel-body">
         <ul class="chat">
             <li class="left clearfix">

@@ -8,6 +8,9 @@
   <meta name="author" content="">
   <title>Taxi System</title>
 
+  <?php
+    echo $css;
+  /*
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css">
   <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.print.css"> -->
   <link rel="stylesheet" type="text/css" href="<?php echo CSS_DIR; ?>bootstrap.min.css">
@@ -26,7 +29,7 @@
   <link href="<?php echo CSS_DIR; ?>plugins/morris.css" rel="stylesheet">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
+  */ ?>
   <script type="text/javascript">var base_url = '<?php echo base_url();?>'</script>
 </head>
 <body>
