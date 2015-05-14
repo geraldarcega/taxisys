@@ -10,10 +10,55 @@ $(document).ready(function() {
     $('#renew_by_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
     $('#year_model_dp').datetimepicker({format: "YYYY",viewMode: "years"});
 
-    $('#frmModalUnits').validate()
+    $('#frmModalUnits').validate({
+        submitHandler: function(form) {
+            var ans = confirm('Continue saving?')
+
+            if( ans )
+            {
+                $.ajax({
+                    type: $(form).attr("method"),
+                    url: $(form).attr("action"),
+                    data: $(form).serialize(),
+                    dataType: "JSON",
+                    beforeSend: function() {
+                        $('#btnModalUnitsave').button('loading')
+                    },
+                    success: function(data){
+                        console.log(data)
+                        if( data.success )
+                            location.reload()
+                        else
+                        {
+                            $('#btnModalUnitsave').button('reset')
+                            $('#failed_msg span').html( data.msg )
+                            $('#failed_msg').show()
+                        }
+                    }
+                });
+            }
+
+            return false
+        }
+    })
+
+    populate_tbl();
 });
 
-function save()
-{
-    $('#frmModalUnits').submit()
+function populate_tbl() {
+    if( typeof units_data !== 'undefined' )
+    {
+        if( units_data.length )
+        {
+            $('#tbl_loading').show()
+            var num = 0;
+            $.each( units_data, function(i, v) {
+                num++;
+
+                var htm = '<tr id="unit_'+v.unit_id+'"><td>'+num+'</td><td>'+v.plate_number.toUpperCase()+'</td><td>'+v.year_model+'</td><td>'+v.coding_day+'</td><td>'+readableDate(v.franchise_until)+'</td><td>'+readableDate(v.renew_by)+'</td><td><a href="#"><i class="fa fa-eye"></i></a></td></tr>'
+                $('#tbl_all_units').append(htm);
+            })
+            $('#tbl_loading').hide()
+        }
+    }
 }

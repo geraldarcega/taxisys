@@ -26,3 +26,22 @@ $(function() {
         }
     })
 })
+
+function readableDate( date ){
+    var d =new Date(date);
+    var month_name=new Array(12);
+    month_name[0]="Jan"
+    month_name[1]="Feb"
+    month_name[2]="Mar"
+    month_name[3]="Apr"
+    month_name[4]="May"
+    month_name[5]="Jun"
+    month_name[6]="Jul"
+    month_name[7]="Aug"
+    month_name[8]="Sep"
+    month_name[9]="Oct"
+    month_name[10]="Nov"     
+    month_name[11]="Dec"
+
+    return month_name[d.getMonth()]+" "+d.getDate()+" , "+d.getFullYear();
+}

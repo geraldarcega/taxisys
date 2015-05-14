@@ -149,4 +149,9 @@
 		$ci->image_lib->clear();
 		return true;
 	}
+
+	# Default mysql date format
+	function dateFormat( $date, $format = 'Y-m-d' ) {
+		return date($format, strtotime($date));
+	}
 ?>

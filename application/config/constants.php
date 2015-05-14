@@ -54,5 +54,27 @@ define('CSS_DIR', SITE_URL.'assets/css/');
 define('IMAGE_DIR', SITE_URL.'assets/img/');
 define('FONT_DIR', SITE_URL.'assets/fonts/');
 
+/*
+|--------------------------------------------------------------------------
+| Status
+|--------------------------------------------------------------------------
+|
+| User-defined
+|
+*/
+
+define('ONDUTY', 1);
+define('ONGARRAGE', 2);
+define('ONMAINTENANCE', 3);
+define('REPLACED', 4);
+
+define('MON', 1);
+define('TUE', 2);
+define('WED', 3);
+define('THUR', 4);
+define('FRI', 5);
+define('SAT', 6);
+define('SUN', 7);
+
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

@@ -38,7 +38,7 @@ class Frontend_library
 		$js[] = JS_DIR.'jquery-2.1.3.min.js';
 		$js[] = JS_DIR.'bootstrap.min.js';
 		$js[] = JS_DIR.'jquery.validate.min.js';
-		$js[] = JS_DIR.'popalert.js';
+		$js[] = JS_DIR.'jquery-validate.bootstrap-tooltip.js';
 
 		if( $method == 'login' )
 			$js[] = JS_DIR.'users.js';

@@ -15,7 +15,17 @@ class Units extends MY_Framework
     {
         $this->tsdata['nav']        = 'units';
         $this->tsdata['sub_nav']    = 'all_units';
-        $this->tsdata['units']      = array();
+
+        # Units data
+        $units_data = array();
+        
+        $units = $this->units_model->read();
+        if( $units->num_rows() )
+        {
+            $units_data = $units->result();
+        }
+
+        $this->tsdata['units'] = $units_data;
 
         $this->load_view( 'all_units' );
     }
@@ -24,9 +34,18 @@ class Units extends MY_Framework
     {
         if( $this->input->is_ajax_request() )
         {
-            switch ( $this->input->post( 'type' ) ) {
+            switch ( $this->input->post( 'action' ) ) {
                 case 'create':
-                    
+                    $new = $this->units_model->create( $this->input->post() );
+                    if( $new )
+                    {
+                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i>Success!</strong> New unit has been saved.');
+                        $msg = array( 'success' => 1 );
+                    }
+                    else
+                        $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Failed!</strong> Please contact the administrator immediately' );
+
+                    echo json_encode( $msg );
                     break;
                 
                 default:
