@@ -7,10 +7,13 @@ class Units_model extends CI_Model {
     parent::__construct();
   }
 
-  public function read($filter = array(), $fields = '*', $limit = null, $offset = null, $one = false) {
+  public function read($filter = array(), $fields = '*', $limit = null, $offset = null, $sort = array(), $one = false) {
     if( count($filter) )
       $this->db->filter( $filter );
 
+    if( count( $sort ) )
+      $this->db->order_by( $sort['field'], $sort['direction'] );
+    
     return $this->db
                 ->select( $fields )
                 ->get( $this->table );
