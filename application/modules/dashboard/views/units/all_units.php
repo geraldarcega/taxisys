@@ -15,6 +15,7 @@
                             <th>Coding Day</th>
                             <th>Franchise Until</th>
                             <th>Renew By</th>
+                            <th>Status</th>
                             <th></th>
                         </thead>
                         <tbody>

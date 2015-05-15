@@ -13,13 +13,18 @@ class Units extends MY_Framework
 
     public function index( )
     {
-        $this->tsdata['nav']        = 'units';
-        $this->tsdata['sub_nav']    = 'all_units';
+        $filter = array();
+        $sort = array();
+        if($this->input->get('sort'))
+            $sort = array( 'field' => $this->input->get('sort'), 'direction' => $this->input->get('sort_order') );
+
+        $this->tsdata['nav']     = 'units';
+        $this->tsdata['sub_nav'] = 'all_units';
 
         # Units data
         $units_data = array();
         
-        $units = $this->units_model->read();
+        $units = $this->units_model->read( $filter, '*', null, null, $sort );
         if( $units->num_rows() )
         {
             $units_data = $units->result();
