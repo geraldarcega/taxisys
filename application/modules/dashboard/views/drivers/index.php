@@ -6,7 +6,9 @@
     <main class="mainContainer">
         <div class="row">
             <article class="col-xs-9">
-                <button type="button" class="btn btn-default" >ADD NEW DRIVER</button>
+                <div style="  text-align: center;margin-bottom: 16px;">
+                    <button type="button" class="btn btn-default" >ADD NEW DRIVER</button>
+                </div>
                 <table class="table">
                     <thead style="border-bottom: 3px solid #BDBDBD;background-color: #fff;">
                         <th>#</th>

@@ -13,7 +13,7 @@ class Drivers extends MY_Framework
 
     public function index( )
     {
-        $this->tsdata['nav']        = 'drivers';
+        $this->tsdata['nav']       = 'drivers';
         $this->tsdata['drivers']   = array();
 
         $this->load_view( 'index', true, false );

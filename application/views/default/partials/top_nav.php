@@ -2,10 +2,10 @@
     <div class="row">
         <div class="col-lg-9 leftNavi">
             <nav class="navbar navbar-default ts-navbar-inner" style="margin-bottom: -1px; line-height: 47px;">
-                <?php if( $nav == 'dashboard' ) { ?>
+                <?php if( $nav == 'pos' ) { ?>
                 <ul class="nav navbar-nav">
-                    <li <?=@$sub_nav=='units' ? 'class="active"' : '';?>><a href="<?=dashboard_url()?>">UNITS</a></li>
-                    <li <?=@$sub_nav=='drivers' ? 'class="active"' : '';?>><a href="<?=dashboard_url('drivers')?>">DRIVERS</a></li>
+                    <li <?=@$sub_nav=='units' ? 'class="active"' : '';?>><a href="<?=pos_url()?>">UNITS</a></li>
+                    <li <?=@$sub_nav=='drivers' ? 'class="active"' : '';?>><a href="<?=pos_url('drivers')?>">DRIVERS</a></li>
                 </ul>
                 <?php } ?>
 

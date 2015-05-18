@@ -1,7 +1,7 @@
 function login()
 {
     $.ajax({
-        url: base_url+'dashboard/login',
+        url: base_url+'pos/login',
         type: 'post',
         dataType: 'JSON',
         data: $('#frmLogin').serialize(),
@@ -11,7 +11,7 @@ function login()
         },
         success: function(data){
             if( data.success )
-                window.location = base_url+"dashboard"
+                window.location = base_url+"pos"
             else
             {
                 $('.login-panel .alert').show()

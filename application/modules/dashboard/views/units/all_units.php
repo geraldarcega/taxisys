@@ -15,14 +15,25 @@
                             <th>Coding Day</th>
                             <th>Franchise Until</th>
                             <th>Renew By</th>
-                            <th>Status</th>
                             <th></th>
                         </thead>
                         <tbody>
                             <tr id="tbl_loading" style="display:none;">
                                 <td colspan="7" align="center"><h3><i class="fa fa-cog fa-spin"></i> Loading...</h3></td>
                             </tr>
-                            <?php if( !count($units)) { ?>
+                            <?php if( $units->num_rows() ) { $i = 0; ?>
+                            <?php foreach ($units->result() as $unit) { $i++; ?>
+                            <tr>
+                                <td><?=$i?></td>
+                                <td><?=strtoupper($unit->plate_number)?></td>
+                                <td><?=$unit->year_model?></td>
+                                <td><?=$unit->coding_day?></td>
+                                <td><?=dateFormat($unit->franchise_until, 'M d, Y')?></td>
+                                <td><?=dateFormat($unit->renew_by, 'M d, Y')?></td>
+                                <td><a href="#"><i class="fa fa-eye"></i></a></td>
+                            </tr>
+                            <?php } ?>
+                            <?php } else { ?>
                             <tr>
                                 <td colspan="7"><div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> No units found!</div></td>
                             </tr>
@@ -55,8 +66,11 @@
                         <div class="col-xs-6">
                             <div class="form-group">
                                 <label for="plate_number" class="col-xs-4 control-label">Plate #</label>
-                                <div class="col-xs-8">
-                                    <input type="text" class="form-control" id="plate_number" name="plate_number" required>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="plate_number1" name="plate_number1" maxlength="3" required placeholder="AAA">
+                                </div>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="plate_number2" name="plate_number2" maxlength="4" required placeholder="123">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -220,5 +234,5 @@
     </div>
 </div>
 <script type="text/javascript">
-    var units_data = <?php echo count( $units ) ? json_encode( $units ) : '[]'; ?>;
+    var units_data = <?php echo $units->num_rows() ? json_encode( $units->result() ) : '[]'; ?>;
 </script>

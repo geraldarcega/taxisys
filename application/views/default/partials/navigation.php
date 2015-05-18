@@ -206,7 +206,7 @@
                 <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="<?=dashboard_url('logout')?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><a href="<?=pos_url('logout')?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </li>
             </ul>
             <!-- /.dropdown-user -->
@@ -230,7 +230,7 @@
                     <!-- /input-group -->
                 </li>
                 <li>
-                    <a <?=$nav == 'dashboard' ? 'class="active"' : '' ?> href="<?=dashboard_url()?>"><i class="fa fa-dashboard fa-fw"></i> DASHBOARD</a>
+                    <a <?=$nav == 'pos' ? 'class="active"' : '' ?> href="<?=pos_url()?>"><i class="fa fa-calculator fa-fw"></i> POS</a>
                 </li>
                 <li>
                     <a <?=$nav == 'boundary' ? 'class="active"' : '' ?> href="<?=dashboard_url('boundary');?>"><i class="fa fa-money fa-fw"></i> BOUNDARY</a>

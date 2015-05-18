@@ -7,7 +7,7 @@ class Units_model extends CI_Model {
     parent::__construct();
   }
 
-  public function read($filter = array(), $fields = '*', $limit = null, $offset = null, $sort = array(), $one = false) {
+  public function read( $filter = array(), $fields = '*', $limit = null, $offset = null, $sort = array(), $one = false ) {
     if( count($filter) )
       $this->db->filter( $filter );
 
@@ -16,6 +16,7 @@ class Units_model extends CI_Model {
     
     return $this->db
                 ->select( $fields )
+                ->join( 'drivers', 'driver_idFK = driver_id', 'left' )
                 ->get( $this->table );
   }
 
@@ -26,14 +27,24 @@ class Units_model extends CI_Model {
                           ,'franchise_until'
                           ,'renew_by'
                         );
+    if( isset($db_data['plate_number1']) && isset($db_data['plate_number2']) )
+    {
+      $db_data['plate_number'] = $db_data['plate_number1'].' '.$db_data['plate_number2'];
+      unset($db_data['plate_number1']);
+      unset($db_data['plate_number2']);
+    }
+
     if( isset($db_data['action']) )
       unset($db_data['action']);
 
-    for ($i=0; $i < count($date_fields); $i++) { 
+    for ($i=0; $i < count($date_fields); $i++) {
       $db_data[$date_fields[$i]] = dateFormat( $db_data[$date_fields[$i]] );
     }
 
     $this->db->insert( $this->table, $db_data );
+
+    if( $this->db->affected_rows() )
+      $this->db->insert( $this->table.'_logs', array( 'unit_idFK' => $this->db->insert_id(), 'status' => ONGARRAGE ) );
 
     return $this->db->affected_rows();
   }

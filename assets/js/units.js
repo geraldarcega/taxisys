@@ -41,24 +41,4 @@ $(document).ready(function() {
             return false
         }
     })
-
-    populate_tbl();
 });
-
-function populate_tbl() {
-    if( typeof units_data !== 'undefined' )
-    {
-        if( units_data.length )
-        {
-            $('#tbl_loading').show()
-            var num = 0;
-            $.each( units_data, function(i, v) {
-                num++;
-
-                var htm = '<tr id="unit_'+v.unit_id+'"><td>'+num+'</td><td>'+v.plate_number.toUpperCase()+'</td><td>'+v.year_model+'</td><td>'+v.coding_day+'</td><td>'+readableDate(v.franchise_until)+'</td><td>'+readableDate(v.renew_by)+'</td><td>'+v.status+'</td><td><a href="#"><i class="fa fa-eye"></i></a></td></tr>'
-                $('#tbl_all_units').append(htm);
-            })
-            $('#tbl_loading').hide()
-        }
-    }
-}

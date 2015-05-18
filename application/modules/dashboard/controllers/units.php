@@ -22,15 +22,9 @@ class Units extends MY_Framework
         $this->tsdata['sub_nav'] = 'all_units';
 
         # Units data
-        $units_data = array();
-        
         $units = $this->units_model->read( $filter, '*', null, null, $sort );
-        if( $units->num_rows() )
-        {
-            $units_data = $units->result();
-        }
 
-        $this->tsdata['units'] = $units_data;
+        $this->tsdata['units'] = $units;
 
         $this->load_view( 'all_units' );
     }

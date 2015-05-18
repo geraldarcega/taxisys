@@ -8,6 +8,10 @@
 		return base_url('dashboard/'.$uri);
 	}
 
+	function pos_url( $uri = '' ) {
+		return base_url('pos/'.$uri);
+	}
+
 	function getSession( ) {
 		$ci =& get_instance();
 
@@ -16,8 +20,8 @@
 			return $user_data;
 		else
 		{
-			if( uri_string() != 'dashboard/login' )
-        		redirect( base_url('dashboard/login') );
+			if( uri_string() != 'pos/login' )
+        		redirect( pos_url('login') );
 		}
 	}
 
