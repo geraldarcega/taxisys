@@ -367,7 +367,7 @@ padding-right: 0;
 // Login Page
 
 .login-panel {
-    margin-top: 25%;
+    margin-top: 25% !important;
 }
 
 // Flot Charts Containers
@@ -457,7 +457,7 @@ table.dataTable thead .sorting:after {
 // Custom Colored Panels
 
 .huge {
-    font-size: 30px;
+    font-size: 25px;
     display: inline-block;
 }
 
@@ -486,10 +486,10 @@ table.dataTable thead .sorting:after {
     }
 }
 .panel {
-     margin-bottom: 0;
+    margin-bottom: 0;
     margin-top: 20px;
-       position: relative;
-     .updateEditbtn {
+    position: relative;
+    .updateEditbtn {
         text-align: center;
         background-color: #ffffff;
         position: absolute;
@@ -500,13 +500,12 @@ table.dataTable thead .sorting:after {
         transform-origin: right top 0;
         width: 118.889px;
         top: 0px;
-        right: 33.33px;
+        right: 32.33px;
         height: 33.33px;
-       a {
-         color:@gray;
-         line-height: 33.33px;
-          
-       }
+    }
+    a.panel-side-link {
+        color:@gray;
+        line-height: 33.33px;
     }
 }
 .Units {
@@ -531,12 +530,15 @@ table.dataTable thead .sorting:after {
 }
 
 .panel-red {
-    height: 100px;
     border-color: @brand-danger;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
     .panel-heading {
         border-color: @brand-danger;
         color: white;
         background-color: @brand-danger;
+        text-align: center;
     }
     .panel-nametag {
         background-color: @brand-danger-darken;
@@ -544,12 +546,15 @@ table.dataTable thead .sorting:after {
 }
 
 .panel-yellow {
-    height: 100px;
     border-color: @brand-warning;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
     .panel-heading {
         border-color: @brand-warning;
         color: white;
         background-color: @brand-warning;
+        text-align: center;
     }
     .panel-nametag {
         background-color: @brand-warning-darken;

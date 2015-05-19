@@ -7,7 +7,7 @@
         <div class="row">
             <article class="col-xs-9">
                 <div style="  text-align: center;margin-bottom: 16px;">
-                    <button type="button" class="btn btn-default" >ADD NEW DRIVER</button>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#driversModal">ADD NEW DRIVER</button>
                 </div>
                 <table class="table">
                     <thead style="border-bottom: 3px solid #BDBDBD;background-color: #fff;">
@@ -35,23 +35,29 @@
     </main>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="unitsModal" tabindex="-1" role="dialog" aria-labelledby="unitsModalLabel" aria-hidden="true">
+<div class="modal fade" id="driversModal" tabindex="-1" role="dialog" aria-labelledby="driversModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="unitsModalLabel">ADD NEW UNIT</h4>
+                <h4 class="modal-title" id="driversModalLabel">ADD NEW DRIVER</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="frmModalUnits" method="post" action="">
                     <div class="form-group">
-                        <label for="plate_number" class="col-xs-4 control-label">Plate #</label>
-                        <div class="col-xs-5">
-                            <input type="text" class="form-control" id="plate_number" name="plate_number" required>
+                        <label for="plate_number" class="col-xs-3 control-label">Full Name</label>
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" id="plate_number" name="plate_number" placeholder="First name" required>
+                        </div>
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" id="plate_number" name="plate_number" placeholder="Middle name" required>
+                        </div>
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" id="plate_number" name="plate_number" placeholder="Last name" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="year_model" class="col-xs-4 control-label">Year Model</label>
+                        <label for="year_model" class="col-xs-4 control-label">Birth Date</label>
                         <div class="col-xs-3">
                             <div class="input-group date" id="year_model_dp">
                                 <input type="text" class="form-control" id="year_model" name="year_model" required/>
@@ -62,7 +68,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="reg_rate" class="col-xs-4 control-label">Regular Rate</label>
+                        <label for="reg_rate" class="col-xs-4 control-label">SSS</label>
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" id="reg_rate" name="reg_rate" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg_rate" class="col-xs-4 control-label">Philhealth</label>
                         <div class="col-xs-3">
                             <input type="text" class="form-control" id="reg_rate" name="reg_rate" required>
                         </div>

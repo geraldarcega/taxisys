@@ -301,7 +301,7 @@ body {
   padding-left: 0;
 }
 .login-panel {
-  margin-top: 25%;
+  margin-top: 25% !important;
 }
 .flot-chart {
   display: block;
@@ -369,7 +369,7 @@ table.dataTable thead .sorting:after {
   margin: 15px 0;
 }
 .huge {
-  font-size: 30px;
+  font-size: 25px;
   display: inline-block;
 }
 .panel a {
@@ -410,10 +410,10 @@ table.dataTable thead .sorting:after {
   transform-origin: right top 0;
   width: 118.889px;
   top: 0px;
-  right: 33.33px;
+  right: 32.33px;
   height: 33.33px;
 }
-.panel .updateEditbtn a {
+.panel a.panel-side-link {
   color: #6d686d;
   line-height: 33.33px;
 }
@@ -436,25 +436,31 @@ table.dataTable thead .sorting:after {
   background-color: #3d763d;
 }
 .panel-red {
-  height: 100px;
   border-color: #d90707;
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
 }
 .panel-red .panel-heading {
   border-color: #d90707;
   color: white;
   background-color: #d90707;
+  text-align: center;
 }
 .panel-red .panel-nametag {
   background-color: #9e0505;
 }
 .panel-yellow {
-  height: 100px;
   border-color: #f28705;
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
 }
 .panel-yellow .panel-heading {
   border-color: #f28705;
   color: white;
   background-color: #f28705;
+  text-align: center;
 }
 .panel-yellow .panel-nametag {
   background-color: #b66604;
