@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Boundary extends MY_Framework
+class Reports extends MY_Framework
 {
     function __construct()
     {
@@ -11,12 +11,13 @@ class Boundary extends MY_Framework
         // $this->load->model('units_model');
     }
 
-    public function index( )
+    public function boundary( )
     {
-        $this->tsdata['nav']        = 'boundary';
+        $this->tsdata['nav']        = 'reports';
+        $this->tsdata['sub_nav']    = 'boundary';
         $this->tsdata['boundary']   = array();
 
-        $this->load_view( 'index' );
+        $this->load_view( 'boundary' );
     }
 
     public function ajax()
