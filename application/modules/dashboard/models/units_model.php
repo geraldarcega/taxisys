@@ -30,6 +30,12 @@ class Units_model extends CI_Model {
     if( isset($db_data['plate_number1']) && isset($db_data['plate_number2']) )
     {
       $db_data['plate_number'] = $db_data['plate_number1'].' '.$db_data['plate_number2'];
+      
+      if( $this->check_exist( $db_data['plate_number'] ) > 0 )
+      {
+        return array('exist' => strtoupper($db_data['plate_number']));
+      }
+
       unset($db_data['plate_number1']);
       unset($db_data['plate_number2']);
     }
@@ -47,5 +53,45 @@ class Units_model extends CI_Model {
       $this->db->insert( $this->table.'_logs', array( 'unit_idFK' => $this->db->insert_id(), 'status' => ONGARRAGE ) );
 
     return $this->db->affected_rows();
+  }
+
+  public function update( $db_data ) {
+    $date_fields = array(
+                           'releasing_date1'
+                          ,'releasing_date2'
+                          ,'franchise_until'
+                          ,'renew_by'
+                        );
+    if( isset($db_data['plate_number1']) && isset($db_data['plate_number2']) )
+    {
+      $db_data['plate_number'] = $db_data['plate_number1'].' '.$db_data['plate_number2'];
+
+      unset($db_data['plate_number1']);
+      unset($db_data['plate_number2']);
+    }
+
+    unset($db_data['action']);
+
+    if( isset($db_data['unit_id']) )
+    {
+      $this->db->where( 'unit_id', $db_data['unit_id'] );
+      unset($db_data['unit_id']);
+    }
+
+    for ($i=0; $i < count($date_fields); $i++) {
+      $db_data[$date_fields[$i]] = dateFormat( $db_data[$date_fields[$i]] );
+    }
+
+    $this->db->update( $this->table, $db_data );
+
+    return $this->db->affected_rows();
+  }
+
+  # check if unit already exist
+  public function check_exist( $plate_number )
+  {
+    return $this->db
+                ->where( 'plate_number', $plate_number )
+                ->count_all_results( $this->table );
   }
 }

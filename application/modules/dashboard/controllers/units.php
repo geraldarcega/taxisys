@@ -36,18 +36,32 @@ class Units extends MY_Framework
             switch ( $this->input->post( 'action' ) ) {
                 case 'create':
                     $new = $this->units_model->create( $this->input->post() );
-                    if( $new )
+                    if( !is_array($new) )
                     {
-                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i>Success!</strong> New unit has been saved.');
+                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> New unit has been saved.');
+                        $msg = array( 'success' => 1 );
+                    }
+                    else
+                    {
+                        if( isset($new['exist']) )
+                            $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Ooops!</strong> Unit with plate #'.$new['exist'].' is already exists.' );
+                        else
+                            $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Urgent!</strong> Please contact the administrator immediately' );
+                    }
+
+                    echo json_encode( $msg );
+                    break;
+                case 'update':
+                    $update = $this->units_model->update( $this->input->post() );
+                    if( $update )
+                    {
+                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> Unit has been updated.');
                         $msg = array( 'success' => 1 );
                     }
                     else
                         $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Failed!</strong> Please contact the administrator immediately' );
 
                     echo json_encode( $msg );
-                    break;
-                case 'update':
-                    echo json_encode( $this->input->post() );
                     break;
                 
                 default:

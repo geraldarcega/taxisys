@@ -5,7 +5,8 @@
     </div>
     <!-- /.navbar-header -->
 
-    <ul class="nav navbar-top-links navbar-left">
+    <ul class="nav navbar-top-links navbar-right">
+        <?php /*
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -135,12 +136,20 @@
             </ul>
             <!-- /.dropdown-tasks -->
         </li>
+        */ ?>
         <!-- /.dropdown -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                <span class="label label-info label-as-badge">0</span><i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-alerts">
+                <li>
+                    <div style="text-align:center;">
+                        <i class="fa fa-smile-o fa-fw"></i> Hooray! Your notification is empty.
+                    </div>
+                </li>
+            </ul>
+            <!-- <ul class="dropdown-menu dropdown-alerts">
                 <li>
                     <a href="#">
                         <div>
@@ -192,7 +201,7 @@
                         <i class="fa fa-angle-right"></i>
                     </a>
                 </li>
-            </ul>
+            </ul> -->
             <!-- /.dropdown-alerts -->
         </li>
         <!-- /.dropdown -->
@@ -233,9 +242,6 @@
                     <a <?=$nav == 'pos' ? 'class="active"' : '' ?> href="<?=pos_url()?>"><i class="fa fa-calculator fa-fw"></i> POS</a>
                 </li>
                 <li>
-                    <a <?=$nav == 'boundary' ? 'class="active"' : '' ?> href="<?=dashboard_url('boundary');?>"><i class="fa fa-money fa-fw"></i> BOUNDARY</a>
-                </li>
-                <li>
                     <a <?=$nav == 'calendar' ? 'class="active"' : '' ?> href="<?=dashboard_url('calendar')?>"><i class="fa fa-calendar fa-fw"></i> CALENDAR</a>
                 </li>
                 <li>
@@ -257,10 +263,16 @@
                     <!-- /.nav-second-level -->
                 </li>
                 <li>
-                    <a href="tables.html"><i class="fa fa-cube fa-fw"></i> SPARE PARTS</a>
+                    <a href="tables.html"><i class="fa fa-cube fa-fw"></i> SPARE PARTS</span></a>
                 </li>
                 <li>
-                    <a href="tables.html"><i class="fa fa-line-chart fa-fw"></i> REPORTS</a>
+                    <a href="#"><i class="fa fa-line-chart fa-fw"></i> REPORTS<span class="fa arrow"></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a <?=@$sub_nav == 'boundary' ? 'class="active"' : '' ?> href="<?=dashboard_url('reports/boundary');?>"><i class="fa fa-money fa-fw"></i> BOUNDARY</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
                 </li>
                 <?php if( $user_data->lvl == "1" ){ ?>
                 <li>

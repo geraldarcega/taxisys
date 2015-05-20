@@ -25,7 +25,6 @@ $(document).ready(function() {
                         $('#btnModalUnitsave').button('loading')
                     },
                     success: function(data){
-                        console.log(data)
                         if( data.success )
                             location.reload()
                         else
@@ -48,6 +47,8 @@ $('#unitsModal').on('show.bs.modal', function (e) {
     
     $('.unit-field').val('')
     $('#unitsModalLabel').html('CREATE NEW UNIT')
+    $('#failed_msg span').html('')
+    $('#failed_msg').hide()
 
     if( typeof units_data[data_id['value']] !== "undefined" )
     {
@@ -57,7 +58,10 @@ $('#unitsModal').on('show.bs.modal', function (e) {
         $.each( units_data[data_id['value']], function( i, v ){
             if( $('#'+i).length )
             {
-                $('#'+i).val( v )
+                if( i.indexOf('date') > -1 )
+                    $('#'+i).val( readableDate(v) )
+                else
+                    $('#'+i).val( v )
             }
 
             if( i == 'plate_number' )
