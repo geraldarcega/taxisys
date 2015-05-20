@@ -22,7 +22,7 @@
                                 <td colspan="7" align="center"><h3><i class="fa fa-cog fa-spin"></i> Loading...</h3></td>
                             </tr>
                             <?php if( $units->num_rows() ) { $i = 0; ?>
-                            <?php foreach ($units->result() as $unit) { $i++; ?>
+                            <?php foreach ($units->result() as $unit) { $i++; $json_units[$unit->unit_id] = $unit; ?>
                             <tr>
                                 <td><?=$i?></td>
                                 <td><?=strtoupper($unit->plate_number)?></td>
@@ -30,7 +30,7 @@
                                 <td><?=$unit->coding_day?></td>
                                 <td><?=dateFormat($unit->franchise_until, 'M d, Y')?></td>
                                 <td><?=dateFormat($unit->renew_by, 'M d, Y')?></td>
-                                <td><a href="#"><i class="fa fa-eye"></i></a></td>
+                                <td><a href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" ><i class="fa fa-eye"></i></a></td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>
@@ -62,22 +62,23 @@
                 </div>
                 <form class="form-horizontal" id="frmModalUnits" method="post" action="<?=dashboard_url('units/ajax')?>">
                     <input type="hidden" name="action" id="action" value="create">
+                    <input type="hidden" name="unit_id" id="unit_id" value="">
                     <div class="row">
                         <div class="col-xs-6">
                             <div class="form-group">
                                 <label for="plate_number" class="col-xs-4 control-label">Plate #</label>
                                 <div class="col-xs-4">
-                                    <input type="text" class="form-control" id="plate_number1" name="plate_number1" maxlength="3" required placeholder="AAA">
+                                    <input type="text" class="form-control unit-field" id="plate_number1" name="plate_number1" maxlength="3" required placeholder="AAA">
                                 </div>
                                 <div class="col-xs-4">
-                                    <input type="text" class="form-control" id="plate_number2" name="plate_number2" maxlength="4" required placeholder="123">
+                                    <input type="text" class="form-control unit-field" id="plate_number2" name="plate_number2" maxlength="4" required placeholder="123">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="year_model" class="col-xs-4 control-label">Year Model</label>
                                 <div class="col-xs-8">
                                     <div class="input-group date" id="year_model_dp">
-                                        <input type="text" class="form-control" id="year_model" name="year_model" required/>
+                                        <input type="text" class="form-control unit-field" id="year_model" name="year_model" required/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -87,15 +88,13 @@
                             <div class="form-group">
                                 <label for="reg_rate" class="col-xs-4 control-label">Coding Day</label>
                                 <div class="col-xs-8">
-                                    <select id="coding_day" name="coding_day" class="form-control" required>
+                                    <select id="coding_day" name="coding_day" class="form-control unit-field" required>
                                         <option value="">----</option>
-                                        <option value="1">Monday</option>
-                                        <option value="2">Tuesday</option>
-                                        <option value="3">Wednesday</option>
-                                        <option value="4">Thursday</option>
-                                        <option value="5">Friday</option>
-                                        <option value="6">Saturday</option>
-                                        <option value="7">Sunday</option>
+                                        <option value="Monday">Monday</option>
+                                        <option value="Tuesday">Tuesday</option>
+                                        <option value="Wednesday">Wednesday</option>
+                                        <option value="Thursday">Thursday</option>
+                                        <option value="Friday">Friday</option>
                                     </select>
                                 </div>
                             </div>
@@ -103,7 +102,7 @@
                                 <label for="reg_rate" class="col-xs-4 control-label">Releasing Date 1</label>
                                 <div class="col-xs-8">
                                     <div class="input-group date" id="releasing_date1_dp">
-                                        <input type='text' class="form-control" id="releasing_date1" name="releasing_date1" required/>
+                                        <input type='text' class="form-control unit-field" id="releasing_date1" name="releasing_date1" required/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -114,7 +113,7 @@
                                 <label for="reg_rate" class="col-xs-4 control-label">Releasing Date 2</label>
                                 <div class="col-xs-8">
                                     <div class="input-group date" id="releasing_date2_dp">
-                                        <input type='text' class="form-control" id="releasing_date2" name="releasing_date2" required/>
+                                        <input type='text' class="form-control unit-field" id="releasing_date2" name="releasing_date2" required/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -125,7 +124,7 @@
                                 <label for="reg_rate" class="col-xs-4 control-label">Franchise Until</label>
                                 <div class="col-xs-8">
                                     <div class="input-group date" id="franchise_until_dp">
-                                        <input type='text' class="form-control" id="franchise_until" name="franchise_until" required/>
+                                        <input type='text' class="form-control unit-field" id="franchise_until" name="franchise_until" required/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -136,7 +135,7 @@
                                 <label for="reg_rate" class="col-xs-4 control-label">Renew By</label>
                                 <div class="col-xs-8">
                                     <div class="input-group date" id="renew_by_dp">
-                                        <input type='text' class="form-control" id="renew_by" name="renew_by" required />
+                                        <input type='text' class="form-control unit-field" id="renew_by" name="renew_by" required />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -152,7 +151,7 @@
                                         <span class="input-group-addon">
                                             <b>Php</b>
                                         </span>
-                                        <input type="number" class="form-control" id="reg_rate" name="reg_rate" required>
+                                        <input type="number" class="form-control unit-field" id="reg_rate" name="reg_rate" required>
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +162,7 @@
                                         <span class="input-group-addon">
                                             <b>Php</b>
                                         </span>
-                                        <input type="number" class="form-control" id="sunday_rate" name="sunday_rate" required>
+                                        <input type="number" class="form-control unit-field" id="sunday_rate" name="sunday_rate" required>
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +173,7 @@
                                         <span class="input-group-addon">
                                             <b>Php</b>
                                         </span>
-                                        <input type="number" class="form-control" id="holiday_rate" name="holiday_rate" required>
+                                        <input type="number" class="form-control unit-field" id="holiday_rate" name="holiday_rate" required>
                                     </div>
                                 </div>
                             </div>
@@ -185,7 +184,7 @@
                                         <span class="input-group-addon">
                                             <b>Php</b>
                                         </span>
-                                        <input type="number" class="form-control" id="coding_rate" name="coding_rate" required>
+                                        <input type="number" class="form-control unit-field" id="coding_rate" name="coding_rate" required>
                                     </div>
                                 </div>
                             </div>
@@ -196,7 +195,7 @@
                                         <span class="input-group-addon">
                                             <b>Php</b>
                                         </span>
-                                        <input type="number" class="form-control" id="overhead_fund" name="overhead_fund" required>
+                                        <input type="number" class="form-control unit-field" id="overhead_fund" name="overhead_fund" required>
                                     </div>
                                 </div>
                             </div>
@@ -207,7 +206,7 @@
                                         <span class="input-group-addon">
                                             <b>Php</b>
                                         </span>
-                                        <input type="number" class="form-control" id="docs_fund" name="docs_fund" required>
+                                        <input type="number" class="form-control unit-field" id="docs_fund" name="docs_fund" required>
                                     </div>
                                 </div>
                             </div>
@@ -218,7 +217,7 @@
                                         <span class="input-group-addon">
                                             <b>Php</b>
                                         </span>
-                                        <input type="number" class="form-control" id="replacement_fund" name="replacement_fund" required>
+                                        <input type="number" class="form-control unit-field" id="replacement_fund" name="replacement_fund" required>
                                     </div>
                                 </div>
                             </div>
@@ -234,5 +233,5 @@
     </div>
 </div>
 <script type="text/javascript">
-    var units_data = <?php echo $units->num_rows() ? json_encode( $units->result() ) : '[]'; ?>;
+    var units_data = <?php echo $units->num_rows() ? json_encode( $json_units ) : '[]'; ?>;
 </script>

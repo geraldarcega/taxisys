@@ -46,6 +46,9 @@ class Units extends MY_Framework
 
                     echo json_encode( $msg );
                     break;
+                case 'update':
+                    echo json_encode( $this->input->post() );
+                    break;
                 
                 default:
                     # code...

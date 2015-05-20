@@ -42,3 +42,31 @@ $(document).ready(function() {
         }
     })
 });
+
+$('#unitsModal').on('show.bs.modal', function (e) {
+    var data_id = e.relatedTarget.attributes[3];
+    
+    $('.unit-field').val('')
+    $('#unitsModalLabel').html('CREATE NEW UNIT')
+
+    if( typeof units_data[data_id['value']] !== "undefined" )
+    {
+        $('#unitsModalLabel').html('UPDATE UNIT')
+        $('#action').val('update')
+        $('#unit_id').val(data_id['value'])
+        $.each( units_data[data_id['value']], function( i, v ){
+            if( $('#'+i).length )
+            {
+                $('#'+i).val( v )
+            }
+
+            if( i == 'plate_number' )
+            {
+                var plate_number = v.split(' ')
+
+                $('#'+i+'1').val( plate_number[0].toUpperCase() )
+                $('#'+i+'2').val( plate_number[1] )
+            }
+        })
+    }
+})

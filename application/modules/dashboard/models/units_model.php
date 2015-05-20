@@ -34,8 +34,8 @@ class Units_model extends CI_Model {
       unset($db_data['plate_number2']);
     }
 
-    if( isset($db_data['action']) )
-      unset($db_data['action']);
+    unset($db_data['action']);
+    unset($db_data['unit_id']);
 
     for ($i=0; $i < count($date_fields); $i++) {
       $db_data[$date_fields[$i]] = dateFormat( $db_data[$date_fields[$i]] );
