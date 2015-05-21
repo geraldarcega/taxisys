@@ -27,6 +27,7 @@ class Frontend_library
 		{
 			$css[] = CSS_DIR.'plugins/metisMenu/metisMenu.min.css';
 			$css[] = CSS_DIR.'bootstrap-datetimepicker.css';
+			$css[] = CSS_DIR.'tablesorter.css';
 		}
 
 
@@ -47,6 +48,7 @@ class Frontend_library
 			$js[] = JS_DIR.'plugins/metisMenu/metisMenu.min.js';
 			$js[] = '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js';
 			$js[] = JS_DIR.'bootstrap-datetimepicker.js';
+			$js[] = JS_DIR.'jquery.tablesorter.min.js';
 			$js[] = JS_DIR.'sb-admin-2.js';
 
 			if( $class == 'calendar' )

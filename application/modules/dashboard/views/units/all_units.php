@@ -14,20 +14,19 @@
         <div class="row">
             <article class="col-xs-9">
                 <!-- <div class="dash-border Units"> -->
-                    <table id="tbl_all_units" class="table">
+                    <table id="tbl_all_units" class="table tablesorter">
                         <thead style="background-color:#fff;">
-                            <th>#</th>
-                            <th>Plate #</th>
-                            <th>Year Model</th>
-                            <th>Coding Day</th>
-                            <th>Franchise Until</th>
-                            <th>Renew By</th>
-                            <th></th>
+                            <tr>
+                                <th>#</th>
+                                <th>Plate #</th>
+                                <th>Year Model</th>
+                                <th>Coding Day</th>
+                                <th>Franchise Until</th>
+                                <th>Renew By</th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
-                            <tr id="tbl_loading" style="display:none;">
-                                <td colspan="7" align="center"><h3><i class="fa fa-cog fa-spin"></i> Loading...</h3></td>
-                            </tr>
                             <?php if( $units->num_rows() ) { $i = 0; ?>
                             <?php foreach ($units->result() as $unit) { $i++; $json_units[$unit->unit_id] = $unit; ?>
                             <tr>
