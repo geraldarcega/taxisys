@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_unicode_ci">taxisys</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="drivers" view="colnames">
+<left>139</left>
+<top>226</top>
+<width>145</width>
+<height>240</height>
+<sql_create_table>CREATE TABLE `drivers` (
+  `driver_id` int(11) NOT NULL AUTO_INCREMENT,
+  `unit_idFK` int(11) DEFAULT NULL,
+  `fname` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `mname` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `lname` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `address` text,
+  `dob` date DEFAULT NULL,
+  `sss` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+  `philhealth` varchar(50) DEFAULT NULL,
+  `pagibig` varchar(50) DEFAULT NULL,
+  `photo` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `del` enum('Yes','No') DEFAULT 'No',
+  PRIMARY KEY (`driver_id`),
+  KEY `acct_idFK` (`fname`,`mname`,`lname`,`dob`,`unit_idFK`),
+  KEY `unit_idFK` (`unit_idFK`),
+  CONSTRAINT `drivers_ibfk_1` FOREIGN KEY (`unit_idFK`) REFERENCES `units` (`unit_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="units" view="colnames">
+<left>544</left>
+<top>136</top>
+<width>170</width>
+<height>240</height>
+<sql_create_table>CREATE TABLE `units` (
+  `unit_id` int(11) NOT NULL AUTO_INCREMENT,
+  `driver_idFK` int(11) DEFAULT NULL,
+  `garrage_idFK` int(11) DEFAULT NULL,
+  `plate_number` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+  `year_model` int(4) DEFAULT NULL,
+  `reg_rate` int(11) DEFAULT NULL,
+  `coding_rate` int(11) DEFAULT NULL,
+  `holiday_rate` int(11) DEFAULT NULL,
+  `sunday_rate` int(11) DEFAULT NULL,
+  `coding_day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') CHARACTER SET latin1 DEFAULT NULL,
+  `resealing_date1` date DEFAULT NULL,
+  `resealing_date2` date DEFAULT NULL,
+  `franchise_until` date DEFAULT NULL,
+  `renew_by` date DEFAULT NULL,
+  `overhead_fund` decimal(10,2) DEFAULT NULL,
+  `docs_fund` decimal(10,2) DEFAULT NULL,
+  `replacement_fund` decimal(10,2) DEFAULT NULL,
+  `status` enum('On-duty','On-garrage','On-maintenance','Replace') DEFAULT 'On-duty',
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`unit_id`),
+  KEY `plate_number` (`plate_number`,`franchise_until`,`renew_by`,`coding_day`,`driver_idFK`,`year_model`,`coding_rate`,`holiday_rate`,`resealing_date1`,`resealing_date2`,`status`,`garrage_idFK`),
+  KEY `garrage_idFK` (`garrage_idFK`),
+  CONSTRAINT `units_ibfk_1` FOREIGN KEY (`garrage_idFK`) REFERENCES `garrage` (`garrage_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="units_logs" view="colnames">
+<left>336</left>
+<top>3</top>
+<width>130</width>
+<height>210</height>
+<sql_create_table>CREATE TABLE `units_logs` (
+  `log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `unit_idFK` int(11) DEFAULT NULL,
+  `driver_idFK` int(11) DEFAULT NULL,
+  `status` enum('On-duty','On-garrage','On-maintenance','Replaced') CHARACTER SET latin1 DEFAULT 'On-duty',
+  `boundary` decimal(10,2) DEFAULT NULL,
+  `is_holiday` tinyint(1) DEFAULT NULL,
+  `is_coding` tinyint(1) DEFAULT NULL,
+  `is_sunday` tinyint(1) DEFAULT NULL,
+  `trans_date` datetime DEFAULT NULL,
+  `assign_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`log_id`),
+  KEY `unit_idFK` (`unit_idFK`,`status`,`trans_date`,`driver_idFK`,`assign_date`),
+  KEY `driver_idFK` (`driver_idFK`),
+  CONSTRAINT `units_logs_ibfk_1` FOREIGN KEY (`unit_idFK`) REFERENCES `units` (`unit_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `units_logs_ibfk_2` FOREIGN KEY (`driver_idFK`) REFERENCES `drivers` (`driver_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="garrage" view="colnames">
+<left>821</left>
+<top>251</top>
+<width>142</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `garrage` (
+  `garrage_id` int(11) NOT NULL AUTO_INCREMENT,
+  `garrage_name` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `garrage_location` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`garrage_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="drivers_acct" view="colnames">
+<left>16</left>
+<top>18</top>
+<width>120</width>
+<height>180</height>
+<sql_create_table>CREATE TABLE `drivers_acct` (
+  `acct_id` int(11) NOT NULL AUTO_INCREMENT,
+  `drivers_idFK` int(11) DEFAULT NULL,
+  `in` int(11) DEFAULT NULL,
+  `out` int(11) DEFAULT NULL,
+  `remarks` text CHARACTER SET latin1,
+  `transac_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`acct_id`),
+  KEY `drivers_idFK` (`drivers_idFK`),
+  CONSTRAINT `drivers_acct_ibfk_1` FOREIGN KEY (`drivers_idFK`) REFERENCES `drivers` (`driver_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="parts" view="colnames">
+<left>820</left>
+<top>50</top>
+<width>161</width>
+<height>190</height>
+<sql_create_table>CREATE TABLE `parts` (
+  `parts_id` int(11) NOT NULL AUTO_INCREMENT,
+  `unit_idFK` int(11) DEFAULT NULL,
+  `parts_name` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `purchase_date` date DEFAULT NULL,
+  `install_date` date DEFAULT NULL,
+  `install_by` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `supplier` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`parts_id`),
+  KEY `unit_idFK` (`unit_idFK`),
+  CONSTRAINT `parts_ibfk_1` FOREIGN KEY (`unit_idFK`) REFERENCES `units` (`unit_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="boundary" view="colnames">
+<left>353</left>
+<top>338</top>
+<width>150</width>
+<height>180</height>
+<sql_create_table>CREATE TABLE `boundary` (
+  `boundary_id` int(11) NOT NULL AUTO_INCREMENT,
+  `driver_idFK` int(11) DEFAULT NULL,
+  `unit_idFK` int(11) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `short` int(11) DEFAULT NULL,
+  `remarks` text,
+  `status` enum('complete','short') DEFAULT NULL,
+  `transac_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`boundary_id`),
+  KEY `driver_idFK` (`driver_idFK`,`unit_idFK`),
+  KEY `unit_idFK` (`unit_idFK`),
+  CONSTRAINT `boundary_ibfk_1` FOREIGN KEY (`driver_idFK`) REFERENCES `drivers` (`driver_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `boundary_ibfk_2` FOREIGN KEY (`unit_idFK`) REFERENCES `units` (`unit_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

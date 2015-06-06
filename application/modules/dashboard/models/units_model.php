@@ -16,14 +16,15 @@ class Units_model extends CI_Model {
     
     return $this->db
                 ->select( $fields )
-                ->join( 'drivers', 'driver_idFK = driver_id', 'left' )
+                ->join( '(SELECT ull.driver_idFK, ull.unit_idFK FROM `units_logs` ull LEFT JOIN (SELECT MAX(log_id) mlid FROM `units_logs` GROUP BY `driver_idFK`) asd ON asd.mlid = ull.log_id) ul', 'unit_id = ul.unit_idFK', 'left' )
+                ->join( 'drivers d', 'd.driver_id = ul.driver_idFK', 'left' )
                 ->get( $this->table );
   }
 
   public function create( $db_data ) {
     $date_fields = array(
-                           'releasing_date1'
-                          ,'releasing_date2'
+                           'resealing_date1'
+                          ,'resealing_date2'
                           ,'franchise_until'
                           ,'renew_by'
                         );
@@ -57,8 +58,8 @@ class Units_model extends CI_Model {
 
   public function update( $db_data ) {
     $date_fields = array(
-                           'releasing_date1'
-                          ,'releasing_date2'
+                           'resealing_date1'
+                          ,'resealing_date2'
                           ,'franchise_until'
                           ,'renew_by'
                         );
@@ -93,5 +94,25 @@ class Units_model extends CI_Model {
     return $this->db
                 ->where( 'plate_number', $plate_number )
                 ->count_all_results( $this->table );
+  }
+
+  # check if unit is on-duty
+  public function check_duty( $unit_id )
+  {
+    return $this->db
+                ->where( 'unit_idFK', $unit_id )
+                ->count_all_results( $this->table );
+  }
+
+  # Logs unit
+  public function create_log( $data = array() )
+  {
+    # check if driver ID and unit ID still the same
+    $check = $this->db->where( 'driver_idFK', $data['driver_idFK'])->where( 'unit_idFK', $data['unit_idFK'] )->count_all_results('units_logs');
+    if( $check > 0 )
+      return false;
+
+    $this->db->insert('units_logs', $data);
+    return $this->db->affected_rows();
   }
 }

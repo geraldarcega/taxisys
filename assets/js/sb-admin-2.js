@@ -1,7 +1,6 @@
 $(function() {
-
     $('#side-menu').metisMenu();
-
+    $(".bs-switch").not("[data-switch-no-init]").bootstrapSwitch();
 });
 
 //Loads the correct sidebar on window load,

@@ -110,10 +110,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="reg_rate" class="col-xs-4 control-label">Releasing Date 1</label>
+                        <label for="reg_rate" class="col-xs-4 control-label">resealing Date 1</label>
                         <div class="col-xs-5">
-                            <div class="input-group date" id="releasing_date1_dp">
-                                <input type='text' class="form-control" id="releasing_date1" name="releasing_date1" required/>
+                            <div class="input-group date" id="resealing_date1_dp">
+                                <input type='text' class="form-control" id="resealing_date1" name="resealing_date1" required/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -121,10 +121,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="reg_rate" class="col-xs-4 control-label">Releasing Date 2</label>
+                        <label for="reg_rate" class="col-xs-4 control-label">resealing Date 2</label>
                         <div class="col-xs-5">
-                            <div class="input-group date" id="releasing_date2_dp">
-                                <input type='text' class="form-control" id="releasing_date2" name="releasing_date2" required/>
+                            <div class="input-group date" id="resealing_date2_dp">
+                                <input type='text' class="form-control" id="resealing_date2" name="resealing_date2" required/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>

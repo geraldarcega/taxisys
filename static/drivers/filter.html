@@ -1,0 +1,23 @@
+<form class="form-horizontal" method="get" action="">
+	<div class="form-group">
+		<div class="col-xs-12">
+			<input type="text" class="form-control" id="search" name="search" placeholder="Search here..">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="reg_rate" class="col-xs-2 control-label">In</label>
+		<div class="col-xs-10">
+			<select class="form-control" id="column" name="column">
+				<option value="plate_num">Plate #</option>
+				<option value="plate_num">Name</option>
+				<option value="on_duty">On-duty</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-xs-12" style="text-align: center;">
+			<button type="submit" class="btn btn-primary">Filter</button>&nbsp;&nbsp;
+			<button type="button" class="btn btn-warning" onclick="$('#filter').popover('hide')">Close</button>
+		</div>
+	</div>
+</form>

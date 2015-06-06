@@ -38,7 +38,7 @@ class Units extends MY_Framework
                     $new = $this->units_model->create( $this->input->post() );
                     if( !is_array($new) )
                     {
-                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> New unit has been saved.');
+                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> New unit has been created.');
                         $msg = array( 'success' => 1 );
                     }
                     else
@@ -55,7 +55,7 @@ class Units extends MY_Framework
                     $update = $this->units_model->update( $this->input->post() );
                     if( $update )
                     {
-                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> Unit has been updated.');
+                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> Unit\'s details has been updated.');
                         $msg = array( 'success' => 1 );
                     }
                     else
