@@ -1,11 +1,11 @@
 $('#unitsModal').on('show.bs.modal', function (e) {
-    var data_id   = e.relatedTarget.attributes[4]
-    var data_type = e.relatedTarget.attributes[5]
-    var data      = (typeof pos_json[data_id['value']] !== "undefined") ? pos_json[data_id['value']] : ''
-
+    var data_id   = e.relatedTarget.attributes[4]['value']
+    var data_type = e.relatedTarget.attributes[5]['value']
+    var data      = (typeof pos_json[data_id] !== "undefined") ? pos_json[data_id] : ''
+    console.log(data)
     if( data != '' )
     {
-        switch( data_type['value'] ) {
+        switch( data_type ) {
             case 'garrage':
             case 'maintenance':
                 $('.onduty-input').hide()
@@ -15,8 +15,12 @@ $('#unitsModal').on('show.bs.modal', function (e) {
                 
         }
 
+        $('#unitsModalLabel').html('UNIT - '+data.plate_number.toUpperCase())
+        $('#action').val('update')
+        $('#unit_id').val(data_id)
+
         $('#driver').html('-- Unassigned --')
-        if( data.driver_idFK )
+        if( data.driver_id )
             $('#driver').html(data.fname+' '+data.lname)
 
         $('#boundary').prop('placeholder', data.reg_rate)

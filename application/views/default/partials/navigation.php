@@ -275,14 +275,14 @@
                     <!-- /.nav-second-level -->
                 </li>
                 <?php if( $user_data->lvl == "1" ){ ?>
-                <li>
+                <li <?=$nav == 'administrator' ? 'class="active"' : '' ?>>
                     <a href="#"><i class="fa fa-gear fa-fw"></i> ADMINISTRATOR<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="flot.html"><i class="fa fa-male fa-fw"></i> USERS</a>
                         </li>
                         <li>
-                            <a href="morris.html"><i class="fa fa-home fa-fw"></i> GARRAGE</a>
+                            <a <?=@$sub_nav == 'garrage' ? 'class="active"' : '' ?> href="<?=dashboard_url('administrator/garrage');?>"><i class="fa fa-home fa-fw"></i> GARRAGE</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->

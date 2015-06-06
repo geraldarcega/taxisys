@@ -97,13 +97,13 @@
                     <div class="form-group">
                         <label for="date" class="col-xs-3 control-label">Date</label>
                         <div class="col-xs-9">
-                            <?php echo date('M d, Y'); ?>
+                            <span id="date_now" style="padding-top: 7px;display: inline-block;"><?php echo date('M d, Y'); ?></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="driver" class="col-xs-3 control-label">Driver</label>
                         <div class="col-xs-9">
-                            <span id="driver"></span>
+                            <span id="driver" style="padding-top: 7px;display: inline-block;"></span>
                         </div>
                     </div>
                     <div class="form-group onduty-input">

@@ -16,9 +16,8 @@ class Units_model extends CI_Model {
     
     return $this->db
                 ->select( $fields )
-                ->join( '(SELECT ull.driver_idFK, ull.unit_idFK FROM `units_logs` ull LEFT JOIN (SELECT MAX(log_id) mlid FROM `units_logs` GROUP BY `driver_idFK`) asd ON asd.mlid = ull.log_id) ul', 'unit_id = ul.unit_idFK', 'left' )
-                ->join( 'drivers d', 'd.driver_id = ul.driver_idFK', 'left' )
-                ->get( $this->table );
+                ->join( 'drivers d', 'd.unit_idFK = u.unit_id', 'left' )
+                ->get( $this->table.' u' );
   }
 
   public function create( $db_data ) {

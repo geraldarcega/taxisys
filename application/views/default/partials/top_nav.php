@@ -30,6 +30,12 @@
                    <span>May 2015</span>
                 </div>
                 <?php } ?>
+
+                <?php if( $nav == 'administrator' && $sub_nav == 'garrage' ) { ?>
+                <div class="pull-right" style="margin-right:5px;">
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#garrageModal"><i class="fa fa-plus"></i> NEW GARRAGE</button>
+                </div>
+                <?php } ?>
             </nav>
         </div>
         <div class="col col-xs-3 chatDiv">
