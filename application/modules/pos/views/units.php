@@ -91,9 +91,10 @@
                 <h4 class="modal-title" id="unitsModalLabel">UNIT - ABC 123</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" id="frmModalPOS" method="POST" action="<?=dashboard_url('pos/ajax')?>">
+                <form class="form-horizontal" id="frmModalPOS" method="POST" action="<?=base_url('pos/ajax')?>">
                     <input type="hidden" name="t_stats" id="t_stats" value="">
                     <input type="hidden" name="unit_id" id="unit_id" value="">
+                    <input type="hidden" name="old_driver" id="old_driver" value="">
                     <div class="form-group">
                         <label for="date" class="col-xs-3 control-label">Date</label>
                         <div class="col-xs-9">
@@ -104,7 +105,7 @@
                         <label for="driver" class="col-xs-3 control-label">Driver</label>
                         <div class="col-xs-9">
                             <span id="driver" style="padding-top: 7px;display: inline-block;"></span>
-                            <select class="form-control" id="old_driver" name="old_driver" style="display:none;" required>
+                            <select class="form-control" id="select_driver" name="select_driver" style="display:none;" required>
                                 <option>----</option>
                                 <?php if( $drivers->num_rows() ) { ?>
                                 <?php foreach ($drivers->result() as $driver) { ?>

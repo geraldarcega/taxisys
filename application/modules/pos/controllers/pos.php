@@ -38,6 +38,7 @@ class Pos extends MY_Framework
 
     public function ajax( $action = '' )
     {
+        debug($this->input->post());exit();
         if( $this->input->is_ajax_request() )
         {
             switch ($action) {

@@ -45,7 +45,10 @@ $('#unitsModal').on('show.bs.modal', function (e) {
                 $('#old_driver').show()
                 $('#driver').hide()
                 if( data.driver_id )
+                {
                     $('#old_driver').val( data.driver_id )
+                    $('#select_driver').val( data.driver_id )
+                }
                 break;
             default:
                 $('#old_driver').hide()
