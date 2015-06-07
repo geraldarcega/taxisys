@@ -24,7 +24,7 @@ class Pos extends MY_Framework
         $this->tsdata['units']['on_garrage']     = $this->units_model->read( array( 'wh|u.status' => ONGARRAGE ), '*' );
         $this->tsdata['units']['on_maintenance'] = $this->units_model->read( array( 'wh|u.status' => ONMAINTENANCE ), '*' );
 
-        $this->tsdata['drivers'] = $this->drivers_model->read();
+        $this->tsdata['drivers'] = $this->drivers_model->read(array( 'wh|d.on_duty' => 0 ));
 
         $this->load_view( 'units' );
     }

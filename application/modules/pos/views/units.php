@@ -104,12 +104,20 @@
                         <label for="driver" class="col-xs-3 control-label">Driver</label>
                         <div class="col-xs-9">
                             <span id="driver" style="padding-top: 7px;display: inline-block;"></span>
+                            <select class="form-control" id="old_driver" name="old_driver" style="display:none;" required>
+                                <option>----</option>
+                                <?php if( $drivers->num_rows() ) { ?>
+                                <?php foreach ($drivers->result() as $driver) { ?>
+                                <option value="<?=$driver->driver_id?>"><?=$driver->fname?> <?=$driver->lname?></option>
+                                <?php } ?>
+                                <?php } ?>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group onduty-input">
                         <label for="boundary" class="col-xs-3 control-label">Boundary</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="boundary" placeholder="1500">
+                            <input type="text" class="form-control" id="boundary" placeholder="1500" required>
                         </div>
                     </div>
                     <div class="form-group onduty-input">
@@ -144,11 +152,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="save_changes();">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="$('#frmModalPOS').submit();">Save changes</button>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
     var pos_json = <?=!empty($pos_data) ? json_encode($pos_data) : '[]'?>;
+    var drivers_json = <?=$drivers->num_rows() ? json_encode($drivers->result()) : '[]'?>;
 </script>
