@@ -1,5 +1,5 @@
 $(document).ready( function(){
-    $('#frmModalPOS').validate({
+    var validator = $('#frmModalPOS').validate({
         submitHandler: function(form) {
             if( $('#action').val() == 's_update' )
             {
@@ -41,6 +41,19 @@ $(document).ready( function(){
             return false
         }
     })
+
+    $('#status').on('change', function(){
+        if( $(this).val() == '3' )
+        {
+            $('#select_driver').tooltip('hide')
+            $('#select_driver').rules('remove', 'required')
+            $('#select_driver').removeAttr('required')
+        }
+        else
+        {
+            $('#select_driver').rules('add', 'required')
+        }
+    })
 })
 
 $('#unitsModal').on('show.bs.modal', function (e) {
@@ -48,6 +61,7 @@ $('#unitsModal').on('show.bs.modal', function (e) {
     var data_type = e.relatedTarget.attributes[5]['value']
     var data      = (typeof pos_json[data_id] !== "undefined") ? pos_json[data_id] : ''
 
+    $('#select_driver').tooltip('hide')
     if( data != '' )
     {
         switch( data_type ) {
