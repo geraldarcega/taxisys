@@ -2,12 +2,13 @@
 
 class Units_model extends CI_Model {
   private $table  = 'units';
+  public $fields  = 'u.*, d.*, u.status unit_status, d.status driver_status';
 
   function __construct(){
     parent::__construct();
   }
 
-  public function read( $filter = array(), $fields = '*', $limit = null, $offset = null, $sort = array(), $one = false ) {
+  public function read( $filter = array(), $limit = null, $offset = null, $sort = array(), $one = false ) {
     if( count($filter) )
       $this->db->filter( $filter );
 
@@ -15,7 +16,7 @@ class Units_model extends CI_Model {
       $this->db->order_by( $sort['field'], $sort['direction'] );
     
     return $this->db
-                ->select( $fields )
+                ->select( $this->fields )
                 ->join( 'drivers d', 'd.unit_idFK = u.unit_id', 'left' )
                 ->get( $this->table.' u' );
   }
@@ -83,6 +84,16 @@ class Units_model extends CI_Model {
     }
 
     $this->db->update( $this->table, $db_data );
+
+    return $this->db->affected_rows();
+  }
+
+  # update unit status
+  public function update_status( $unit_id, $status = UNIT_DUTY )
+  {
+    $this->db
+         ->where( 'unit_id', $unit_id )
+         ->update( $this->table, array( 'status' => $status ) );
 
     return $this->db->affected_rows();
   }

@@ -63,18 +63,35 @@ define('FONT_DIR', SITE_URL.'assets/fonts/');
 |
 */
 
-define('ONDUTY', 1);
-define('ONGARRAGE', 2);
-define('ONMAINTENANCE', 3);
-define('REPLACED', 4);
+# Unit Status
+define('UNIT_DUTY', 1);
+define('UNIT_GARRAGE', 2);
+define('UNIT_MAINTENANCE', 3);
+define('UNIT_REPLACED', 4);
 
-define('MON', 1);
-define('TUE', 2);
-define('WED', 3);
-define('THUR', 4);
-define('FRI', 5);
-define('SAT', 6);
-define('SUN', 7);
+# Boundary day type
+define('BTYPE_REGULAR', 1);
+define('BTYPE_CODING', 2);
+define('BTYPE_SUNDAY', 3);
+define('BTYPE_HOLIDAY', 4);
+
+# Boundary status
+define('BOUNDARY_FULL', 1);
+define('BOUNDARY_SHORT', 2);
+
+# Driver status
+define('DRIVER_DUTY', 1);
+define('DRIVER_OFF', 2);
+
+# Days
+define('DAY_MON', 1);
+define('DAY_TUE', 2);
+define('DAY_WED', 3);
+define('DAY_THUR', 4);
+define('DAY_FRI', 5);
+define('DAY_SAT', 6);
+define('DAY_SUN', 7);
 
 /* End of file constants.php */
+
 /* Location: ./application/config/constants.php */

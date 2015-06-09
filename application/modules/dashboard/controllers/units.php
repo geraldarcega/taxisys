@@ -22,7 +22,7 @@ class Units extends MY_Framework
         $this->tsdata['sub_nav'] = 'all_units';
 
         # Units data
-        $units = $this->units_model->read( $filter, '*', null, null, $sort );
+        $units = $this->units_model->read( $filter, null, null, $sort );
 
         $this->tsdata['units'] = $units;
 

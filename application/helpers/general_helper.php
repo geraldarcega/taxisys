@@ -55,23 +55,6 @@
 		return md5($password.PASS_SALT);
 	}
 
-	function getPhoneCountryCodes( $sort = true, $option = false ) {
-		$ci =& get_instance();
-
-		$country_codes = $ci->global_model->getCountryPhoneCodes( $sort );
-		if( !$option )
-			return $country_codes;
-		else{ 
-			if( count($country_codes) ) {
-				$options = '';
-				for ($i=0; $i < count($country_codes); $i++) { 
-					$options .= '<option value="'.$country_codes[$i]['phone_code'].'">'.$country_codes[$i]['country'].' (+'.$country_codes[$i]['phone_code'].')</option>';
-				}
-				return $options;
-			}			
-		}
-	}
-
 	function debug() {
 		$params = func_get_args();
 		if( count( $params ) > 0 ) {
@@ -83,24 +66,6 @@
 
 	function singular_plural( $count ) {
 		return $count > 1 ? 's' : '';
-	}
-
-	function getCountries( $options = false, $filter = array() ) {
-		$ci =& get_instance();
-		
-		$countries = $ci->global_model->getCountry($filter);
-		if( !$options )
-			return $countries;
-		else{
-			$option = '';
-			if( $countries->num_rows() ) {
-				foreach ($countries->result() as $country) {
-					$option .= '<option value="'.$country->countryId.'">'.$country->name.'</option>';
-				}
-			}
-
-			return $option;
-		}
 	}
 
 	function upload_img( $save_path ) {
@@ -157,5 +122,11 @@
 	# Default mysql date format
 	function dateFormat( $date, $format = 'Y-m-d' ) {
 		return date($format, strtotime($date));
+	}
+
+	# Show readable unit status
+	function unitStatus( $stats ) {
+		$status = array( UNIT_DUTY => 'On-duty', UNIT_GARRAGE => 'On-garrage', UNIT_MAINTENANCE => 'Maintenance', UNIT_REPLACED => 'Replaced' );
+		return @$status[ $stats ];
 	}
 ?>

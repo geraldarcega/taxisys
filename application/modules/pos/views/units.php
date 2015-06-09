@@ -47,7 +47,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-body panel-nametag"><?=$unit->fname != '' && $unit->lname != '' ? ucwords($unit->fname.' '.$unit->lname) : 'Unassigned'?></div>
+                            <div class="panel-body panel-nametag"><?=$unit->fname != '' && $unit->lname != '' ? ucwords($unit->fname.' '.$unit->lname) : 'No Driver'?></div>
                         </div>
                         <?php } ?>
                         <?php } ?>
@@ -92,9 +92,10 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="frmModalPOS" method="POST" action="<?=base_url('pos/ajax')?>">
-                    <input type="hidden" name="t_stats" id="t_stats" value="">
+                    <input type="hidden" name="action" id="action" value="">
                     <input type="hidden" name="unit_id" id="unit_id" value="">
                     <input type="hidden" name="old_driver" id="old_driver" value="">
+                    <input type="hidden" name="old_status" id="old_status" value="">
                     <div class="form-group">
                         <label for="date" class="col-xs-3 control-label">Date</label>
                         <div class="col-xs-9">
@@ -105,8 +106,8 @@
                         <label for="driver" class="col-xs-3 control-label">Driver</label>
                         <div class="col-xs-9">
                             <span id="driver" style="padding-top: 7px;display: inline-block;"></span>
-                            <select class="form-control" id="select_driver" name="select_driver" style="display:none;" required>
-                                <option>----</option>
+                            <select class="form-control" id="select_driver" name="select_driver" required>
+                                <option value="">----</option>
                                 <?php if( $drivers->num_rows() ) { ?>
                                 <?php foreach ($drivers->result() as $driver) { ?>
                                 <option value="<?=$driver->driver_id?>"><?=$driver->fname?> <?=$driver->lname?></option>
@@ -143,9 +144,9 @@
                         <label for="remarks" class="col-xs-3 control-label">Status</label>
                         <div class="col-xs-5">
                             <select id="status" name="status" class="form-control" required>
-                                <option value="On-duty">On-duty</option>
-                                <option value="On-garrage">On-garrage</option>
-                                <option value="On-maintenance">On-maintenance</option>
+                                <option value="<?=UNIT_DUTY?>">On-duty</option>
+                                <option value="<?=UNIT_GARRAGE?>">On-garrage</option>
+                                <option value="<?=UNIT_MAINTENANCE?>">On-maintenance</option>
                             </select>
                         </div>
                     </div>

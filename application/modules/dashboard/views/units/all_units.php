@@ -23,6 +23,7 @@
                                 <th>Coding Day</th>
                                 <th>Franchise Until</th>
                                 <th>Renew By</th>
+                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -36,6 +37,7 @@
                                 <td><?=$unit->coding_day?></td>
                                 <td><?=dateFormat($unit->franchise_until, 'M d, Y')?></td>
                                 <td><?=dateFormat($unit->renew_by, 'M d, Y')?></td>
+                                <td><?=unitStatus($unit->status)?></td>
                                 <td><a href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" ><i class="fa fa-eye"></i></a></td>
                             </tr>
                             <?php } ?>
@@ -56,7 +58,7 @@
 </div>
 <!-- Modal -->
 <div class="modal fade" id="unitsModal" tabindex="-1" role="dialog" aria-labelledby="unitsModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width:800px;">
+    <div class="modal-dialog" style="width:850px;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -70,7 +72,7 @@
                     <input type="hidden" name="action" id="action" value="create">
                     <input type="hidden" name="unit_id" id="unit_id" value="">
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-xs-4">
                             <div class="form-group">
                                 <label for="plate_number" class="col-xs-4 control-label">Plate #</label>
                                 <div class="col-xs-4">
@@ -105,7 +107,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="reg_rate" class="col-xs-4 control-label">resealing Date 1</label>
+                                <label for="reg_rate" class="col-xs-4 control-label">Resealing Date 1</label>
                                 <div class="col-xs-8">
                                     <div class="input-group date" id="resealing_date1_dp">
                                         <input type='text' class="form-control unit-field" id="resealing_date1" name="resealing_date1" required/>
@@ -116,7 +118,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="reg_rate" class="col-xs-4 control-label">resealing Date 2</label>
+                                <label for="reg_rate" class="col-xs-4 control-label">Resealing Date 2</label>
                                 <div class="col-xs-8">
                                     <div class="input-group date" id="resealing_date2_dp">
                                         <input type='text' class="form-control unit-field" id="resealing_date2" name="resealing_date2" required/>
@@ -149,7 +151,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-6">
+                        <div class="col-xs-4">
                             <div class="form-group">
                                 <label for="reg_rate" class="col-xs-4 control-label">Regular Rate</label>
                                 <div class="col-xs-8">
@@ -224,6 +226,30 @@
                                             <b>Php</b>
                                         </span>
                                         <input type="number" class="form-control unit-field" id="replacement_fund" name="replacement_fund" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label for="reg_rate" class="col-xs-4 control-label">Driver</label>
+                                <div class="col-xs-8">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <b>Php</b>
+                                        </span>
+                                        <input type="number" class="form-control unit-field" id="reg_rate" name="reg_rate" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg_rate" class="col-xs-4 control-label">Status</label>
+                                <div class="col-xs-8">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <b>Php</b>
+                                        </span>
+                                        <input type="number" class="form-control unit-field" id="sunday_rate" name="sunday_rate" required>
                                     </div>
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Units_model extends CI_Model {
+class Pos_model extends CI_Model {
   private $table = 'units_transactions';
   private $logs  = 'units_logs';
 
@@ -34,33 +34,19 @@ class Units_model extends CI_Model {
   }
 
   public function update( $db_data ) {
-    $date_fields = array(
-                           'resealing_date1'
-                          ,'resealing_date2'
-                          ,'franchise_until'
-                          ,'renew_by'
-                        );
-    if( isset($db_data['plate_number1']) && isset($db_data['plate_number2']) )
-    {
-      $db_data['plate_number'] = $db_data['plate_number1'].' '.$db_data['plate_number2'];
+    $unit_id = $db_data['unit_id'];
 
-      unset($db_data['plate_number1']);
-      unset($db_data['plate_number2']);
-    }
+    if( $db_data['old_driver'] != $db_data['select_driver'] )
+      $db_data['driver_idFK'] = $db_data['select_driver'];
 
     unset($db_data['action']);
+    unset($db_data['unit_id']);
+    unset($db_data['old_driver']);
+    unset($db_data['select_driver']);
 
-    if( isset($db_data['unit_id']) )
-    {
-      $this->db->where( 'unit_id', $db_data['unit_id'] );
-      unset($db_data['unit_id']);
-    }
-
-    for ($i=0; $i < count($date_fields); $i++) {
-      $db_data[$date_fields[$i]] = dateFormat( $db_data[$date_fields[$i]] );
-    }
-
-    $this->db->update( $this->table, $db_data );
+    $this->db
+         ->where( 'unit_idFK', $unit_id )
+         ->update( $this->table, $db_data );
 
     return $this->db->affected_rows();
   }
@@ -85,11 +71,23 @@ class Units_model extends CI_Model {
   public function create_log( $data = array() )
   {
     # check if driver ID and unit ID still the same
-    $check = $this->db->where( 'driver_idFK', $data['driver_idFK'])->where( 'unit_idFK', $data['unit_idFK'] )->count_all_results('units_logs');
+    $check = $this->db
+                  ->where( 'driver_idFK', $data['select_driver'])
+                  ->where( 'unit_idFK', $data['unit_id'] )
+                  ->count_all_results( $this->logs );
     if( $check > 0 )
       return false;
 
-    $this->db->insert('units_logs', $data);
+    $data['driver_idFK'] = $data['select_driver'];
+    $data['unit_idFK'] = $data['unit_id'];
+
+    unset($data['action']);
+    unset($data['unit_id']);
+    unset($data['old_status']);
+    unset($data['old_driver']);
+    unset($data['select_driver']);
+
+    $this->db->insert( $this->logs, $data);
     return $this->db->affected_rows();
   }
 }

@@ -1,6 +1,18 @@
 $(document).ready( function(){
     $('#frmModalPOS').validate({
         submitHandler: function(form) {
+            if( $('#action').val() == 's_update' )
+            {
+                if( $('#old_driver').val() == $('#select_driver').val() )
+                {
+                    if( $('#old_status').val() == $('#status').val() )
+                    {
+                        alert('No changes has been made. Update some details to proceed.')
+                        return false;
+                    }
+                }
+            }
+
             var ans = confirm('Continue saving?')
 
             if( ans )
@@ -42,29 +54,33 @@ $('#unitsModal').on('show.bs.modal', function (e) {
             case 'garrage':
             case 'maintenance':
                 $('.onduty-input').hide()
-                $('#old_driver').show()
+                $('#select_driver').show()
                 $('#driver').hide()
+                
                 if( data.driver_id )
                 {
                     $('#old_driver').val( data.driver_id )
                     $('#select_driver').val( data.driver_id )
                 }
+
+                $('#old_status').val( data.unit_status )
+                $('#action').val('s_update')
                 break;
             default:
-                $('#old_driver').hide()
+                $('#select_driver').hide()
                 $('.onduty-input').show()
                 $('#driver').show()
                 if( data.driver_id )
                     $('#driver').html(data.fname+' '+data.lname)
+                
+                $('#action').val('u_update')
         }
 
 
 
-        $('#unitsModalLabel').html('UNIT - '+data.plate_number.toUpperCase())
-        $('#action').val('update')
+        $('#unitsModalLabel').html('UNIT: '+data.plate_number.toUpperCase())
         $('#unit_id').val(data_id)
-
         $('#boundary').prop('placeholder', data.reg_rate)
-        $('#status').val(data.status)
+        $('#status').val(data.unit_status)
     }
 })

@@ -50,6 +50,14 @@ class Drivers_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
+    public function assign( $driver_id, $unit_id, $status = DRIVER_DUTY ) {
+        $this->db
+             ->where( 'driver_id', $driver_id )
+             ->update( $this->table, array( 'unit_idFK' => $unit_id, 'status' => $status ) );
+
+        return $this->db->affected_rows();
+    }
+
     # Check if driver exists
     public function check_exists( $data ) {
         return $this->db
