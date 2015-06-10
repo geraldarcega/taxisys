@@ -24,7 +24,7 @@ class Pos extends MY_Framework
         $this->tsdata['units']['on_duty']        = $this->units_model->read( array( 'wh|u.status' => UNIT_DUTY, 'wh|d.status' => DRIVER_DUTY ) );
         $this->tsdata['units']['on_garrage']     = $this->units_model->read( array( 'wh|u.status' => UNIT_GARRAGE ) );
         $this->tsdata['units']['on_maintenance'] = $this->units_model->read( array( 'wh|u.status' => UNIT_MAINTENANCE ) );
-        
+
         $this->tsdata['drivers'] = $this->drivers_model->read(array( 'wh|d.status' => 2 ));
 
         $this->load_view( 'units' );
@@ -39,6 +39,7 @@ class Pos extends MY_Framework
 
     public function ajax()
     {
+        debug($this->input->post());exit();
         if( $this->input->is_ajax_request() )
         {
             switch ($this->input->post('action')) {
@@ -50,7 +51,7 @@ class Pos extends MY_Framework
                     $this->units_model->update_status( $this->input->post('unit_id'), $this->input->post('status') );
                     break;
                 
-                case 'p_update':
+                case 'u_update':
                     $return = $this->pos_model->update($this->input->post());
                     break;
                 

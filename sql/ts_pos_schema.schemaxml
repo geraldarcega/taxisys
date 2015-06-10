@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_unicode_ci">taxisys</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="pos" view="colnames">
+<left>136</left>
+<top>185</top>
+<width>111</width>
+<height>197</height>
+<sql_create_table>CREATE TABLE `pos` (
+  `trans_id` int(11) NOT NULL AUTO_INCREMENT,
+  `unit_idFK` int(11) DEFAULT NULL,
+  `driver_idFK` int(11) DEFAULT NULL,
+  `boundary` decimal(10,2) DEFAULT NULL,
+  `day_type` tinyint(1) DEFAULT '1' COMMENT '1-regular, 2-coding, 3-sunday, 4-holiday',
+  `status` tinyint(1) DEFAULT '1' COMMENT 'Short: 1-no, 2-yes',
+  `trans_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`trans_id`),
+  KEY `unit_idFK` (`unit_idFK`,`driver_idFK`,`trans_date`),
+  KEY `driver_idFK` (`driver_idFK`),
+  KEY `is_short` (`status`),
+  KEY `trans_date` (`trans_date`),
+  KEY `day_type` (`day_type`),
+  CONSTRAINT `pos_ibfk_1` FOREIGN KEY (`unit_idFK`) REFERENCES `units` (`unit_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `pos_ibfk_2` FOREIGN KEY (`driver_idFK`) REFERENCES `drivers` (`driver_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="units" view="colnames">
+<left>728</left>
+<top>202</top>
+<width>149</width>
+<height>311</height>
+<sql_create_table>CREATE TABLE `units` (
+  `unit_id` int(11) NOT NULL AUTO_INCREMENT,
+  `garrage_idFK` int(11) DEFAULT NULL,
+  `plate_number` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+  `year_model` int(4) DEFAULT NULL,
+  `reg_rate` int(11) DEFAULT NULL,
+  `coding_rate` int(11) DEFAULT NULL,
+  `holiday_rate` int(11) DEFAULT NULL,
+  `sunday_rate` int(11) DEFAULT NULL,
+  `coding_day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') CHARACTER SET latin1 DEFAULT NULL,
+  `resealing_date1` date DEFAULT NULL,
+  `resealing_date2` date DEFAULT NULL,
+  `franchise_until` date DEFAULT NULL,
+  `renew_by` date DEFAULT NULL,
+  `overhead_fund` decimal(10,2) DEFAULT NULL,
+  `docs_fund` decimal(10,2) DEFAULT NULL,
+  `replacement_fund` decimal(10,2) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '1' COMMENT '1-duty, 2-garrage, 3-maintenance, 4-replaced',
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`unit_id`),
+  KEY `garrage_idFK` (`garrage_idFK`),
+  KEY `plate_number` (`plate_number`,`franchise_until`,`renew_by`,`coding_day`,`year_model`,`coding_rate`,`holiday_rate`,`resealing_date1`,`resealing_date2`,`status`,`garrage_idFK`),
+  CONSTRAINT `units_ibfk_1` FOREIGN KEY (`garrage_idFK`) REFERENCES `garrage` (`garrage_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="drivers" view="colnames">
+<left>367</left>
+<top>8</top>
+<width>147</width>
+<height>230</height>
+<sql_create_table>CREATE TABLE `drivers` (
+  `driver_id` int(11) NOT NULL AUTO_INCREMENT,
+  `unit_idFK` int(11) DEFAULT NULL,
+  `fname` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `mname` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `lname` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `address` text,
+  `dob` date DEFAULT NULL,
+  `sss` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
+  `philhealth` varchar(50) DEFAULT NULL,
+  `pagibig` varchar(50) DEFAULT NULL,
+  `photo` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '1' COMMENT '1-duty, 2-off',
+  `deleted_at` timestamp NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`driver_id`),
+  KEY `acct_idFK` (`fname`,`mname`,`lname`,`dob`,`unit_idFK`),
+  KEY `unit_idFK` (`unit_idFK`,`status`),
+  CONSTRAINT `drivers_ibfk_1` FOREIGN KEY (`unit_idFK`) REFERENCES `units` (`unit_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

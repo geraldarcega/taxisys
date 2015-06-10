@@ -1,5 +1,5 @@
 $(document).ready( function(){
-    var validator = $('#frmModalPOS').validate({
+    $('#frmModalPOS').validate({
         submitHandler: function(form) {
             if( $('#action').val() == 's_update' )
             {
@@ -77,6 +77,8 @@ $('#unitsModal').on('show.bs.modal', function (e) {
                     $('#select_driver').val( data.driver_id )
                 }
 
+                $('#status option[value="1"]').show()
+                $('#status').val(data.unit_status)
                 $('#old_status').val( data.unit_status )
                 $('#action').val('s_update')
                 break;
@@ -85,16 +87,19 @@ $('#unitsModal').on('show.bs.modal', function (e) {
                 $('.onduty-input').show()
                 $('#driver').show()
                 if( data.driver_id )
+                {
+                    $('#old_driver').val( data.driver_id )
                     $('#driver').html(data.fname+' '+data.lname)
+                }
                 
+                $('#status option[value="1"]').hide()
+                $('#status').val('')
                 $('#action').val('u_update')
         }
 
-
-
         $('#unitsModalLabel').html('UNIT: '+data.plate_number.toUpperCase())
         $('#unit_id').val(data_id)
+        $('#coding_day').val(data.coding_day)
         $('#boundary').prop('placeholder', data.reg_rate)
-        $('#status').val(data.unit_status)
     }
 })

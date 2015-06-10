@@ -96,6 +96,7 @@
                     <input type="hidden" name="unit_id" id="unit_id" value="">
                     <input type="hidden" name="old_driver" id="old_driver" value="">
                     <input type="hidden" name="old_status" id="old_status" value="">
+                    <input type="hidden" name="coding_day" id="coding_day" value="">
                     <div class="form-group">
                         <label for="date" class="col-xs-3 control-label">Date</label>
                         <div class="col-xs-9">
@@ -119,19 +120,19 @@
                     <div class="form-group onduty-input">
                         <label for="boundary" class="col-xs-3 control-label">Boundary</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="boundary" placeholder="1500" required>
+                            <input type="text" class="form-control" id="boundary" name="boundary" placeholder="1500" required>
                         </div>
                     </div>
                     <div class="form-group onduty-input">
                         <label for="drivers_fund" class="col-xs-3 control-label">Driver's fund</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="drivers_fund" placeholder="50">
+                            <input type="text" class="form-control" id="drivers_fund" name="drivers_fund" placeholder="50">
                         </div>
                     </div>
                     <div class="form-group onduty-input">
                         <label for="short" class="col-xs-3 control-label">Short</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="short">
+                            <input type="text" class="form-control" id="short" name="short">
                         </div>
                     </div>
                     <div class="form-group">

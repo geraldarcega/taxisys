@@ -34,10 +34,10 @@
                                 <td><?=$i?></td>
                                 <td><?=strtoupper($unit->plate_number)?></td>
                                 <td><?=$unit->year_model?></td>
-                                <td><?=$unit->coding_day?></td>
+                                <td><?=codingDay($unit->coding_day)?></td>
                                 <td><?=dateFormat($unit->franchise_until, 'M d, Y')?></td>
                                 <td><?=dateFormat($unit->renew_by, 'M d, Y')?></td>
-                                <td><?=unitStatus($unit->status)?></td>
+                                <td><?=unitStatus($unit->unit_status)?></td>
                                 <td><a href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" ><i class="fa fa-eye"></i></a></td>
                             </tr>
                             <?php } ?>

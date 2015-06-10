@@ -129,4 +129,10 @@
 		$status = array( UNIT_DUTY => 'On-duty', UNIT_GARRAGE => 'On-garrage', UNIT_MAINTENANCE => 'Maintenance', UNIT_REPLACED => 'Replaced' );
 		return @$status[ $stats ];
 	}
+
+	# Show readable coding day
+	function codingDay( $day ) {
+		$coding = array( DAY_MON => 'Monday', DAY_TUE => 'Tuesday', DAY_WED => 'Wednesday', DAY_THUR => 'Thursday', DAY_FRI => 'Friday' );
+		return @$coding[ $day ];
+	}
 ?>
