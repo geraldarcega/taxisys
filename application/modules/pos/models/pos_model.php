@@ -2,6 +2,7 @@
 
 class Pos_model extends CI_Model {
   private $table        = 'pos';
+  private $units        = 'units';
   private $logs         = 'units_logs';
   private $drivers_acct = 'drivers_acct';
 
@@ -24,33 +25,37 @@ class Pos_model extends CI_Model {
 
   public function create( $db_data ) {
     $day = date('N');
-    // if(  )
+    # Sunday boundary
+    if( $day == DAY_SUN )
+      $pos_data['day_type'] = BTYPE_SUNDAY;
+
+    # Coding boundary
+    if( $db_data['coding_day'] == $day )
+      $pos_data['day_type'] = BTYPE_CODING;
+
     $pos_data['unit_idFK']   = $db_data['unit_id'];
     $pos_data['boundary']    = $db_data['boundary'];
     $pos_data['remarks']     = $db_data['remarks'];
-    $pos_data['driver_idFK'] = $db_data['old_driver'];
     if( $db_data['short'] > 0 )
       $pos_data['status'] = 2;
 
-    $driver_data['out'] = $db_data['short'];
-    $driver_data['drivers_fund'] = $db_data['drivers_fund'];
+    $driver_data['driver_idFK'] = $pos_data['driver_idFK'] = $db_data['old_driver'];
+    $driver_data['in']          = $db_data['drivers_fund'];
+    $driver_data['out']         = $db_data['short'];
 
-    $logs_data['status'] = $db_data['status'];
+    // $logs_data['status'] = $db_data['status'];
 
-    unset($db_data['action']);
-    unset($db_data['unit_id']);
-    unset($db_data['old_driver']);
-    unset($db_data['old_status']);
-    unset($db_data['select_driver']);
-    unset($db_data['short']);
-    unset($db_data['status']);
-    unset($db_data['drivers_fund']);
-
+    # Insert transaction in pos
     $this->db->insert( $this->table, $pos_data );
-    $trans_id = $this->db->insert_id();
+    $driver_data['trans_idFK'] = $this->db->insert_id();
 
-    if( $this->db->affected_rows() )
-      $this->db->insert( $this->table, array( 'unit_idFK' => $this->db->insert_id(), 'status' => ONGARRAGE ) );
+    # Logs driver acct
+    $this->db->insert( $this->drivers_acct, $driver_data );
+
+    # Update unit
+    $this->db
+         ->where( 'unit_id', $pos_data['unit_idFK'] );
+         ->update( $this->units, $unit_data );
 
     return $this->db->affected_rows();
   }

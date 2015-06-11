@@ -51,7 +51,7 @@ class Units_model extends CI_Model {
     $this->db->insert( $this->table, $db_data );
 
     if( $this->db->affected_rows() )
-      $this->db->insert( $this->table.'_logs', array( 'unit_idFK' => $this->db->insert_id(), 'status' => ONGARRAGE ) );
+      $this->db->insert( $this->table.'_logs', array( 'unit_idFK' => $this->db->insert_id(), 'status' => UNIT_GARRAGE ) );
 
     return $this->db->affected_rows();
   }

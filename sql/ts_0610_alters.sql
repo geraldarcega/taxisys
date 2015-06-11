@@ -4,5 +4,4 @@ ALTER TABLE `taxisys`.`boundary` ADD INDEX (`status`);
 
 ALTER TABLE `taxisys`.`units` CHANGE `coding_day` `coding_day` TINYINT(1) NULL;
 
-ALTER TABLE `taxisys`.`drivers_acct` DROP COLUMN `remarks`;
 ALTER TABLE `taxisys`.`pos` ADD COLUMN `remarks` TEXT NULL AFTER `status`; 

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemadesigner version="6.5">
 <source>
-<database charset="utf8" collation="utf8_unicode_ci">taxisys</database>
+<database charset="latin1" collation="latin1_swedish_ci">taxisys</database>
 </source>
 <canvas zoom="100">
 <tables>
 <table name="pos" view="colnames">
-<left>136</left>
-<top>185</top>
-<width>111</width>
+<left>595</left>
+<top>66</top>
+<width>112</width>
 <height>197</height>
 <sql_create_table>CREATE TABLE `pos` (
   `trans_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -17,6 +17,7 @@
   `boundary` decimal(10,2) DEFAULT NULL,
   `day_type` tinyint(1) DEFAULT '1' COMMENT '1-regular, 2-coding, 3-sunday, 4-holiday',
   `status` tinyint(1) DEFAULT '1' COMMENT 'Short: 1-no, 2-yes',
+  `remarks` text,
   `trans_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`trans_id`),
   KEY `unit_idFK` (`unit_idFK`,`driver_idFK`,`trans_date`),
@@ -24,15 +25,15 @@
   KEY `is_short` (`status`),
   KEY `trans_date` (`trans_date`),
   KEY `day_type` (`day_type`),
-  CONSTRAINT `pos_ibfk_1` FOREIGN KEY (`unit_idFK`) REFERENCES `units` (`unit_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `pos_ibfk_2` FOREIGN KEY (`driver_idFK`) REFERENCES `drivers` (`driver_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `pos_ibfk_1` FOREIGN KEY (`driver_idFK`) REFERENCES `drivers` (`driver_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `pos_ibfk_2` FOREIGN KEY (`unit_idFK`) REFERENCES `units` (`unit_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
 </table>
 <table name="units" view="colnames">
-<left>728</left>
-<top>202</top>
+<left>101</left>
+<top>174</top>
 <width>149</width>
-<height>311</height>
+<height>195</height>
 <sql_create_table>CREATE TABLE `units` (
   `unit_id` int(11) NOT NULL AUTO_INCREMENT,
   `garrage_idFK` int(11) DEFAULT NULL,
@@ -42,7 +43,7 @@
   `coding_rate` int(11) DEFAULT NULL,
   `holiday_rate` int(11) DEFAULT NULL,
   `sunday_rate` int(11) DEFAULT NULL,
-  `coding_day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') CHARACTER SET latin1 DEFAULT NULL,
+  `coding_day` tinyint(1) DEFAULT NULL,
   `resealing_date1` date DEFAULT NULL,
   `resealing_date2` date DEFAULT NULL,
   `franchise_until` date DEFAULT NULL,
@@ -59,8 +60,8 @@
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8</sql_create_table>
 </table>
 <table name="drivers" view="colnames">
-<left>367</left>
-<top>8</top>
+<left>360</left>
+<top>226</top>
 <width>147</width>
 <height>230</height>
 <sql_create_table>CREATE TABLE `drivers` (
@@ -82,6 +83,25 @@
   KEY `unit_idFK` (`unit_idFK`,`status`),
   CONSTRAINT `drivers_ibfk_1` FOREIGN KEY (`unit_idFK`) REFERENCES `units` (`unit_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="drivers_acct" view="colnames">
+<left>116</left>
+<top>12</top>
+<width>112</width>
+<height>158</height>
+<sql_create_table>CREATE TABLE `drivers_acct` (
+  `acct_id` int(11) NOT NULL AUTO_INCREMENT,
+  `trans_idFK` int(11) DEFAULT NULL,
+  `drivers_idFK` int(11) DEFAULT NULL,
+  `in` int(11) DEFAULT NULL,
+  `out` int(11) DEFAULT NULL,
+  `transac_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`acct_id`),
+  KEY `drivers_idFK` (`drivers_idFK`,`trans_idFK`),
+  KEY `trans_idFK` (`trans_idFK`),
+  CONSTRAINT `drivers_acct_ibfk_2` FOREIGN KEY (`trans_idFK`) REFERENCES `pos` (`trans_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `drivers_acct_ibfk_1` FOREIGN KEY (`drivers_idFK`) REFERENCES `drivers` (`driver_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
 </table>
 </tables>
 </canvas>

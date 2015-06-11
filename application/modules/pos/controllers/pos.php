@@ -39,7 +39,7 @@ class Pos extends MY_Framework
 
     public function ajax()
     {
-        debug($this->input->post());exit();
+        // debug($this->input->post());exit();
         if( $this->input->is_ajax_request() )
         {
             switch ($this->input->post('action')) {
@@ -52,7 +52,14 @@ class Pos extends MY_Framework
                     break;
                 
                 case 'u_update':
-                    $return = $this->pos_model->update($this->input->post());
+                    $return = $this->pos_model->create($this->input->post());
+                    // if( $return > 0 )
+                    // {
+                    //     $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> New driver has been created.');
+                    //     $msg = array( 'success' => 1 );
+                    // }
+                    // else
+                    //     $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Ooops!</strong> Driver '.$this->input->post('fname').' '.$this->input->post('lname').' is already exists.' );
                     break;
                 
                 default:
