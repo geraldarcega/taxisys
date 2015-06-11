@@ -10,7 +10,7 @@
     <!-- /.row -->
     <main class="mainContainer">
         <div class="row">
-            <article class="col-xs-9">
+            <article class="col-xs-12">
                 <div class="dash-border Units">
                     <div class="col-xs-4 border-right" id="duty_wrapper">
                         <i class="dashboard-label">On-duty</i>
@@ -73,7 +73,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-body panel-nametag"><?=ucwords($unit->fname.' '.$unit->lname)?></div>
+                            <div class="panel-body panel-nametag"><?=$unit->fname != '' && $unit->lname != '' ? ucwords($unit->fname.' '.$unit->lname) : 'No Driver'?></div>
                         </div>
                         <?php } ?>
                         <?php } ?>

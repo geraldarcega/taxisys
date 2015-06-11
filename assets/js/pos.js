@@ -91,7 +91,7 @@ $('#unitsModal').on('show.bs.modal', function (e) {
 
                 $('#status option[value="1"]').show()
                 $('#status').val(data_type)
-                $('#old_status').val( data.unit_status )
+                $('#old_status').val( data_type )
                 $('#action').val('s_update')
                 break;
             default:
