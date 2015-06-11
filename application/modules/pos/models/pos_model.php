@@ -3,6 +3,7 @@
 class Pos_model extends CI_Model {
   private $table        = 'pos';
   private $units        = 'units';
+  private $drivers      = 'drivers';
   private $logs         = 'units_logs';
   private $drivers_acct = 'drivers_acct';
 
@@ -54,8 +55,13 @@ class Pos_model extends CI_Model {
 
     # Update unit
     $this->db
-         ->where( 'unit_id', $pos_data['unit_idFK'] );
-         ->update( $this->units, $unit_data );
+         ->where( 'unit_id', $pos_data['unit_idFK'] )
+         ->update( $this->units, array( 'status' => $db_data['status'] ) );
+
+    # Update driver
+    $this->db
+         ->where( 'driver_id', $pos_data['driver_idFK'] )
+         ->update( $this->drivers, array( 'status' => 2 ) );
 
     return $this->db->affected_rows();
   }

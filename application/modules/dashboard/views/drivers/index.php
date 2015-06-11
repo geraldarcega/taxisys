@@ -35,7 +35,7 @@
                             <td><?=strtoupper($driver->plate_number)?></td>
                             <td><?=ucwords($driver->fname)?></td>
                             <td><?=ucwords($driver->lname)?></td>
-                            <td><?=!$driver->on_duty ? 'No' : 'Yes' ?></td>
+                            <td><?=driverStatus($driver->status)?></td>
                             <td><a href="#driversModal" data-toggle="modal" data-target="#driversModal" data-id="<?=$driver->driver_id?>" ><i class="fa fa-eye"></i></a></td>
                         </tr>                        
                         <?php } ?>
@@ -137,7 +137,7 @@
                     <div class="form-group">
                         <label for="reg_rate" class="col-xs-4 control-label">On-duty</label>
                         <div class="col-xs-5">
-                            <input class="bs-switch" id="on_duty" name="on_duty" type="checkbox" checked data-size="small" data-on-text="Yes" data-off-text="No">
+                            <input class="bs-switch" id="status" name="status" type="checkbox" checked data-size="small" data-on-text="Yes" data-off-text="No">
                         </div>
                     </div>
                 </form>

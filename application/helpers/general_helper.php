@@ -135,4 +135,22 @@
 		$coding = array( DAY_MON => 'Monday', DAY_TUE => 'Tuesday', DAY_WED => 'Wednesday', DAY_THUR => 'Thursday', DAY_FRI => 'Friday' );
 		return @$coding[ $day ];
 	}
+
+	# Show readable driver status
+	function driverStatus( $stats ) {
+		$on_duty = array( DRIVER_DUTY => 'Yes', DRIVER_OFF => 'No' );
+		return @$on_duty[ $stats ];
+	}
+
+	# get unit wrapper by status
+	function unitStatusWrapper( $stats ) {
+		$status = array( UNIT_DUTY => 'duty_wrapper', UNIT_GARRAGE => 'garrage_wrapper', UNIT_MAINTENANCE => 'maintenance_wrapper' );
+		return @$status[ $stats ];
+	}
+
+	# get unit class by status
+	function unitStatusClass( $stats ) {
+		$status = array( UNIT_DUTY => 'panel-green', UNIT_GARRAGE => 'panel-yellow', UNIT_MAINTENANCE => 'panel-red' );
+		return @$status[ $stats ];
+	}
 ?>

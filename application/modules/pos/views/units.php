@@ -2,18 +2,22 @@
 <div id="page-wrapper">
     <?=@$page_header;?>
     <!-- /.row -->
+    <div id="pos_alert" class="alert alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="msg"></div>
+    </div>
     <?=@$top_nav;?>
     <!-- /.row -->
     <main class="mainContainer">
         <div class="row">
             <article class="col-xs-9">
                 <div class="dash-border Units">
-                    <div class="col-xs-4 border-right">
+                    <div class="col-xs-4 border-right" id="duty_wrapper">
                         <i class="dashboard-label">On-duty</i>
                         <?php if( $units['on_duty']->num_rows() ) { ?>
                         <?php foreach ($units['on_duty']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
-                        <div class="panel panel-green"> 
-                           <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="duty">
+                        <div class="panel panel-green" id="taxi_<?=$unit->unit_id?>">
+                           <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_DUTY?>">
                                 <div class="updateEditbtn">
                                     UPDATE<i class="fa fa-angle-right"></i>
                                 </div><!-- updateEditbtn -->
@@ -30,12 +34,12 @@
                         <?php } ?>
                         <?php } ?>
                     </div>
-                    <div class="col-xs-4 border-right">
+                    <div class="col-xs-4 border-right" id="garrage_wrapper">
                         <i class="dashboard-label">On-garrage</i>
                         <?php if( $units['on_garrage']->num_rows() ) { ?>
                         <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
-                        <div class="panel panel-yellow"> 
-                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="garrage">
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>">
                                 <div class="updateEditbtn">
                                     UPDATE<i class="fa fa-angle-right"></i>
                                 </div><!-- updateEditbtn -->
@@ -52,12 +56,12 @@
                         <?php } ?>
                         <?php } ?>
                     </div>
-                    <div class="col-xs-4 border-right">
+                    <div class="col-xs-4 border-right" id="maintenance_wrapper">
                         <i class="dashboard-label">On-maintenance</i>
                         <?php if( $units['on_maintenance']->num_rows() ) { ?>
                         <?php foreach ($units['on_maintenance']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
-                        <div class="panel panel-red">
-                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="maintenance">
+                        <div class="panel panel-red" id="taxi_<?=$unit->unit_id?>">
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_MAINTENANCE?>">
                                 <div class="updateEditbtn">
                                     UPDATE<i class="fa fa-angle-right"></i>
                                 </div><!-- updateEditbtn -->

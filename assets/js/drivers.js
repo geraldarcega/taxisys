@@ -65,8 +65,7 @@ $('#driversModal').on('show.bs.modal', function (e) {
         $.each( drivers_data[data_id['value']], function( i, v ){
             if( $('#'+i).length )
             {
-                if( i.indexOf('on_duty') > -1 ){
-                    console.log(i, v)
+                if( i.indexOf('status') > -1 ){
                     if( v == "1" )
                         $('#'+i).bootstrapSwitch( 'state', true )
                     else

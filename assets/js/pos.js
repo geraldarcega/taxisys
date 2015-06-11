@@ -1,4 +1,8 @@
 $(document).ready( function(){
+    init()
+
+    $('#pos_alert').hide()
+
     $('#frmModalPOS').validate({
         submitHandler: function(form) {
             if( $('#action').val() == 's_update' )
@@ -26,14 +30,22 @@ $(document).ready( function(){
                         $('#btnModalUnitsave').button('loading')
                     },
                     success: function(data){
-                        if( data.success )
-                            location.reload()
-                        else
-                        {
-                            $('#btnModalUnitsave').button('reset')
-                            $('#failed_msg span').html( data.msg )
-                            $('#failed_msg').show()
-                        }
+                        console.log(data)
+                        $('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
+                        $('#'+data.taxi).hide()
+                                        .appendTo("#"+data.element.div)
+                                        .removeClass(data.element.old_class)
+                                        .addClass(data.element.new_class)
+                                        .fadeIn(1000)
+
+                        $('#unitsModal').modal('hide')
+
+                        $('#pos_alert .msg').html(data.msg.text)
+                        $('#pos_alert').addClass(data.msg.class)
+                                       .show()
+                                       .fadeOut(4000)
+
+                        init()
                     }
                 });
             }
@@ -43,7 +55,7 @@ $(document).ready( function(){
     })
 
     $('#status').on('change', function(){
-        if( $(this).val() == '3' )
+        if( $(this).val() != '1' )
         {
             $('#select_driver').tooltip('hide')
             $('#select_driver').rules('remove', 'required')
@@ -61,12 +73,12 @@ $('#unitsModal').on('show.bs.modal', function (e) {
     var data_type = e.relatedTarget.attributes[5]['value']
     var data      = (typeof pos_json[data_id] !== "undefined") ? pos_json[data_id] : ''
 
-    $('#select_driver').tooltip('hide')
+    init()
     if( data != '' )
     {
         switch( data_type ) {
-            case 'garrage':
-            case 'maintenance':
+            case '2':
+            case '3':
                 $('.onduty-input').hide()
                 $('#select_driver').show()
                 $('#driver').hide()
@@ -78,7 +90,7 @@ $('#unitsModal').on('show.bs.modal', function (e) {
                 }
 
                 $('#status option[value="1"]').show()
-                $('#status').val(data.unit_status)
+                $('#status').val(data_type)
                 $('#old_status').val( data.unit_status )
                 $('#action').val('s_update')
                 break;
@@ -103,3 +115,10 @@ $('#unitsModal').on('show.bs.modal', function (e) {
         $('#boundary').prop('placeholder', data.reg_rate)
     }
 })
+
+function init() {
+    $('#select_driver').tooltip('hide')
+
+    $('#frmModalPOS input[type="text"]').val('')
+    $('#frmModalPOS textarea').val('')
+}
