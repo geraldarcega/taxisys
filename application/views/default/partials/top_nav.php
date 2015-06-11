@@ -1,6 +1,6 @@
 <div class="mainNav">
     <div class="row">
-        <div class="col-lg-9 leftNavi">
+        <div class="col-xs-12 leftNavi">
             <nav class="navbar navbar-default ts-navbar-inner" style="margin-bottom: -1px; line-height: 47px;">
                 <?php if( $nav == 'pos' ) { ?>
                 <ul class="nav navbar-nav">
@@ -38,10 +38,10 @@
                 <?php } ?>
             </nav>
         </div>
-        <div class="col col-xs-3 chatDiv">
+        <!-- <div class="col col-xs-3 chatDiv">
             <ul class="nav navbar-nav navbar-right chat-panel-header">
                 <li><span><i class="fa fa-comments"></i> CHAT</span></li>
             </ul> 
-        </div>
+        </div> -->
     </div><!-- row -->
 </div><!-- mainNav -->

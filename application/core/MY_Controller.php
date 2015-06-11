@@ -25,7 +25,7 @@ class MY_Framework extends MY_Controller {
         $this->_method = $this->router->fetch_method();
     }
 
-    public function load_view( $views = '', $nav = true, $top_nav = true, $chat = true, $theme = 'default' )
+    public function load_view( $views = '', $nav = true, $top_nav = true, $chat = false, $theme = 'default' )
     {
         $_view_folder = $this->_class;
 
