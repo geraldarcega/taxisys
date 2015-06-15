@@ -253,8 +253,14 @@
                         <li>
                             <a <?=@$sub_nav == 'all_units' ? 'class="active"' : '' ?> href="<?=dashboard_url('units');?>"><i class="fa fa-taxi fa-fw"></i> ALL UNITS</a>
                         </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+                <li <?=$nav == 'maintenance' ? 'class="active"' : '' ?>>
+                    <a href="#"><i class="fa fa-wrench fa-fw"></i> MAINTENANCE<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
                         <li>
-                            <a <?=@$sub_nav == 'maintenance' ? 'class="active"' : '' ?> href="flot.html"><i class="fa fa-wrench fa-fw"></i> MAINTENANCE</a>
+                            <a <?=@$sub_nav == 'index' ? 'class="active"' : '' ?> href="<?=dashboard_url('maintenance')?>"><i class="fa fa-tachometer fa-fw"></i> ALL MAINTENANCE</a>
                         </li>
                         <li>
                             <a <?=@$sub_nav == 'parts' ? 'class="active"' : '' ?> href="morris.html"><i class="fa fa-gears fa-fw"></i> PARTS</a>

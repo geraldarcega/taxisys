@@ -3,14 +3,16 @@
     <!-- /.row -->
     <main class="mainContainer">
         <div class="row">
-            <article class="col-xs-9">
+            <article class="col-xs-10">
                 <div id="calendar">
+                
+                </div>
+            </article>
+            <article class="col-xs-2">
+                <div id="calendar-filter">
                 
             	</div>
             </article>
-            <aside class="col-xs-3">
-                <?=@$chat;?>
-            </aside>
         </div>
     </main>
     <!-- /.row -->
