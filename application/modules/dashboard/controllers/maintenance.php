@@ -14,7 +14,25 @@ class Maintenance extends MY_Framework
     public function index( )
     {
         $this->tsdata['nav']        = 'maintenance';
-        $this->tsdata['sub_nav']    = 'index';
+        $this->tsdata['sub_nav']    = 'scheduled';
+        $this->tsdata['maintenance']= array();
+
+        $this->load_view( 'index' );
+    }
+
+    public function items( )
+    {
+        $this->tsdata['nav']        = 'maintenance';
+        $this->tsdata['sub_nav']    = 'items';
+        $this->tsdata['maintenance']= array();
+
+        $this->load_view( 'items' );
+    }
+
+    public function unscheduled( )
+    {
+        $this->tsdata['nav']        = 'maintenance';
+        $this->tsdata['sub_nav']    = 'unscheduled';
         $this->tsdata['boundary']   = array();
 
         $this->load_view( 'index' );

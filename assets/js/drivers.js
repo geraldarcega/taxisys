@@ -5,13 +5,6 @@ $(document).ready(function() {
             ,5: { sorter: false } 
         } 
     });
-    
-    $.get( base_url+"static/drivers/filter.html", function( data ) {
-        $('#filter').popover({
-                                 'html' : true
-                                ,'content' : data
-                            })
-    })
 
     $('#dob').datetimepicker({ 'format': 'MMM DD, YYYY' });
 

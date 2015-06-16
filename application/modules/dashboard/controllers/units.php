@@ -19,7 +19,6 @@ class Units extends MY_Framework
             $sort = array( 'field' => $this->input->get('sort'), 'direction' => $this->input->get('sort_order') );
 
         $this->tsdata['nav']     = 'units';
-        $this->tsdata['sub_nav'] = 'all_units';
 
         # Units data
         $units = $this->units_model->read( $filter, null, null, $sort );

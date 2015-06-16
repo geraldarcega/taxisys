@@ -247,23 +247,20 @@
                 <li>
                     <a <?=$nav == 'drivers' ? 'class="active"' : '' ?> href="<?=dashboard_url('drivers')?>"><i class="fa fa-users fa-fw"></i> DRIVERS</a>
                 </li>
-                <li <?=$nav == 'units' ? 'class="active"' : '' ?>>
-                    <a href="#"><i class="fa fa-list-alt fa-fw"></i> UNITS<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a <?=@$sub_nav == 'all_units' ? 'class="active"' : '' ?> href="<?=dashboard_url('units');?>"><i class="fa fa-taxi fa-fw"></i> ALL UNITS</a>
-                        </li>
-                    </ul>
-                    <!-- /.nav-second-level -->
+                <li >
+                    <a <?=$nav == 'units' ? 'class="active"' : '' ?> href="<?=dashboard_url('units');?>"><i class="fa fa-taxi fa-fw"></i> UNITS</a>
                 </li>
                 <li <?=$nav == 'maintenance' ? 'class="active"' : '' ?>>
                     <a href="#"><i class="fa fa-wrench fa-fw"></i> MAINTENANCE<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a <?=@$sub_nav == 'index' ? 'class="active"' : '' ?> href="<?=dashboard_url('maintenance')?>"><i class="fa fa-tachometer fa-fw"></i> ALL MAINTENANCE</a>
+                            <a <?=@$sub_nav == 'items' ? 'class="active"' : '' ?> href="<?=dashboard_url('maintenance/items')?>"><i class="fa fa-list-alt fa-fw"></i> ITEMS</a>
                         </li>
                         <li>
-                            <a <?=@$sub_nav == 'parts' ? 'class="active"' : '' ?> href="morris.html"><i class="fa fa-gears fa-fw"></i> PARTS</a>
+                            <a <?=@$sub_nav == 'scheduled' ? 'class="active"' : '' ?> href="<?=dashboard_url('maintenance')?>"><i class="fa fa-clock-o fa-fw"></i> SCHEDULED</a>
+                        </li>
+                        <li>
+                            <a <?=@$sub_nav == 'unscheduled' ? 'class="active"' : '' ?> href="<?=dashboard_url('maintenance/unscheduled')?>"><i class="fa fa-fire-extinguisher fa-fw"></i> UNSCHEDULED</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->

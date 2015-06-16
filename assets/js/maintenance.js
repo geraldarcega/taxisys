@@ -1,22 +1,16 @@
 $(document).ready(function() {
     $('[rel="tooltip"]').tooltip()
     
-    $("#tbl_all_units").tablesorter({
+    $("#tbl_all_maintenance").tablesorter({
         headers: { 
              0: { sorter: false }
-            ,4: { sorter: 'shortDate' }
-            ,5: { sorter: 'shortDate' }
-            ,7: { sorter: false } 
+            ,3: { sorter: false }
         } 
     });
 
-    $('#resealing_date1_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
-    $('#resealing_date2_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
-    $('#franchise_until_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
-    $('#renew_by_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
-    $('#year_model_dp').datetimepicker({format: "YYYY",viewMode: "years"});
+    // $('#resealing_date1_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
 
-    $('#frmModalUnits').validate({
+    $('#frmModalMaintenance').validate({
         submitHandler: function(form) {
             var ans = confirm('Continue saving?')
 

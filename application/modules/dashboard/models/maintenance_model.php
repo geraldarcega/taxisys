@@ -2,7 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Maintenance_model extends CI_Model {
-	private $table = 'drivers';
+	private $table = 'maintenance';
+	private $sched = 'maintenance_sched';
 	
 	function __construct(){
 		parent::__construct();

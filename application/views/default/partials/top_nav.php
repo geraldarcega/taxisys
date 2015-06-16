@@ -20,15 +20,23 @@
 
                 <?php if( $nav == 'drivers' ) { ?>
                 <div class="pull-right" style="margin-right:5px;">
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#driversModal"><i class="fa fa-plus"></i> NEW DRIVER</button>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#driversModal"><i class="fa fa-plus-square"></i> NEW DRIVER</button>
                     <button type="button" class="btn btn-default" id="filter" data-container="body" data-toggle="popover" data-placement="bottom"><i class="fa fa-filter"></i> Filter</button>
                 </div>
                 <?php } ?>
 
-                <?php if( $nav == 'boundary' ) { ?>
-                <div class="navbar-left" style="margin-left:10px;color:#fff;">
-                   <span>May 2015</span>
+                <?php if( $nav == 'maintenance' ) { ?>
+                <?php if( $sub_nav == 'scheduled' ) { ?>
+                <div class="pull-right" style="margin-right:5px;">
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#driversModal"><i class="fa fa-plus-square"></i> NEW SCHEDULE</button>
+                    <button type="button" class="btn btn-default" id="filter" data-container="body" data-toggle="popover" data-placement="bottom"><i class="fa fa-filter"></i> Filter</button>
                 </div>
+                <?php } if( $sub_nav == 'items' ) { ?>
+                <div class="pull-right" style="margin-right:5px;">
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#maintenanceModal"><i class="fa fa-plus-square"></i> NEW ITEM</button>
+                    <button type="button" class="btn btn-default" id="filter" data-container="body" data-toggle="popover" data-placement="bottom"><i class="fa fa-filter"></i> Filter</button>
+                </div>
+                <?php } ?>
                 <?php } ?>
 
                 <?php if( $nav == 'administrator' && $sub_nav == 'garrage' ) { ?>

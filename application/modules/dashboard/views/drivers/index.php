@@ -12,7 +12,7 @@
     <!-- /.row -->
     <main class="mainContainer">
         <div class="row">
-            <article class="col-xs-9">
+            <article class="col-xs-12">
                 <!-- <div style="text-align: center;margin-bottom: 16px;">
                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#driversModal">ADD NEW DRIVER</button>
                 </div> -->
@@ -47,9 +47,6 @@
                     </tbody>
                 </table>
             </article>
-            <aside class="col-xs-3">
-                <?=@$chat;?>
-            </aside>
         </div>
     </main>
 </div>
@@ -132,12 +129,6 @@
                         <label for="reg_rate" class="col-xs-4 control-label">Pagibig</label>
                         <div class="col-xs-5">
                             <input type="text" class="form-control driver-field" id="pagibig" name="pagibig">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="reg_rate" class="col-xs-4 control-label">On-duty</label>
-                        <div class="col-xs-5">
-                            <input class="bs-switch" id="status" name="status" type="checkbox" checked data-size="small" data-on-text="Yes" data-off-text="No">
                         </div>
                     </div>
                 </form>
