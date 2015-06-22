@@ -16,7 +16,7 @@
                 <!-- <div style="text-align: center;margin-bottom: 16px;">
                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#garrageModal">ADD NEW garrage</button>
                 </div> -->
-                <table class="table table-hover tablesorter" id="tbl_garrage">
+                <table class="table table-striped tablesorter" id="tbl_garrage">
                     <thead style="border-bottom: 3px solid #BDBDBD;background-color: #fff;">
                         <tr>
                             <th>#</th>

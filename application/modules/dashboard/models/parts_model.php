@@ -1,14 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Maintenance_model extends CI_Model {
-	private $table = 'maintenance';
-	private $details = 'maintenance_details';
+class Parts_model extends CI_Model {
+
+	private $table = 'parts';
+	private $logs  = 'parts_logs';
 	
 	function __construct(){
 		parent::__construct();
 	}
-	
+
 	public function read($filter = array(), $limit = null, $offset = null, $one = false) {
 		if( count($filter) )
 			$this->db->filter( $filter );
@@ -21,11 +22,9 @@ class Maintenance_model extends CI_Model {
 	}
 	
 	public function create( $db_data ) {
-		$db_data['name'] = $db_data['m_type'];
-	
-		unset($db_data['maintenance_id']);
+		$db_data['purchase_date'] = date( 'Y-m-d', strtotime($db_data['purchase_date']) );
+		unset($db_data['parts_id']);
 		unset($db_data['action']);
-		unset($db_data['m_type']);
 
 		if( $this->check_exists( $db_data['name'] ) > 0 )
 			return array( 'exists' => true );
@@ -35,13 +34,15 @@ class Maintenance_model extends CI_Model {
 		return $this->db->insert_id();
 	}
 	
-	public function create_maintenance_details( $unit_id, $db_data ) {
+	public function create_logs( $db_data ) {
+		$db_data['purchase_date'] = date( 'Y-m-d', strtotime($db_data['purchase_date']) );
+		unset($db_data['parts_id']);
 		unset($db_data['action']);
-		unset($db_data['maintenance_id']);
-		unset($db_data['parts']);
-		unset($db_data['parts_count']);
 
-		$this->db->insert( $this->details, $db_data );
+		if( $this->check_exists( $db_data['name'] ) > 0 )
+			return array( 'exists' => true );
+	
+		$this->db->insert( $this->table, $db_data );
 	
 		return $this->db->insert_id();
 	}
@@ -61,23 +62,15 @@ class Maintenance_model extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
-	# check if unit already exist
-	public function check_exists( $type )
+	# check if parts already exist
+	public function check_exists( $name )
 	{
 		return $this->db
-		            ->where( 'name', $type )
+		            ->where( 'name', $name )
 		            ->count_all_results( $this->table );
 	}
 
-	public function get_maintenance( $unit_id, $filter = array() )
-	{
-		if( count($filter) )
-			$this->db->filter( $filter );
-	
-		return $this->db
-					->where( 'unit_idFK', $unit_id )
-					->get( $this->sched );
-	}
 }
 
-/* End of file maintenance_model.php */
+/* End of file parts_model.php */
+/* Location: ./application/modules/dashboard/models/parts_model.php */

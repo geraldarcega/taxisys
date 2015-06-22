@@ -9,7 +9,6 @@ class Administrator extends MY_Framework
     {
         parent::__construct();
         $this->load->model('garrage_model');
-        $this->tsdata['nav']  = 'administrator';
     }
 
     public function garrage( )

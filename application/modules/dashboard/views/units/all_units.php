@@ -14,7 +14,7 @@
         <div class="row">
             <article class="col-xs-12">
                 <!-- <div class="dash-border Units"> -->
-                <table id="tbl_all_units" class="table table-hover tablesorter">
+                <table id="tbl_all_units" class="table table-striped tablesorter">
                     <thead style="background-color:#fff;">
                         <tr>
                             <th>#</th>
@@ -39,7 +39,8 @@
                             <td><?=dateFormat($unit->renew_by, 'M d, Y')?></td>
                             <td><?=unitStatus($unit->unit_status)?></td>
                             <td>
-                                <a href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="View details"><i class="fa fa-eye"></i></a>
+                                <a href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
+                                <a href="<?=dashboard_url('units/maintenance/'.$unit->unit_id)?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a>
                             </td>
                         </tr>
                         <?php } ?>

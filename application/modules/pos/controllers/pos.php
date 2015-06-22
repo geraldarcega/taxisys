@@ -18,7 +18,6 @@ class Pos extends MY_Framework
     {
         $now = date('Y-m-d');
 
-        $this->tsdata['nav']        = 'pos';
         $this->tsdata['sub_nav']    = 'units';
 
         $this->tsdata['units']['on_duty']        = $this->units_model->read( array( 'wh|u.status' => UNIT_DUTY, 'wh|d.status' => DRIVER_DUTY ) );
@@ -32,7 +31,6 @@ class Pos extends MY_Framework
 
     public function drivers( )
     {
-        $this->tsdata['nav']        = 'pos';
         $this->tsdata['sub_nav']    = 'drivers';
         $this->load_view( 'drivers' );
     }
@@ -100,7 +98,11 @@ class Pos extends MY_Framework
             if( $check->num_rows() )
             {
                 $this->session->set_userdata( 'user_info', $check->row() );
-                $msg = array( 'success' => true );
+                
+                $r = $this->session->userdata('r') != '' ? urldecode($this->session->userdata('r')) : base_url('pos');
+                $this->session->unset_userdata('r');
+
+                $msg = array( 'success' => true, 'r' => $r );
             }
             else
                 $msg = array( 'success' => false );

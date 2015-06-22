@@ -8,7 +8,7 @@ $(document).ready(function() {
         } 
     });
 
-    // $('#resealing_date1_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
+    // $('#parts').multiselect({includeSelectAllOption: true});
 
     $('#frmModalMaintenance').validate({
         submitHandler: function(form) {
@@ -22,17 +22,17 @@ $(document).ready(function() {
                     data: $(form).serialize(),
                     dataType: "JSON",
                     beforeSend: function() {
-                        $('#btnModalUnitsave').button('loading')
+                        $('#btnModalMaintenanceSave').button('loading')
                     },
                     success: function(data){
-                        if( data.success )
-                            location.reload()
-                        else
-                        {
-                            $('#btnModalUnitsave').button('reset')
-                            $('#failed_msg span').html( data.msg )
-                            $('#failed_msg').show()
-                        }
+                        // if( data.success )
+                        //     location.reload()
+                        // else
+                        // {
+                        //     $('#btnModalMaintenanceSave').button('reset')
+                        //     $('#failed_msg span').html( data.msg )
+                        //     $('#failed_msg').show()
+                        // }
                     }
                 });
             }
@@ -42,36 +42,77 @@ $(document).ready(function() {
     })
 });
 
-$('#unitsModal').on('show.bs.modal', function (e) {
-    var data_id = e.relatedTarget.attributes[3];
-    
+$('#maintenanceModal').on('show.bs.modal', function (e) {
+    var data_id = e.relatedTarget.attributes[3]['value'];
     $('.unit-field').val('')
-    $('#unitsModalLabel').html('CREATE NEW UNIT')
+    $('#maintenanceModalLabel').html('ADD NEW MAINTENANCE ITEM')
     $('#failed_msg span').html('')
     $('#failed_msg').hide()
     $('#action').val('create')
 
-    if( typeof units_data[data_id['value']] !== "undefined" )
+    if( typeof maintenance_data[data_id] !== "undefined" )
     {
-        $('#unitsModalLabel').html('UPDATE UNIT')
+        $('#maintenanceModalLabel').html('UPDATE MAINTENANCE ITEM')
         $('#action').val('update')
-        $('#unit_id').val(data_id['value'])
-        $.each( units_data[data_id['value']], function( i, v ){
+        $('#maintenance_id').val(data_id)
+
+        $.each( maintenance_data[data_id], function( i, v ){
             if( $('#'+i).length )
-            {
-                if( i.indexOf('date') > -1 )
-                    $('#'+i).val( readableDate(v) )
-                else
-                    $('#'+i).val( v )
-            }
+                $('#'+i).val( v )
 
-            if( i == 'plate_number' )
-            {
-                var plate_number = v.split(' ')
-
-                $('#'+i+'1').val( plate_number[0].toUpperCase() )
-                $('#'+i+'2').val( plate_number[1] )
-            }
+            if( i == 'name' )
+                $('#m_type').val( v )
+                
         })
     }
 })
+
+function add_parts() {
+    var input_id = 'parts_'+$('#parts_wrapper .row').length
+    var parts_select = '';
+    var parts_stock = '';
+
+    if( typeof parts_data === "object" )
+    {
+        $.each( parts_data, function( key, val ) {
+            parts_select += '<option value="'+key+'">'+val.name+'</option>'
+        })
+    }
+    
+    var parts_input = '<div id="'+input_id+'" class="row" style="margin-top: 10px;">\
+                            <div class="col-xs-7">\
+                                <select name="parts[]" class="form-control parts-select" required>\
+                                    <option value="">---</option>\
+                                    '+parts_select+'\
+                                </select>\
+                            </div>\
+                            <div class="col-xs-3">\
+                                <select name="parts_count[]" class="form-control parts-stock-select" required>\
+                                    <option value="">---</option>\
+                                    '+parts_stock+'\
+                                </select>\
+                            </div>\
+                            <div class="col-xs-2">\
+                                <a href="javascript:remove_parts(\''+input_id+'\');" rel="tooltip" data-original-title="Remove"><i class="fa fa-times"></i></a>\
+                            </div>\
+                        </div>';
+    $('#parts_wrapper').append( parts_input )
+
+    $('.parts-select').on( 'change', function(){
+        var max = parts_data[$(this).val()].stock
+        var parent = $(this).parent().parent().prop('id')
+        var parts_select = '<option value="">---</option>'
+
+        for (var i = 1; i <= max; i++) {
+            parts_select += '<option value="'+i+'">'+i+'</option>'
+        };
+        $('#'+parent+' .parts-stock-select').html(parts_select)
+    } )
+}
+
+function remove_parts( input_id ) {
+    var ans = confirm('Remove this parts?')
+    
+    if(ans)
+        $('#'+input_id).remove()
+}

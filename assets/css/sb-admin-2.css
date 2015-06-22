@@ -502,3 +502,7 @@ table.dataTable thead .sorting:after {
 #unitsModal .form-group .control-label {
   padding-right: 0;
 }
+.multiselect-container {
+  height: 200px;
+  overflow-y: auto;
+}

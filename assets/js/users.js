@@ -11,7 +11,7 @@ function login()
         },
         success: function(data){
             if( data.success )
-                window.location = base_url+"pos"
+                window.location = data.r
             else
             {
                 $('.login-panel .alert').show()

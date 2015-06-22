@@ -17,7 +17,7 @@
                         <?php if( $units['on_duty']->num_rows() ) { ?>
                         <?php foreach ($units['on_duty']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
                         <div class="panel panel-green" id="taxi_<?=$unit->unit_id?>">
-                           <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_DUTY?>">
+                           <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_DUTY?>" data-backdrop="static">
                                 <div class="updateEditbtn">
                                     UPDATE<i class="fa fa-angle-right"></i>
                                 </div><!-- updateEditbtn -->
@@ -39,7 +39,7 @@
                         <?php if( $units['on_garrage']->num_rows() ) { ?>
                         <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
                         <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
-                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>">
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
                                 <div class="updateEditbtn">
                                     UPDATE<i class="fa fa-angle-right"></i>
                                 </div><!-- updateEditbtn -->
@@ -61,7 +61,7 @@
                         <?php if( $units['on_maintenance']->num_rows() ) { ?>
                         <?php foreach ($units['on_maintenance']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
                         <div class="panel panel-red" id="taxi_<?=$unit->unit_id?>">
-                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_MAINTENANCE?>">
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_MAINTENANCE?>" data-backdrop="static">
                                 <div class="updateEditbtn">
                                     UPDATE<i class="fa fa-angle-right"></i>
                                 </div><!-- updateEditbtn -->

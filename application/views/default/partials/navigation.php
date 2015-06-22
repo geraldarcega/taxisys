@@ -239,34 +239,22 @@
                     <!-- /input-group -->
                 </li>
                 <li>
-                    <a <?=$nav == 'pos' ? 'class="active"' : '' ?> href="<?=pos_url()?>"><i class="fa fa-calculator fa-fw"></i> POS</a>
+                    <a <?=$this->_class == 'pos' ? 'class="active"' : '' ?> href="<?=pos_url()?>"><i class="fa fa-calculator fa-fw"></i> POS</a>
                 </li>
                 <li>
-                    <a <?=$nav == 'calendar' ? 'class="active"' : '' ?> href="<?=dashboard_url('calendar')?>"><i class="fa fa-calendar fa-fw"></i> CALENDAR</a>
+                    <a <?=$this->_class == 'calendar' ? 'class="active"' : '' ?> href="<?=dashboard_url('calendar')?>"><i class="fa fa-calendar fa-fw"></i> CALENDAR</a>
                 </li>
                 <li>
-                    <a <?=$nav == 'drivers' ? 'class="active"' : '' ?> href="<?=dashboard_url('drivers')?>"><i class="fa fa-users fa-fw"></i> DRIVERS</a>
+                    <a <?=$this->_class == 'drivers' ? 'class="active"' : '' ?> href="<?=dashboard_url('drivers')?>"><i class="fa fa-users fa-fw"></i> DRIVERS</a>
                 </li>
                 <li >
-                    <a <?=$nav == 'units' ? 'class="active"' : '' ?> href="<?=dashboard_url('units');?>"><i class="fa fa-taxi fa-fw"></i> UNITS</a>
-                </li>
-                <li <?=$nav == 'maintenance' ? 'class="active"' : '' ?>>
-                    <a href="#"><i class="fa fa-wrench fa-fw"></i> MAINTENANCE<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a <?=@$sub_nav == 'items' ? 'class="active"' : '' ?> href="<?=dashboard_url('maintenance/items')?>"><i class="fa fa-list-alt fa-fw"></i> ITEMS</a>
-                        </li>
-                        <li>
-                            <a <?=@$sub_nav == 'scheduled' ? 'class="active"' : '' ?> href="<?=dashboard_url('maintenance')?>"><i class="fa fa-clock-o fa-fw"></i> SCHEDULED</a>
-                        </li>
-                        <li>
-                            <a <?=@$sub_nav == 'unscheduled' ? 'class="active"' : '' ?> href="<?=dashboard_url('maintenance/unscheduled')?>"><i class="fa fa-fire-extinguisher fa-fw"></i> UNSCHEDULED</a>
-                        </li>
-                    </ul>
-                    <!-- /.nav-second-level -->
+                    <a <?=$this->_class == 'units' ? 'class="active"' : '' ?> href="<?=dashboard_url('units');?>"><i class="fa fa-taxi fa-fw"></i> UNITS</a>
                 </li>
                 <li>
-                    <a href="tables.html"><i class="fa fa-cube fa-fw"></i> SPARE PARTS</span></a>
+                    <a <?=$this->_class == 'maintenance' ? 'class="active"' : '' ?> href="<?=dashboard_url('maintenance')?>"><i class="fa fa-wrench fa-fw"></i> MAINTENANCE</a>
+                </li>
+                <li>
+                    <a <?=$this->_class == 'parts' ? 'class="active"' : '' ?> href="<?=dashboard_url('parts');?>"><i class="fa fa-gears fa-fw"></i> PARTS</a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-line-chart fa-fw"></i> REPORTS<span class="fa arrow"></a>
@@ -278,7 +266,7 @@
                     <!-- /.nav-second-level -->
                 </li>
                 <?php if( $user_data->lvl == "1" ){ ?>
-                <li <?=$nav == 'administrator' ? 'class="active"' : '' ?>>
+                <li <?=$this->_class == 'administrator' ? 'class="active"' : '' ?>>
                     <a href="#"><i class="fa fa-gear fa-fw"></i> ADMINISTRATOR<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>

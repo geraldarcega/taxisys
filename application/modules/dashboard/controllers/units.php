@@ -9,6 +9,7 @@ class Units extends MY_Framework
     {
         parent::__construct();
         $this->load->model('units_model');
+        $this->load->model('maintenance_model');
     }
 
     public function index( )
@@ -18,14 +19,31 @@ class Units extends MY_Framework
         if($this->input->get('sort'))
             $sort = array( 'field' => $this->input->get('sort'), 'direction' => $this->input->get('sort_order') );
 
-        $this->tsdata['nav']     = 'units';
-
         # Units data
         $units = $this->units_model->read( $filter, null, null, $sort );
 
         $this->tsdata['units'] = $units;
 
         $this->load_view( 'all_units' );
+    }
+
+    public function maintenance( )
+    {
+        $unit_id = $this->uri->segment(4);
+        if( $unit_id == '' || !is_numeric($unit_id) )
+            redirect( dashboard_url('units') );
+
+        # Unit data
+        $unit = $this->units_model->read( array( 'wh|unit_id' => $unit_id ) );
+        if( !$unit->num_rows() )
+            redirect( dashboard_url('units') );
+
+        $this->tsdata['unit']    = $unit->row();
+        $this->tsdata['sub_nav'] = 'maintenance ('.strtoupper($this->tsdata['unit']->plate_number).')';
+
+        $this->tsdata['maintenance'] = $this->maintenance_model->read();
+
+        $this->load_view( 'maintenance' );
     }
 
     public function ajax()
