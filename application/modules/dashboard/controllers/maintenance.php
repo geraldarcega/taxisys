@@ -42,17 +42,18 @@ class Maintenance extends MY_Framework
         {
             switch ( $this->input->post( 'action' ) ) {
                 case 'create':
+                    $parts = $this->input->post('parts');
+                    $parts_count = $this->input->post('parts_count');
+                    $parts_serialize = array();
+                    if( is_array($parts) )
+                    {
+                        for ($i=0; $i < count($parts); $i++)
+                            $parts_serialize[ $parts[$i] ] = $parts_count[$i];
+                    }
+                    debug( $parts_serialize, $this->input->post() );exit();
                     $new = $this->maintenance_model->create( $this->input->post() );
                     if( !isset( $new['exists'] ) )
                     {
-                        $parts = $this->input->post('parts');
-                        $parts_count = $this->input->post('parts_count');
-                        if( is_array($parts) )
-                        {
-                            for ($i=0; $i < count($parts); $i++) { 
-                                
-                            }
-                        }
                         $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> New mainetenance has been created.');
                         $msg = array( 'success' => 1 );
                     }

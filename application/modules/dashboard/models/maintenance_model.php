@@ -35,7 +35,7 @@ class Maintenance_model extends CI_Model {
 		return $this->db->insert_id();
 	}
 	
-	public function create_maintenance_details( $unit_id, $db_data ) {
+	public function create_maintenance_details( $unit_id, $db_data, $parts = array() ) {
 		unset($db_data['action']);
 		unset($db_data['maintenance_id']);
 		unset($db_data['parts']);

@@ -1,0 +1,1 @@
+ALTER TABLE `taxisys`.`maintenance_details` ADD COLUMN `parts_serialize` TEXT NULL AFTER `schedule_time`;
