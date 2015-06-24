@@ -25,14 +25,14 @@ $(document).ready(function() {
                         $('#btnModalMaintenanceSave').button('loading')
                     },
                     success: function(data){
-                        // if( data.success )
-                        //     location.reload()
-                        // else
-                        // {
-                        //     $('#btnModalMaintenanceSave').button('reset')
-                        //     $('#failed_msg span').html( data.msg )
-                        //     $('#failed_msg').show()
-                        // }
+                        if( data.success )
+                            location.reload()
+                        else
+                        {
+                            $('#btnModalMaintenanceSave').button('reset')
+                            $('#failed_msg span').html( data.msg )
+                            $('#failed_msg').show()
+                        }
                     }
                 });
             }
@@ -62,12 +62,29 @@ $('#maintenanceModal').on('show.bs.modal', function (e) {
 
             if( i == 'name' )
                 $('#m_type').val( v )
-                
+
+            if( i == 'parts_idFK' )
+            {
+                $.ajax({
+                    type: 'POST',
+                    url: base_url+'dashboard/maintenance/ajax',
+                    data: { 'action' : 'get_parts', 'parts_id' : v },
+                    dataType: "JSON",
+                    success: function(data){
+                        if( data.success )
+                        {
+                            $.each( data.result, function( key, val ) {
+                                add_parts( val.parts_id, maintenance_data[data_id].count )
+                            })
+                        }
+                    }
+                });
+            }
         })
     }
 })
 
-function add_parts() {
+function add_parts( parts, count ) {
     var input_id = 'parts_'+$('#parts_wrapper .row').length
     var parts_select = '';
     var parts_stock = '';
@@ -108,6 +125,13 @@ function add_parts() {
         };
         $('#'+parent+' .parts-stock-select').html(parts_select)
     } )
+
+    if( parts != '' && count != '' )
+    {
+        $('#'+input_id+' .parts-select').val(parts)
+        $('.parts-select').change()
+        $('#'+input_id+' .parts-stock-select').val(count)
+    }
 }
 
 function remove_parts( input_id ) {

@@ -25,7 +25,7 @@
 				$ci->session->set_userdata('r', urlencode($ci->agent->referrer()));
 
 			if( uri_string() != 'pos/login' )
-        		redirect( pos_url('login'.@$append_url) );
+        		redirect( pos_url('login') );
 		}
 	}
 

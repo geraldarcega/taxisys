@@ -42,18 +42,17 @@ class Maintenance extends MY_Framework
         {
             switch ( $this->input->post( 'action' ) ) {
                 case 'create':
-                    $parts = $this->input->post('parts');
-                    $parts_count = $this->input->post('parts_count');
-                    $parts_serialize = array();
-                    if( is_array($parts) )
-                    {
-                        for ($i=0; $i < count($parts); $i++)
-                            $parts_serialize[ $parts[$i] ] = $parts_count[$i];
-                    }
-                    debug( $parts_serialize, $this->input->post() );exit();
                     $new = $this->maintenance_model->create( $this->input->post() );
                     if( !isset( $new['exists'] ) )
                     {
+                        $parts = $this->input->post('parts');
+                        $parts_count = $this->input->post('parts_count');
+                        if( count($parts) > 0 && count($parts_count) > 0 )
+                        {
+                            for ($i=0; $i < count($parts); $i++)
+                                $this->maintenance_model->assign_parts( $new, $parts[$i], $parts_count[$i] );
+                        }
+
                         $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> New mainetenance has been created.');
                         $msg = array( 'success' => 1 );
                     }
@@ -78,6 +77,17 @@ class Maintenance extends MY_Framework
                     }
 
                     echo json_encode( $msg );
+                    break;
+                
+                
+                case 'get_parts':
+                    $parts = $this->parts_model->read( array( 'wh|parts_id' => $this->input->post('parts_id') ) );
+                    if( $parts->num_rows() > 0 )                        
+                        $result = array( 'success' => 1, 'result' => $parts->result());
+                    else
+                        $result = array( 'success' => 0 );
+
+                    echo json_encode( $result );
                     break;
                 
                 default:

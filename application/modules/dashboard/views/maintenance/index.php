@@ -84,7 +84,7 @@
                     <div class="form-group">
                         <label for="price" class="col-xs-3 control-label">Parts</label>
                         <div class="col-xs-9">
-                            <button type="button" class="btn btn-success" onclick="add_parts()"><i class="fa fa-plus"></i> Add parts</button>
+                            <button type="button" class="btn btn-success" onclick="add_parts('','')"><i class="fa fa-plus"></i> Add parts</button>
                             <div id="parts_wrapper">
                                 
                             </div>
