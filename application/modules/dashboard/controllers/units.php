@@ -41,8 +41,15 @@ class Units extends MY_Framework
         $this->tsdata['unit']    = $unit->row();
         $this->tsdata['sub_nav'] = 'maintenance ('.strtoupper($this->tsdata['unit']->plate_number).')';
 
-        $this->tsdata['maintenance'] = $this->maintenance_model->read();
-
+        $maintenance = $this->maintenance_model->read();
+        if( $maintenance->num_rows() > 0 )
+        {
+            $_maintenance = array();
+            foreach ($maintenance->result() as $m) {
+                $_maintenance[ $m->maintenance_id ] = $m;
+            }
+            $this->tsdata['maintenance'] = json_encode($_maintenance);
+        }
         $this->load_view( 'maintenance' );
     }
 
@@ -50,7 +57,8 @@ class Units extends MY_Framework
     {
         if( $this->input->is_ajax_request() )
         {
-            switch ( $this->input->post( 'action' ) ) {
+            $action = $this->input->post( 'action' ) != '' ? $this->input->post( 'action' ) : $this->input->get( 'action' );
+            switch ( $action ) {
                 case 'create':
                     $new = $this->units_model->create( $this->input->post() );
                     if( !is_array($new) )
@@ -79,6 +87,27 @@ class Units extends MY_Framework
                         $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Failed!</strong> Please contact the administrator immediately' );
 
                     echo json_encode( $msg );
+                    break;
+                
+                case 'get_parts':
+                    $parts = $this->maintenance_model->get_maintenance_parts( array( 'wh|maintenance_idFK' => $this->input->get('maintenance_id') ) );
+                    if( $parts->num_rows() > 0 )
+                        $result = array( 'success' => 1, 'result' => $parts->result());
+                    else
+                        $result = array( 'success' => 0 );
+
+                    echo json_encode( $result );
+                    break;
+                
+                
+                case 'create_maintenance':
+                    $parts = $this->maintenance_model->get_maintenance_parts( array( 'wh|maintenance_idFK' => $this->input->get('maintenance_id') ) );
+                    if( $parts->num_rows() > 0 )
+                        $result = array( 'success' => 1, 'result' => $parts->result());
+                    else
+                        $result = array( 'success' => 0 );
+
+                    echo json_encode( $result );
                     break;
                 
                 default:

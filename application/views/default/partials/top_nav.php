@@ -11,6 +11,10 @@
 
                 <?php if( $this->_class == 'units' ) { ?>
                 <?php if( $this->_method == 'maintenance' ) { ?>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="<?=pos_url()?>">UNITS</a></li>
+                    <li <?=@$sub_nav=='drivers' ? 'class="active"' : '';?>><a href="<?=pos_url('drivers')?>">DRIVERS</a></li>
+                </ul>
                 <div class="navbar-right" style="margin-right:10px;">
                     <button type="button" class="btn btn-default navbar-btn ts-navbar-btn" data-toggle="modal" data-target="#maintenanceModal" data-backdrop="static"><i class="fa fa-plus-square"></i> Add maintenance</button>
                 </div>

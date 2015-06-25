@@ -73,6 +73,7 @@ $('#maintenanceModal').on('show.bs.modal', function (e) {
                     success: function(data){
                         if( data.success )
                         {
+                            $('#parts_wrapper').html('')
                             $.each( data.result, function( key, val ) {
                                 add_parts( val.parts_id, maintenance_data[data_id].count )
                             })

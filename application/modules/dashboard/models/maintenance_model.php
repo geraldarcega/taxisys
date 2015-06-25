@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Maintenance_model extends CI_Model {
 	private $table = 'maintenance';
-	private $parts = 'maintenance_parts';
+	private $mparts = 'maintenance_parts';
+	private $parts = 'parts';
 	
 	function __construct(){
 		parent::__construct();
@@ -17,8 +18,8 @@ class Maintenance_model extends CI_Model {
 			$this->db->limit( $limit, $offset );
 	
 		return $this->db
-					->select( $this->table.'.*, '.$this->parts.'.parts_idFK, '.$this->parts.'.count' )
-					->join( $this->parts, $this->parts.'.maintenance_idFK = '.$this->table.'.maintenance_id', 'left' )
+					->select( $this->table.'.*, '.$this->mparts.'.parts_idFK, '.$this->mparts.'.count' )
+					->join( $this->mparts, $this->mparts.'.maintenance_idFK = '.$this->table.'.maintenance_id', 'left' )
 					->get( $this->table );
 	}
 	
@@ -40,7 +41,7 @@ class Maintenance_model extends CI_Model {
 	}
 	
 	public function assign_parts( $maintenance_id, $parts_id, $cnt ) {
-		$this->db->insert( $this->parts, array( 'maintenance_idFK' => $maintenance_id, 'parts_idFK' => $parts_id, 'count' => $cnt ) );
+		$this->db->insert( $this->mparts, array( 'maintenance_idFK' => $maintenance_id, 'parts_idFK' => $parts_id, 'count' => $cnt ) );
 	
 		return $this->db->insert_id();
 	}
@@ -68,14 +69,14 @@ class Maintenance_model extends CI_Model {
 		            ->count_all_results( $this->table );
 	}
 
-	public function get_maintenance( $unit_id, $filter = array() )
+	public function get_maintenance_parts( $filter = array() )
 	{
 		if( count($filter) )
 			$this->db->filter( $filter );
 	
 		return $this->db
-					->where( 'unit_idFK', $unit_id )
-					->get( $this->sched );
+					->join( $this->parts, $this->parts.'.parts_id = '.$this->mparts.'.parts_idFK', 'left' )
+					->get( $this->mparts );
 	}
 }
 

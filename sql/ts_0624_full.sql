@@ -160,7 +160,7 @@ CREATE TABLE `parts` (
 
 /*Data for the table `parts` */
 
-insert  into `parts`(`parts_id`,`name`,`purchase_date`,`supplier`,`price`,`stock`,`date_created`,`date_deleted`) values (1,'Spark plug','2015-06-19','Mang Jose shop',250.20,10,'2015-06-22 02:40:05','0000-00-00 00:00:00'),(2,'sdgd','2015-06-18','sdfsdsf',1234.00,12,'2015-06-22 02:36:34','0000-00-00 00:00:00');
+insert  into `parts`(`parts_id`,`name`,`purchase_date`,`supplier`,`price`,`stock`,`date_created`,`date_deleted`) values (1,'Spark plug','2015-06-19','Mang Jose shop',250.20,10,'2015-06-22 02:40:05','0000-00-00 00:00:00'),(2,'Oils','2015-06-18','sdfsdsf',1234.00,12,'2015-06-25 12:54:44','0000-00-00 00:00:00');
 
 /*Table structure for table `parts_logs` */
 
@@ -259,6 +259,41 @@ CREATE TABLE `units_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `units_logs` */
+
+/*Table structure for table `units_maintenance` */
+
+DROP TABLE IF EXISTS `units_maintenance`;
+
+CREATE TABLE `units_maintenance` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `unit_idFK` int(11) DEFAULT NULL,
+  `maintenance_idFK` int(11) DEFAULT NULL,
+  `odometer` int(6) DEFAULT NULL,
+  `date_updated` datetime DEFAULT NULL,
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `maintenance_idFK` (`maintenance_idFK`),
+  KEY `unit_idFK` (`unit_idFK`),
+  KEY `odometer` (`odometer`),
+  KEY `date_updated` (`date_updated`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `units_maintenance` */
+
+/*Table structure for table `units_maintenance_hst` */
+
+DROP TABLE IF EXISTS `units_maintenance_hst`;
+
+CREATE TABLE `units_maintenance_hst` (
+  `unit_maintenance_idFK` int(11) DEFAULT NULL,
+  `odometer` int(6) DEFAULT NULL,
+  `date_process` datetime DEFAULT NULL,
+  KEY `unit_maintenance_idFK` (`unit_maintenance_idFK`),
+  KEY `odometer` (`odometer`),
+  KEY `date_process` (`date_process`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `units_maintenance_hst` */
 
 /*Table structure for table `users` */
 

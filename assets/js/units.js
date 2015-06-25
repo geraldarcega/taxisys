@@ -16,36 +16,83 @@ $(document).ready(function() {
     $('#renew_by_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
     $('#year_model_dp').datetimepicker({format: "YYYY",viewMode: "years"});
 
-    $('#frmModalUnits').validate({
-        submitHandler: function(form) {
-            var ans = confirm('Continue saving?')
+    if( $('#frmModalUnits').length )
+    {
+        $('#frmModalUnits').validate({
+            submitHandler: function(form) {
+                var ans = confirm('Continue saving?')
 
-            if( ans )
-            {
-                $.ajax({
-                    type: $(form).attr("method"),
-                    url: $(form).attr("action"),
-                    data: $(form).serialize(),
-                    dataType: "JSON",
-                    beforeSend: function() {
-                        $('#btnModalUnitsave').button('loading')
-                    },
-                    success: function(data){
-                        if( data.success )
-                            location.reload()
-                        else
-                        {
-                            $('#btnModalUnitsave').button('reset')
-                            $('#failed_msg span').html( data.msg )
-                            $('#failed_msg').show()
+                if( ans )
+                {
+                    $.ajax({
+                        type: $(form).attr("method"),
+                        url: $(form).attr("action"),
+                        data: $(form).serialize(),
+                        dataType: "JSON",
+                        beforeSend: function() {
+                            $('#btnModalUnitsave').button('loading')
+                        },
+                        success: function(data){
+                            if( data.success )
+                                location.reload()
+                            else
+                            {
+                                $('#btnModalUnitsave').button('reset')
+                                $('#failed_msg span').html( data.msg )
+                                $('#failed_msg').show()
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
 
-            return false
-        }
-    })
+                return false
+            }
+        })
+    }
+    
+    if( $('#frmModalMaintenance').length )
+    {
+        $('#frmModalMaintenance').validate({
+            submitHandler: function(form) {
+                var ans = confirm('Continue saving?')
+
+                if( ans )
+                {
+                    $.ajax({
+                        type: $(form).attr("method"),
+                        url: $(form).attr("action"),
+                        data: $(form).serialize(),
+                        dataType: "JSON",
+                        beforeSend: function() {
+                            $('#btnModalUnitsave').button('loading')
+                        },
+                        success: function(data){
+                            if( data.success )
+                                location.reload()
+                            else
+                            {
+                                $('#btnModalUnitsave').button('reset')
+                                $('#failed_msg span').html( data.msg )
+                                $('#failed_msg').show()
+                            }
+                        }
+                    });
+                }
+
+                return false
+            }
+        })
+    }
+
+    if( !$.isEmptyObject(maintenance_data) )
+    {
+        var options = '<option value=""> --- </option>'
+        $.each( maintenance_data, function( i, v ){
+            options += '<option value="'+i+'">'+v.name+'</option>'
+        } )
+        $('#maintenance').html(options)
+    }
+    $('#parts_included').hide()
 });
 
 $('#unitsModal').on('show.bs.modal', function (e) {
@@ -81,3 +128,29 @@ $('#unitsModal').on('show.bs.modal', function (e) {
         })
     }
 })
+
+$('#maintenance').on( 'change', function(){
+    $('#tbl_maintenance_parts tbody').html('')
+    if( $(this).val() != '' )
+    {
+        $.getJSON( base_url+'dashboard/units/ajax', { action: "get_parts", maintenance_id: $(this).val() } )
+        .done(function( data ) {
+            if( data.success )
+            {
+                if( !$.isEmptyObject(data.result) )
+                {
+                    var details = ''
+                    $.each( data.result, function( i, v ){
+                        details += '<tr><td>'+v.name+'</td><td>'+v.count+'</td></tr>'
+                    } )
+                    $('#tbl_maintenance_parts tbody').html(details)
+                    $('#parts_included').slideDown("fast")
+                }
+            }
+        });
+    }
+    else
+    {
+        $('#parts_included').slideUp("fast")
+    }
+} )

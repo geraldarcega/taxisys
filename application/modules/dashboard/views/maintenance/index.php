@@ -30,7 +30,7 @@
                             <td><?=ucwords($_m->name)?></td>
                             <td><?=$_m->interval?></td>
                             <td>
-                                <a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?=$_m->maintenance_id?>" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
+                                <a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?=$_m->maintenance_id?>" data-backdrop="static" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
                                 <a href="#" data-id="<?=$_m->maintenance_id?>" rel="tooltip" data-original-title="Remove"><i class="fa fa-times"></i></a>
                             </td>
                         </tr>

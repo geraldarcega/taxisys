@@ -18,7 +18,7 @@
                         <tr>
                             <th>#</th>
                             <th>Maintenance</th>
-                            <th>Interval</th>
+                            <th>Current</th>
                             <th>Prev Date</th>
                             <th>Prev Odometer</th>
                             <th>Next Date</th>
@@ -50,14 +50,8 @@
                     <span></span>
                 </div>
                 <form class="form-horizontal" id="frmModalMaintenance" method="post" action="<?=dashboard_url('maintenance/ajax')?>">
-                    <input type="hidden" name="action" id="action" value="create">
+                    <input type="hidden" name="action" id="action" value="create_maintenance">
                     <input type="hidden" name="maintenance_id" id="maintenance_id" value="">
-                    <div class="form-group">
-                         <label for="reg_rate" class="col-xs-3 control-label">Scheduled</label>
-                         <div class="col-xs-5">
-                            <input class="bs-switch" id="scheduled" name="scheduled" type="checkbox" checked data-size="small" data-on-text="Yes" data-off-text="No">
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label for="maintenance" class="col-xs-3 control-label">Maintenance</label>
                         <div class="col-xs-9">
@@ -73,9 +67,25 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="plate_number" class="col-xs-3 control-label">Interval</label>
+                        <label for="plate_number" class="col-xs-3 control-label">Current</label>
                         <div class="col-xs-9">
-                            <input type="number" class="form-control unit-field" id="interval" name="interval" placeholder="10000">
+                            <input type="number" class="form-control unit-field" id="current" name="current" placeholder="10000">
+                        </div>
+                    </div>
+                    <div class="form-group" id="parts_included">
+                        <div class="col-xs-12">
+                            <h4 class="text-center">PARTS INCLUDED</h4>
+                            <table id="tbl_maintenance_parts" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </form>
@@ -88,5 +98,5 @@
     </div>
 </div>
 <script type="text/javascript">
-    // var maintenance_data = <?php //echo $maintenance->num_rows() ? json_encode( $json_maintenance ) : '[]'; ?>;
+    var maintenance_data = <?php echo isset($maintenance) ? $maintenance : '[]'; ?>;
 </script>
