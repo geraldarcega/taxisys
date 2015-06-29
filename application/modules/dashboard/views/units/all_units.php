@@ -40,7 +40,7 @@
                             <td><?=unitStatus($unit->unit_status)?></td>
                             <td>
                                 <a href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
-                                <a href="<?=dashboard_url('units/maintenance/'.$unit->unit_id)?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a>
+                                <a href="<?=dashboard_url('units/maintenance/scheduled/'.$unit->unit_id)?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a>
                             </td>
                         </tr>
                         <?php } ?>
