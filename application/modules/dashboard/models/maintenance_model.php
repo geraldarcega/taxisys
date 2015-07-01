@@ -5,6 +5,7 @@ class Maintenance_model extends CI_Model {
 	private $table = 'maintenance';
 	private $mparts = 'maintenance_parts';
 	private $parts = 'parts';
+	private $units = 'units_maintenance';
 	
 	function __construct(){
 		parent::__construct();
@@ -77,6 +78,25 @@ class Maintenance_model extends CI_Model {
 		return $this->db
 					->join( $this->parts, $this->parts.'.parts_id = '.$this->mparts.'.parts_idFK', 'left' )
 					->get( $this->mparts );
+	}
+
+	public function add_unit_maintenance( $db_data )
+	{
+		$db_data['unit_idFK'] = $db_data['unit_id'];
+		$db_data['maintenance_idFK'] = $db_data['maintenance'];
+		$db_data['odometer'] = $db_data['current'];
+		$db_data['schedule'] = dateFormat($db_data['schedule']);
+	
+		unset($db_data['unit_maintenance_id']);
+		unset($db_data['unit_id']);
+		unset($db_data['action']);
+		unset($db_data['uns_maintenance']);
+		unset($db_data['current']);
+		unset($db_data['maintenance']);
+	
+		$this->db->insert( $this->units, $db_data );
+	
+		return $this->db->insert_id();
 	}
 }
 

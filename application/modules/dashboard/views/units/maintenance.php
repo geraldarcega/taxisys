@@ -49,9 +49,10 @@
                 <div id="failed_msg" class="alert alert-danger" role="alert" style="display:none;">
                     <span></span>
                 </div>
-                <form class="form-horizontal" id="frmModalMaintenance" method="post" action="<?=dashboard_url('maintenance/ajax')?>">
+                <form class="form-horizontal" id="frmModalMaintenance" method="post" action="<?=dashboard_url('units/ajax')?>">
                     <input type="hidden" name="action" id="action" value="create_maintenance">
-                    <input type="hidden" name="maintenance_id" id="maintenance_id" value="">
+                    <input type="hidden" name="unit_maintenance_id" id="unit_maintenance_id" value="">
+                    <input type="hidden" name="unit_id" id="unit_id" value="<?=$this->uri->segment('5')?>">
                     <div class="form-group">
                         <label for="maintenance" class="col-xs-3 control-label">Maintenance</label>
                         <div class="col-xs-9">
@@ -70,6 +71,17 @@
                         <label for="plate_number" class="col-xs-3 control-label">Current</label>
                         <div class="col-xs-9">
                             <input type="number" class="form-control unit-field" id="current" name="current" placeholder="10000">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg_rate" class="col-xs-3 control-label">Date</label>
+                        <div class="col-xs-5">
+                            <div class="input-group date" id="schedule_dp">
+                                <input type='text' class="form-control unit-field" id="schedule" name="schedule" required/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group" id="parts_included">

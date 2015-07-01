@@ -100,13 +100,16 @@ class Units extends MY_Framework
                 
                 
                 case 'create_maintenance':
-                    $parts = $this->maintenance_model->get_maintenance_parts( array( 'wh|maintenance_idFK' => $this->input->get('maintenance_id') ) );
-                    if( $parts->num_rows() > 0 )
-                        $result = array( 'success' => 1, 'result' => $parts->result());
+                    $update = $this->maintenance_model->add_unit_maintenance( $this->input->post() );
+                    if( $update )
+                    {
+                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> Maintenance has been added.');
+                        $msg = array( 'success' => 1 );
+                    }
                     else
-                        $result = array( 'success' => 0 );
+                        $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Failed!</strong> Please contact the administrator immediately' );
 
-                    echo json_encode( $result );
+                    echo json_encode( $msg );
                     break;
                 
                 default:

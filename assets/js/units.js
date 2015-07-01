@@ -10,6 +10,7 @@ $(document).ready(function() {
         } 
     });
 
+    $('#schedule_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
     $('#resealing_date1_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
     $('#resealing_date2_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
     $('#franchise_until_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
