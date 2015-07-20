@@ -20,7 +20,7 @@ class Pos_model extends CI_Model {
     
     return $this->db
                 ->select( $fields )
-                ->join( 'drivers d', 'd.unit_idFK = u.unit_id', 'left' )
+                ->join( 'drivers d', 'd.unit_id = u.id', 'left' )
                 ->get( $this->table.' u' );
   }
 
@@ -34,7 +34,7 @@ class Pos_model extends CI_Model {
     if( $db_data['coding_day'] == $day )
       $pos_data['day_type'] = BTYPE_CODING;
 
-    $pos_data['unit_idFK']   = $db_data['unit_id'];
+    $pos_data['unit_id']   = $db_data['unit_id'];
     $pos_data['boundary']    = $db_data['boundary'];
     $pos_data['remarks']     = $db_data['remarks'];
     if( $db_data['short'] > 0 )
@@ -55,7 +55,7 @@ class Pos_model extends CI_Model {
 
     # Update unit
     $this->db
-         ->where( 'unit_id', $pos_data['unit_idFK'] )
+         ->where( 'unit_id', $pos_data['unit_id'] )
          ->update( $this->units, array( 'status' => $db_data['status'] ) );
 
     # Update driver
@@ -79,7 +79,7 @@ class Pos_model extends CI_Model {
     unset($db_data['old_status']);
     debug($db_data);exit();
     $this->db
-         ->where( 'unit_idFK', $unit_id )
+         ->where( 'unit_id', $unit_id )
          ->update( $this->table, $db_data );
 
     return $this->db->affected_rows();
@@ -103,7 +103,7 @@ class Pos_model extends CI_Model {
   public function check_duty( $unit_id )
   {
     return $this->db
-                ->where( 'unit_idFK', $unit_id )
+                ->where( 'unit_id', $unit_id )
                 ->count_all_results( $this->table );
   }
 
@@ -113,13 +113,13 @@ class Pos_model extends CI_Model {
     # check if driver ID and unit ID still the same
     $check = $this->db
                   ->where( 'driver_idFK', $data['select_driver'])
-                  ->where( 'unit_idFK', $data['unit_id'] )
+                  ->where( 'unit_id', $data['unit_id'] )
                   ->count_all_results( $this->logs );
     if( $check > 0 )
       return false;
 
     $data['driver_idFK'] = $data['select_driver'];
-    $data['unit_idFK'] = $data['unit_id'];
+    $data['unit_id'] = $data['unit_id'];
 
     unset($data['action']);
     unset($data['unit_id']);

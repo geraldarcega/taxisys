@@ -1,18 +1,7 @@
-<div id="page-wrapper">
-    <?=@$page_header;?>
-    <!-- /.row -->
-    <?php if( $this->session->flashdata('msg') ){ ?>
-    <!-- /message -->
-    <div class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <?=$this->session->flashdata('msg')?>
-    </div>
-    <?php } ?>
-    <?=@$top_nav;?>
     <!-- /.row -->
     <main class="mainContainer">
         <div class="row">
-            <article class="col-xs-9">
+            <article class="col-xs-12">
                 <!-- <div style="text-align: center;margin-bottom: 16px;">
                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#garrageModal">ADD NEW garrage</button>
                 </div> -->
@@ -46,9 +35,6 @@
                     </tbody>
                 </table>
             </article>
-            <aside class="col-xs-3">
-                <?=@$chat;?>
-            </aside>
         </div>
     </main>
 </div>

@@ -14,7 +14,7 @@ class Maintenance extends MY_Framework
 
     public function index( )
     {
-        $this->tsdata['maintenance'] = $this->maintenance_model->read();
+        $this->data['maintenance'] = $this->maintenance_model->read();
         $parts = $this->parts_model->read( array( 'wh|stock >' => 0 ) );
         if( $parts->num_rows() > 0 )
         {
@@ -22,7 +22,7 @@ class Maintenance extends MY_Framework
             foreach ($parts->result() as $part) {
                 $_parts[ $part->parts_id ] = $part;
             }
-            $this->tsdata['parts'] = json_encode($_parts);
+            $this->data['parts'] = json_encode($_parts);
         }
 
         $this->load_view( 'index' );
@@ -30,8 +30,8 @@ class Maintenance extends MY_Framework
 
     public function unscheduled( )
     {
-        $this->tsdata['sub_nav']    = $this->_method;
-        $this->tsdata['boundary']   = array();
+        $this->data['sub_nav']    = $this->_method;
+        $this->data['boundary']   = array();
 
         $this->load_view( 'index' );
     }

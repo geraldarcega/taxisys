@@ -10,15 +10,16 @@ class MY_Controller extends MX_Controller {
 }
 
 class MY_Framework extends MY_Controller {
-    public $tsdata;
+    public $data;
     public $_class;
     public $_method;
+    public $top_nav = true;
 
 	function __construct()
     {
         parent::__construct();
 
-        $this->tsdata['user_data'] = getSession();
+        $this->data['user_data'] = getSession();
 
         $this->_class = $this->router->fetch_class();
         $this->_method = $this->router->fetch_method();
@@ -26,41 +27,37 @@ class MY_Framework extends MY_Controller {
         $this->load->library('frontend_library', array( 'class' => $this->_class, 'method' => $this->_method ) );
     }
 
-    public function load_view( $views = '', $nav = true, $top_nav = true, $chat = false, $theme = 'default' )
+    public function load_view( $views = '', $nav = true, $chat = false, $theme = 'default' )
     {
-       $_view_folder = $this->_class;
+        $_view_folder = $this->_class;
 
         # Assets
-        $this->tsdata['css'] = $this->frontend_library->load_css( );
-        $this->tsdata['js']  = $this->frontend_library->load_js( );
-
-        $this->load->view( $theme.'/partials/header', $this->tsdata);
+        $this->data['css'] = $this->frontend_library->load_css( );
+        $this->data['js']  = $this->frontend_library->load_js( );
+        
+        $this->load->view( $theme.'/partials/header', $this->data);
         if( $nav )
-        {
-            $this->load->view( $theme.'/partials/navigation', $this->tsdata);
-            $this->tsdata['page_header'] = $this->load->view( $theme.'/partials/page_header', $this->tsdata, true);
-        }
+            $this->load->view( $theme.'/partials/navigation', $this->data);
 
-        if( $top_nav )
-           $this->tsdata['top_nav'] = $this->load->view( $theme.'/partials/top_nav', $this->tsdata, true);
+        $this->load->view( $theme.'/partials/top_nav', $this->data);
 
         if( $chat )
-    	   $this->tsdata['chat'] = $this->load->view( $theme.'/partials/chat', $this->tsdata, true);
+    	   $this->data['chat'] = $this->load->view( $theme.'/partials/chat', $this->data, true);
 
     	if( !empty( $views ) )
     	{
     		if( !is_array( $views ) )
     		{
-    			$this->load->view( $_view_folder.'/'.$views, $this->tsdata );
+    			$this->load->view( $_view_folder.'/'.$views, $this->data );
     		}
     		else
     		{
 	    		foreach ($views as $view)
 	    		{
-	    			$this->load->view( $_view_folder.'/'.$view, $this->tsdata );
+	    			$this->load->view( $_view_folder.'/'.$view, $this->data );
 	    		}
     		}
     	}
-    	$this->load->view( $theme.'/partials/footer', $this->tsdata );
+    	$this->load->view( $theme.'/partials/footer', $this->data );
     }
 }

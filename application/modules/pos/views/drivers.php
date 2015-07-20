@@ -1,11 +1,6 @@
-<div id="page-wrapper">
-    <?=@$page_header;?>
-    <!-- /.row -->
-    <?=isset( $top_nav ) ? $top_nav : "";?>
-    <!-- /.row -->
 <main class="mainContainer">
     <div class="row">
-        <article class="col-xs-9 ">
+        <article class="col-xs-12">
              <div class="dash-border ">
 
                 <div class="col-xs-4 border-right  ">
@@ -107,9 +102,6 @@
                 </div>
             </div>
         </article>
-        <aside class="col-xs-3">
-            <?=@$chat;?>
-        </aside>
     </div>
 </main><!-- mainContainer -->
     

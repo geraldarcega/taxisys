@@ -1,15 +1,3 @@
-<div id="page-wrapper">
-    <?=@$page_header;?>
-    <!-- /.row -->
-    <?php if( $this->session->flashdata('msg') ){ ?>
-    <!-- /message -->
-    <div class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <?=$this->session->flashdata('msg')?>
-    </div>
-    <?php } ?>
-    <?=@$top_nav;?>
-    <!-- /.row -->
     <main class="mainContainer">
         <div class="row">
             <article class="col-xs-12">
@@ -29,19 +17,19 @@
                     </thead>
                     <tbody>
                         <?php if( $drivers->num_rows() > 0 ) {  $cnt = 0; ?>
-                        <?php foreach ($drivers->result() as $driver) { $cnt++; $json_drivers[$driver->driver_id] = $driver; ?>
+                        <?php foreach ($drivers->result() as $driver) { $cnt++; $json_drivers[$driver->id] = $driver; ?>
                         <tr>
                             <td><?=$cnt?></td>
                             <td><?=strtoupper($driver->plate_number)?></td>
-                            <td><?=ucwords($driver->fname)?></td>
-                            <td><?=ucwords($driver->lname)?></td>
+                            <td><?=ucwords($driver->first_name)?></td>
+                            <td><?=ucwords($driver->last_name)?></td>
                             <td><?=driverStatus($driver->status)?></td>
-                            <td><a href="#driversModal" data-toggle="modal" data-target="#driversModal" data-id="<?=$driver->driver_id?>" ><i class="fa fa-eye"></i></a></td>
+                            <td><a href="#driversModal" data-toggle="modal" data-target="#driversModal" data-id="<?=$driver->id?>" ><i class="fa fa-eye"></i></a></td>
                         </tr>                        
                         <?php } ?>
                         <?php } else { ?>
                         <tr>
-                            <td colspan="5"><div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> No records found!</div></td>
+                            <td colspan="6"><div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> No records found!</div></td>
                         </tr>
                         <?php } ?>
                     </tbody>
@@ -79,28 +67,28 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="fname" class="col-xs-4 control-label">Full Name</label>
+                        <label for="first_name" class="col-xs-4 control-label">Full Name</label>
                         <div class="col-xs-8">
-                            <input type="text" class="form-control driver-field" id="fname" name="fname" placeholder="First name" required>
+                            <input type="text" class="form-control driver-field" id="first_name" name="first_name" placeholder="First name" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="mname" class="col-xs-4 control-label">&nbsp;</label>
+                        <label for="middle_name" class="col-xs-4 control-label">&nbsp;</label>
                         <div class="col-xs-8">
-                            <input type="text" class="form-control driver-field" id="mname" name="mname" placeholder="Middle name" required>
+                            <input type="text" class="form-control driver-field" id="middle_name" name="middle_name" placeholder="Middle name" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="lname" class="col-xs-4 control-label">&nbsp;</label>
+                        <label for="last_name" class="col-xs-4 control-label">&nbsp;</label>
                         <div class="col-xs-8">
-                            <input type="text" class="form-control driver-field" id="lname" name="lname" placeholder="Last name" required>
+                            <input type="text" class="form-control driver-field" id="last_name" name="last_name" placeholder="Last name" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="dob" class="col-xs-4 control-label">Birth Date</label>
+                        <label for="birthday" class="col-xs-4 control-label">Birth Date</label>
                         <div class="col-xs-5">
-                            <div class="input-group date" id="dob_dp">
-                                <input type="text" class="form-control driver-field" id="dob" name="dob" required/>
+                            <div class="input-group date" id="birthday_dp">
+                                <input type="text" class="form-control driver-field" id="birthday" name="birthday" required/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>

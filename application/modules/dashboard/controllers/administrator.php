@@ -13,8 +13,8 @@ class Administrator extends MY_Framework
 
     public function garrage( )
     {
-        $this->tsdata['sub_nav'] = 'garrage';
-        $this->tsdata['garrage'] = $this->garrage_model->read();
+        $this->data['sub_nav'] = 'garrage';
+        $this->data['garrage'] = $this->garrage_model->read();
 
         $this->load_view( 'garrage' );
     }

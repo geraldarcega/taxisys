@@ -2,7 +2,7 @@
 
 class Units_model extends CI_Model {
   private $table  = 'units';
-  public $fields  = 'u.*, d.*, u.status unit_status, d.status driver_status';
+  public $fields  = 'u.*, d.*, u.id unit_id, d.id driver_id, u.status unit_status, d.status driver_status';
 
   function __construct(){
     parent::__construct();
@@ -17,7 +17,7 @@ class Units_model extends CI_Model {
     
     return $this->db
                 ->select( $this->fields )
-                ->join( 'drivers d', 'd.unit_idFK = u.unit_id', 'left' )
+                ->join( 'drivers d', 'd.unit_id = u.id', 'left' )
                 ->get( $this->table.' u' );
   }
 
@@ -49,9 +49,6 @@ class Units_model extends CI_Model {
     }
 
     $this->db->insert( $this->table, $db_data );
-
-    if( $this->db->affected_rows() )
-      $this->db->insert( $this->table.'_logs', array( 'unit_idFK' => $this->db->insert_id(), 'status' => UNIT_GARRAGE ) );
 
     return $this->db->affected_rows();
   }

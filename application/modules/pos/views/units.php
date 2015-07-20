@@ -1,13 +1,4 @@
 <?php $pos_data = array(); ?>
-<div id="page-wrapper">
-    <?=@$page_header;?>
-    <!-- /.row -->
-    <div id="pos_alert" class="alert alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <div class="msg"></div>
-    </div>
-    <?=@$top_nav;?>
-    <!-- /.row -->
     <main class="mainContainer">
         <div class="row">
             <article class="col-xs-12">
@@ -29,7 +20,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-body panel-nametag"><?=ucwords($unit->fname.' '.$unit->lname)?></div>
+                            <div class="panel-body panel-nametag"><?=ucwords($unit->first_name.' '.$unit->last_name)?></div>
                         </div>
                         <?php } ?>
                         <?php } ?>
@@ -51,7 +42,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-body panel-nametag"><?=$unit->fname != '' && $unit->lname != '' ? ucwords($unit->fname.' '.$unit->lname) : 'No Driver'?></div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
                         </div>
                         <?php } ?>
                         <?php } ?>
@@ -73,7 +64,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-body panel-nametag"><?=$unit->fname != '' && $unit->lname != '' ? ucwords($unit->fname.' '.$unit->lname) : 'No Driver'?></div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
                         </div>
                         <?php } ?>
                         <?php } ?>
@@ -115,16 +106,29 @@
                                 <option value="">----</option>
                                 <?php if( $drivers->num_rows() ) { ?>
                                 <?php foreach ($drivers->result() as $driver) { ?>
-                                <option value="<?=$driver->driver_id?>"><?=$driver->fname?> <?=$driver->lname?></option>
+                                <option value="<?=$driver->driver_id?>"><?=$driver->first_name?> <?=$driver->last_name?></option>
                                 <?php } ?>
                                 <?php } ?>
                             </select>
                         </div>
                     </div>
                     <div class="form-group onduty-input">
+                        <label for="rate_type" class="col-xs-3 control-label">Rate</label>
+                        <div class="col-xs-9">
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary active">
+                                    <input type="radio" name="rate_type" id="rate_type1" value="<?=BTYPE_REGULAR?>" autocomplete="off"> Regular
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="rate_type" id="rate_type4" value="<?=BTYPE_HOLIDAY?>" autocomplete="off"> Holiday
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group onduty-input">
                         <label for="boundary" class="col-xs-3 control-label">Boundary</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="boundary" name="boundary" placeholder="1500" required>
+                            <input type="number" class="form-control" id="boundary" name="boundary" placeholder="1500" maxlength="5" required>
                         </div>
                     </div>
                     <div class="form-group onduty-input">

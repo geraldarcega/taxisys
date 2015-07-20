@@ -14,9 +14,9 @@ class Parts extends MY_Framework
 
     public function index( )
     {
-        $this->tsdata['parts'] = $this->parts_model->read();
+        $this->data['parts'] = $this->parts_model->read();
 
-        $this->load_view( 'index', true );
+        $this->load_view( 'index' );
     }
 
     public function ajax()

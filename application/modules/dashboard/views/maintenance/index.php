@@ -1,15 +1,3 @@
-<div id="page-wrapper">
-	<?=@$page_header;?>
-    <!-- /.row -->
-    <?php if( $this->session->flashdata('msg') ){ ?>
-    <!-- /message -->
-    <div class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <?=$this->session->flashdata('msg')?>
-    </div>
-    <?php } ?>
-    <?=@$top_nav;?>
-    <!-- /.row -->
     <main class="mainContainer">
         <div class="row">
             <article class="col-xs-12">
@@ -24,14 +12,14 @@
                     </thead>
                     <tbody>
                         <?php if( $maintenance->num_rows() ) { $i = 0; ?>
-                        <?php foreach ($maintenance->result() as $_m) { $i++; $json_maintenance[$_m->maintenance_id] = $_m; ?>
+                        <?php foreach ($maintenance->result() as $_m) { $i++; $json_maintenance[$_m->id] = $_m; ?>
                         <tr>
                             <td><?=$i?></td>
                             <td><?=ucwords($_m->name)?></td>
                             <td><?=$_m->interval?></td>
                             <td>
-                                <a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?=$_m->maintenance_id?>" data-backdrop="static" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
-                                <a href="#" data-id="<?=$_m->maintenance_id?>" rel="tooltip" data-original-title="Remove"><i class="fa fa-times"></i></a>
+                                <a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?=$_m->id?>" data-backdrop="static" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
+                                <a href="#" data-id="<?=$_m->id?>" rel="tooltip" data-original-title="Remove"><i class="fa fa-times"></i></a>
                             </td>
                         </tr>
                         <?php } ?>
@@ -62,7 +50,7 @@
                 </div>
                 <form class="form-horizontal" id="frmModalMaintenance" method="post" action="<?=dashboard_url('maintenance/ajax')?>">
                     <input type="hidden" name="action" id="action" value="create">
-                    <input type="hidden" name="maintenance_id" id="maintenance_id" value="">
+                    <input type="hidden" name="id" id="id" value="">
                     <div class="form-group">
                         <label for="plate_number" class="col-xs-3 control-label">Name</label>
                         <div class="col-xs-9">

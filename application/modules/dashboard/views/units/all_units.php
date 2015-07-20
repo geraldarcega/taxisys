@@ -1,15 +1,3 @@
-<div id="page-wrapper">
-    <?=@$page_header;?>
-    <!-- /.row -->
-    <?php if( $this->session->flashdata('msg') ){ ?>
-    <!-- /message -->
-    <div class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <?=$this->session->flashdata('msg')?>
-    </div>
-    <?php } ?>
-    <?=@$top_nav;?>
-    <!-- /.row -->
     <main class="mainContainer">
         <div class="row">
             <article class="col-xs-12">
@@ -98,11 +86,11 @@
                                 <div class="col-xs-8">
                                     <select id="coding_day" name="coding_day" class="form-control unit-field" required>
                                         <option value="">----</option>
-                                        <option value="Monday">Monday</option>
-                                        <option value="Tuesday">Tuesday</option>
-                                        <option value="Wednesday">Wednesday</option>
-                                        <option value="Thursday">Thursday</option>
-                                        <option value="Friday">Friday</option>
+                                        <option value="1">Monday</option>
+                                        <option value="2">Tuesday</option>
+                                        <option value="3">Wednesday</option>
+                                        <option value="4">Thursday</option>
+                                        <option value="5">Friday</option>
                                     </select>
                                 </div>
                             </div>

@@ -14,10 +14,10 @@ class Drivers extends MY_Framework
 
     public function index( )
     {
-        $this->tsdata['drivers']     = $this->drivers_model->read();
-        $this->tsdata['avail_units'] = $this->units_model->read();
+        $this->data['drivers']     = $this->drivers_model->read();
+        $this->data['avail_units'] = $this->units_model->read();
 
-        $this->load_view( 'index', true );
+        $this->load_view( 'index' );
     }
 
     public function ajax()
@@ -29,7 +29,7 @@ class Drivers extends MY_Framework
                     $new = $this->drivers_model->create( $this->input->post() );
                     if( !isset($new['exist']) )
                     {
-                        $this->units_model->create_log( array( 'unit_idFK' => $this->input->post('unit'), 'driver_idFK' => $new ) );
+                        // $this->units_model->create_log( array( 'unit_idFK' => $this->input->post('unit'), 'driver_idFK' => $new ) );
                         $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> New driver has been created.');
                         $msg = array( 'success' => 1 );
                     }

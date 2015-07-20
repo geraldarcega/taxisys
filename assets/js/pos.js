@@ -31,21 +31,21 @@ $(document).ready( function(){
                     },
                     success: function(data){
                         console.log(data)
-                        $('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
-                        $('#'+data.taxi).hide()
-                                        .appendTo("#"+data.element.div)
-                                        .removeClass(data.element.old_class)
-                                        .addClass(data.element.new_class)
-                                        .fadeIn(1000)
+                        // $('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
+                        // $('#'+data.taxi).hide()
+                        //                 .appendTo("#"+data.element.div)
+                        //                 .removeClass(data.element.old_class)
+                        //                 .addClass(data.element.new_class)
+                        //                 .fadeIn(1000)
 
-                        $('#unitsModal').modal('hide')
+                        // $('#unitsModal').modal('hide')
 
-                        $('#pos_alert .msg').html(data.msg.text)
-                        $('#pos_alert').addClass(data.msg.class)
-                                       .show()
-                                       .fadeOut(4000)
+                        // $('#pos_alert .msg').html(data.msg.text)
+                        // $('#pos_alert').addClass(data.msg.class)
+                        //                .show()
+                        //                .fadeOut(4000)
 
-                        init()
+                        // init()
                     }
                 });
             }

@@ -12,8 +12,9 @@ class Calendar extends MY_Framework
 
     public function index( )
     {
-        $this->tsdata['nav'] = 'calendar';
-        $this->load_view( 'index', true, false );
+        $this->data['nav'] = 'calendar';
+        $this->top_nav = false;
+        $this->load_view( 'index' );
 	}
 
 }

@@ -1,16 +1,14 @@
-<div id="page-wrapper">
-	<?=@$page_header;?>
-    <!-- /.row -->
-    <?php if( $this->session->flashdata('msg') ){ ?>
-    <!-- /message -->
-    <div class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <?=$this->session->flashdata('msg')?>
-    </div>
-    <?php } ?>
-    <?=@$top_nav;?>
-    <!-- /.row -->
     <main class="mainContainer">
+        <div class="row">
+            <article class="col-xs-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </article>
+        </div>
         <div class="row">
             <article class="col-xs-12">
                 <table id="tbl_all_maintenance" class="table table-striped tablesorter">

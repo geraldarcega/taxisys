@@ -11,6 +11,7 @@ class Pos extends MY_Framework
         $this->load->model('pos_model');
         $this->load->model('dashboard/units_model');
         $this->load->model('dashboard/drivers_model');
+        // $this->top_nav = false;
     }
 
     # dashboard units
@@ -18,20 +19,20 @@ class Pos extends MY_Framework
     {
         $now = date('Y-m-d');
 
-        $this->tsdata['sub_nav']    = 'units';
+        $this->data['sub_nav']    = 'units';
 
-        $this->tsdata['units']['on_duty']        = $this->units_model->read( array( 'wh|u.status' => UNIT_DUTY, 'wh|d.status' => DRIVER_DUTY ) );
-        $this->tsdata['units']['on_garrage']     = $this->units_model->read( array( 'wh|u.status' => UNIT_GARRAGE ) );
-        $this->tsdata['units']['on_maintenance'] = $this->units_model->read( array( 'wh|u.status' => UNIT_MAINTENANCE ) );
+        $this->data['units']['on_duty']        = $this->units_model->read( array( 'wh|u.status' => UNIT_DUTY, 'wh|d.status' => DRIVER_DUTY ) );
+        $this->data['units']['on_garrage']     = $this->units_model->read( array( 'wh|u.status' => UNIT_GARRAGE ) );
+        $this->data['units']['on_maintenance'] = $this->units_model->read( array( 'wh|u.status' => UNIT_MAINTENANCE ) );
 
-        $this->tsdata['drivers'] = $this->drivers_model->read(array( 'wh|d.status' => 2 ));
+        $this->data['drivers'] = $this->drivers_model->read(array( 'wh|d.status' => 2 ));
 
         $this->load_view( 'units' );
     }
 
     public function drivers( )
     {
-        $this->tsdata['sub_nav']    = 'drivers';
+        $this->data['sub_nav']    = 'drivers';
         $this->load_view( 'drivers' );
     }
 
@@ -51,6 +52,7 @@ class Pos extends MY_Framework
                     break;
                 
                 case 'u_update':
+                    debug($this->input->post());exit();
                     $return = $this->pos_model->create($this->input->post());
                     $msg = array( 'text' => '<strong>Well done!</strong> Trasaction saved!', 'class' => 'alert-success' );
                     // if( $return > 0 )
@@ -83,7 +85,7 @@ class Pos extends MY_Framework
 
     public function login( )
     {
-        if( $this->tsdata['user_data'] )
+        if( $this->data['user_data'] )
             redirect( pos_url() );
 
         if( $this->input->post() )
@@ -110,7 +112,10 @@ class Pos extends MY_Framework
             echo json_encode( $msg );
         }
         else
-            $this->load_view( 'login', false, false );
+        {
+            $this->top_nav = false;
+            $this->load_view( 'login', false );
+        }
     }
 
     public function logout( )

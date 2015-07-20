@@ -6,7 +6,7 @@ $(document).ready(function() {
         } 
     });
 
-    $('#dob').datetimepicker({ 'format': 'MMM DD, YYYY' });
+    $('#birthday').datetimepicker({ 'format': 'MMM DD, YYYY' });
 
     $('#frmModalDriver').validate({
         submitHandler: function(form) {
@@ -65,7 +65,7 @@ $('#driversModal').on('show.bs.modal', function (e) {
                         $('#'+i).bootstrapSwitch( 'state', false )
                 }
 
-                if( i.indexOf('dob') > -1 )
+                if( i.indexOf('birthday') > -1 )
                     $('#'+i).val( readableDate(v) )
                 else
                 {

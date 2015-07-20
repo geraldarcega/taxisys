@@ -20,9 +20,7 @@ class Units extends MY_Framework
             $sort = array( 'field' => $this->input->get('sort'), 'direction' => $this->input->get('sort_order') );
 
         # Units data
-        $units = $this->units_model->read( $filter, null, null, $sort );
-
-        $this->tsdata['units'] = $units;
+        $this->data['units'] = $this->units_model->read( $filter, null, null, $sort );
 
         $this->load_view( 'all_units' );
     }
@@ -33,21 +31,21 @@ class Units extends MY_Framework
             redirect( dashboard_url('units') );
 
         # Unit data
-        $unit = $this->units_model->read( array( 'wh|unit_id' => $unit_id ) );
+        $unit = $this->units_model->read( array( 'wh|u.id' => $unit_id ) );
         if( !$unit->num_rows() )
             redirect( dashboard_url('units') );
 
-        $this->tsdata['unit']    = $unit->row();
-        $this->tsdata['sub_nav'] = $type.' maintenance ('.strtoupper($this->tsdata['unit']->plate_number).')';
+        $this->data['unit']    = $unit->row();
+        $this->data['sub_nav'] = $type.' maintenance ('.strtoupper($this->data['unit']->plate_number).')';
 
         $maintenance = $this->maintenance_model->read();
         if( $maintenance->num_rows() > 0 )
         {
             $_maintenance = array();
             foreach ($maintenance->result() as $m) {
-                $_maintenance[ $m->maintenance_id ] = $m;
+                $_maintenance[ $m->id ] = $m;
             }
-            $this->tsdata['maintenance'] = json_encode($_maintenance);
+            $this->data['maintenance'] = json_encode($_maintenance);
         }
         $this->load_view( 'maintenance' );
     }
@@ -89,7 +87,7 @@ class Units extends MY_Framework
                     break;
                 
                 case 'get_parts':
-                    $parts = $this->maintenance_model->get_maintenance_parts( array( 'wh|maintenance_idFK' => $this->input->get('maintenance_id') ) );
+                    $parts = $this->maintenance_model->get_maintenance_parts( array( 'wh|maintenance_id' => $this->input->get('maintenance_id') ) );
                     if( $parts->num_rows() > 0 )
                         $result = array( 'success' => 1, 'result' => $parts->result());
                     else

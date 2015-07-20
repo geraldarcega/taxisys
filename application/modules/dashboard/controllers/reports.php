@@ -13,8 +13,8 @@ class Reports extends MY_Framework
 
     public function boundary( )
     {
-        $this->tsdata['sub_nav']    = 'boundary';
-        $this->tsdata['boundary']   = array();
+        $this->data['sub_nav']    = 'boundary';
+        $this->data['boundary']   = array();
 
         $this->load_view( 'boundary' );
     }

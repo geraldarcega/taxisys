@@ -19,8 +19,8 @@ class Maintenance_model extends CI_Model {
 			$this->db->limit( $limit, $offset );
 	
 		return $this->db
-					->select( $this->table.'.*, '.$this->mparts.'.parts_idFK, '.$this->mparts.'.count' )
-					->join( $this->mparts, $this->mparts.'.maintenance_idFK = '.$this->table.'.maintenance_id', 'left' )
+					->select( $this->table.'.*, '.$this->mparts.'.parts_id, '.$this->mparts.'.count' )
+					->join( $this->mparts, $this->mparts.'.maintenance_id = '.$this->table.'.id', 'left' )
 					->get( $this->table );
 	}
 	
@@ -42,7 +42,7 @@ class Maintenance_model extends CI_Model {
 	}
 	
 	public function assign_parts( $maintenance_id, $parts_id, $cnt ) {
-		$this->db->insert( $this->mparts, array( 'maintenance_idFK' => $maintenance_id, 'parts_idFK' => $parts_id, 'count' => $cnt ) );
+		$this->db->insert( $this->mparts, array( 'maintenance_id' => $maintenance_id, 'parts_id' => $parts_id, 'count' => $cnt ) );
 	
 		return $this->db->insert_id();
 	}
@@ -76,14 +76,14 @@ class Maintenance_model extends CI_Model {
 			$this->db->filter( $filter );
 	
 		return $this->db
-					->join( $this->parts, $this->parts.'.parts_id = '.$this->mparts.'.parts_idFK', 'left' )
+					->join( $this->parts, $this->parts.'.id = '.$this->mparts.'.parts_id', 'left' )
 					->get( $this->mparts );
 	}
 
 	public function add_unit_maintenance( $db_data )
 	{
 		$db_data['unit_idFK'] = $db_data['unit_id'];
-		$db_data['maintenance_idFK'] = $db_data['maintenance'];
+		$db_data['maintenance_id'] = $db_data['maintenance'];
 		$db_data['odometer'] = $db_data['current'];
 		$db_data['schedule'] = dateFormat($db_data['schedule']);
 	
@@ -97,6 +97,15 @@ class Maintenance_model extends CI_Model {
 		$this->db->insert( $this->units, $db_data );
 	
 		return $this->db->insert_id();
+	}
+
+	public function get_unit_maintenance( $filter = array(), $limit = null, $offset = null, $one = false )
+	{
+		if (!empty($filter))
+			$this->db->filter($filter);
+		
+		return $this->db
+					->get( $this->units, $limit, $offset );
 	}
 }
 

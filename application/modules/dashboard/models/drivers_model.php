@@ -12,19 +12,19 @@ class Drivers_model extends CI_Model {
     		$this->db->filter( $filter );
 
     	return $this->db
-                    ->join( 'units u', 'd.unit_idFK = u.unit_id', 'left' )
+                    ->join( 'units u', 'd.unit_id = u.id', 'left' )
                     ->order_by( 'u.plate_number', 'ASC' )
                     ->get( $this->table.' d' );
     }
 
     public function create( $db_data ) {
-        $db_data['unit_idFK'] = $db_data['unit'];
+        $db_data['unit_id'] = $db_data['unit'];
 
         unset($db_data['unit']);
         unset($db_data['action']);
         unset($db_data['driver_id']);
 
-        $db_data['dob'] = dateFormat( $db_data['dob'] );
+        $db_data['birthday'] = dateFormat( $db_data['birthday'] );
         if( $this->check_exists( $db_data ) > 0 )
             return array( 'exist' => true );
 
@@ -35,13 +35,13 @@ class Drivers_model extends CI_Model {
 
     public function update( $db_data ) {
         $driver_id = $db_data['driver_id'];
-        $db_data['unit_idFK'] = $db_data['unit'];
+        $db_data['unit_id'] = $db_data['unit'];
 
         unset($db_data['driver_id']);
         unset($db_data['action']);
         unset($db_data['unit']);
 
-        $db_data['dob'] = dateFormat( $db_data['dob'] );
+        $db_data['birthday'] = dateFormat( $db_data['birthday'] );
 
         $this->db
              ->where( 'driver_id', $driver_id )
@@ -53,7 +53,7 @@ class Drivers_model extends CI_Model {
     public function assign( $driver_id, $unit_id, $status = DRIVER_DUTY ) {
         $this->db
              ->where( 'driver_id', $driver_id )
-             ->update( $this->table, array( 'unit_idFK' => $unit_id, 'status' => $status ) );
+             ->update( $this->table, array( 'unit_id' => $unit_id, 'status' => $status ) );
 
         return $this->db->affected_rows();
     }
@@ -61,10 +61,10 @@ class Drivers_model extends CI_Model {
     # Check if driver exists
     public function check_exists( $data ) {
         return $this->db
-                    ->where('fname', $data['fname'])
-                    ->where('mname', $data['mname'])
-                    ->where('lname', $data['lname'])
-                    ->where('dob', $data['dob'])
+                    ->where('first_name', $data['first_name'])
+                    ->where('middle_name', $data['middle_name'])
+                    ->where('last_name', $data['last_name'])
+                    ->where('birthday', $data['birthday'])
                     ->count_all_results( $this->table );
     }
 }
