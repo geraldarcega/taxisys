@@ -9,7 +9,7 @@ class Units extends MY_Framework
     {
         parent::__construct();
         $this->load->model('units_model');
-        $this->load->model('maintenance_model');
+        $this->load->model('maintenance_model');        
     }
 
     public function index( )
@@ -96,7 +96,6 @@ class Units extends MY_Framework
                     echo json_encode( $result );
                     break;
                 
-                
                 case 'create_maintenance':
                     $update = $this->maintenance_model->add_unit_maintenance( $this->input->post() );
                     if( $update )
@@ -110,6 +109,11 @@ class Units extends MY_Framework
                     echo json_encode( $msg );
                     break;
                 
+                case 'update_odometer':
+                    $update = $this->units_model->update($this->input->post());
+                    echo json_encode( array( 'success' => $update ) );
+                    break;
+
                 default:
                     # code...
                     break;

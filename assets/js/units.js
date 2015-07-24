@@ -155,3 +155,30 @@ $('#maintenance').on( 'change', function(){
         $('#parts_included').slideUp("fast")
     }
 } )
+
+$('#btnUpdateOdo').on( 'click', function() {
+    var rx = new RegExp(/^\d+$/);
+    if( $('#odometer').val() == '' || !rx.test($('#odometer').val()) )
+    {
+        alert('Please enter valid number for odometer')
+        return false
+    }
+    $.ajax({
+        type: 'POST',
+        url: base_url+'dashboard/units/ajax',
+        data: { 'action' : 'update_odometer','unit_id' : $('#btnUpdateOdo').attr('data-id'), 'odometer' : $('#odometer').val() },
+        dataType: "JSON",
+        beforeSend: function() {
+            $('#btnUpdateOdo').button('loading')
+        },
+        success: function(data){
+            if( data.success )
+            {
+                $('#btnUpdateOdo').button('reset')
+                $('#odotitle').hide()
+                $('#odomsg').slideDown().delay(400).slideUp()
+                $('#odotitle').delay(1000).slideDown('fast')
+            }
+        }
+    });
+})

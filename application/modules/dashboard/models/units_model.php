@@ -72,12 +72,14 @@ class Units_model extends CI_Model {
 
     if( isset($db_data['unit_id']) )
     {
-      $this->db->where( 'unit_id', $db_data['unit_id'] );
+      $this->db->where( 'id', $db_data['unit_id'] );
       unset($db_data['unit_id']);
     }
 
-    for ($i=0; $i < count($date_fields); $i++) {
-      $db_data[$date_fields[$i]] = dateFormat( $db_data[$date_fields[$i]] );
+    if( isset( $db_data['resealing_date1'] ) )
+    {
+      for ($i=0; $i < count($date_fields); $i++)
+        $db_data[$date_fields[$i]] = dateFormat( $db_data[$date_fields[$i]] );
     }
 
     $this->db->update( $this->table, $db_data );
