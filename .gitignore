@@ -1,2 +1,6 @@
 uploads/
 user_guide/
+
+.buildpath
+.project
+.settings/
