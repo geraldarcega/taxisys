@@ -13,13 +13,14 @@ class MY_Framework extends MY_Controller {
     public $data;
     public $_class;
     public $_method;
+    public $userdata;
     public $top_nav = true;
 
 	function __construct()
     {
         parent::__construct();
 
-        $this->data['user_data'] = getSession();
+        $this->userdata = getSession();
 
         $this->_class = $this->router->fetch_class();
         $this->_method = $this->router->fetch_method();

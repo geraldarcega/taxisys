@@ -15,7 +15,7 @@
                     </thead>
                     <tbody>
                         <?php if( $parts->num_rows() ) { $i = 0; ?>
-                        <?php foreach ($parts->result() as $part) { $i++; $json_parts[$part->parts_id] = $part; ?>
+                        <?php foreach ($parts->result() as $part) { $i++; $json_parts[$part->id] = $part; ?>
                         <tr>
                             <td><?=$i?></td>
                             <td><?=ucwords($part->name)?></td>
@@ -24,9 +24,9 @@
                             <td><?=$part->stock?></td>
                             <td><?=dateFormat($part->purchase_date, 'M d, Y')?></td>
                             <td>
-                                <a href="#partsModal" data-toggle="modal" data-target="#partsModal" data-id="<?=$part->parts_id?>" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
-                                <a href="#partsModal" data-toggle="modal" data-target="#partsModal" data-id="<?=$part->parts_id?>" rel="tooltip" data-original-title="History"><i class="fa fa-history"></i></a> &nbsp;
-                                <a href="#" data-id="<?=$part->parts_id?>" rel="tooltip" data-original-title="Archive"><i class="fa fa-archive"></i></a>
+                                <a href="#partsModal" data-toggle="modal" data-target="#partsModal" data-id="<?=$part->id?>" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
+                                <a href="#partsModal" data-toggle="modal" data-target="#partsModal" data-id="<?=$part->id?>" rel="tooltip" data-original-title="History"><i class="fa fa-history"></i></a> &nbsp;
+                                <a href="#" data-id="<?=$part->id?>" rel="tooltip" data-original-title="Archive"><i class="fa fa-archive"></i></a>
                             </td>
                         </tr>
                         <?php } ?>

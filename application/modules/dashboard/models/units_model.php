@@ -91,7 +91,7 @@ class Units_model extends CI_Model {
   public function update_status( $unit_id, $status = UNIT_DUTY )
   {
     $this->db
-         ->where( 'unit_id', $unit_id )
+         ->where( 'id', $unit_id )
          ->update( $this->table, array( 'status' => $status ) );
 
     return $this->db->affected_rows();

@@ -157,4 +157,10 @@
 		$status = array( UNIT_DUTY => 'panel-green', UNIT_GARRAGE => 'panel-yellow', UNIT_MAINTENANCE => 'panel-red' );
 		return @$status[ $stats ];
 	}
+
+	# get maintenance interval
+	function maintenanceInterval( $type ) {
+		$interval = array( 1 => 'Odometer', 2 => 'Month/s', 3 => 'Week/s' );
+		return @$interval[ $type ];
+	}
 ?>

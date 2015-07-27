@@ -207,7 +207,7 @@
         <!-- /.dropdown -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-user fa-fw"></i> <?=@$user_data->username?> <i class="fa fa-caret-down"></i>
+                <i class="fa fa-user fa-fw"></i> <?=@$this->userdata->username?> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
                 <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
@@ -227,17 +227,6 @@
     <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
-                <li class="sidebar-search">
-                    <div class="input-group custom-search-form">
-                        <input type="text" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
-                    <!-- /input-group -->
-                </li>
                 <li>
                     <a <?=$this->_class == 'pos' ? 'class="active"' : '' ?> href="<?=pos_url()?>"><i class="fa fa-calculator fa-fw"></i> POS</a>
                 </li>
@@ -265,7 +254,7 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-                <?php if( $user_data->lvl == "1" ){ ?>
+                <?php if( $this->userdata->lvl == "1" ){ ?>
                 <li <?=$this->_class == 'administrator' ? 'class="active"' : '' ?>>
                     <a href="#"><i class="fa fa-gear fa-fw"></i> ADMINISTRATOR<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -274,6 +263,9 @@
                         </li>
                         <li>
                             <a <?=@$sub_nav == 'garrage' ? 'class="active"' : '' ?> href="<?=dashboard_url('administrator/garrage');?>"><i class="fa fa-home fa-fw"></i> GARRAGE</a>
+                        </li>
+                        <li>
+                            <a <?=@$sub_nav == 'settings' ? 'class="active"' : '' ?> href="<?=dashboard_url('administrator/settings');?>"><i class="fa fa-home fa-fw"></i> SETTINGS</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->

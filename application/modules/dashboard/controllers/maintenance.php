@@ -20,7 +20,7 @@ class Maintenance extends MY_Framework
         {
             $_parts = array();
             foreach ($parts->result() as $part) {
-                $_parts[ $part->parts_id ] = $part;
+                $_parts[ $part->id ] = $part;
             }
             $this->data['parts'] = json_encode($_parts);
         }
@@ -65,23 +65,33 @@ class Maintenance extends MY_Framework
                     break;
                 
                 case 'update':
-                    $new = $this->maintenance_model->update( $this->input->post() );
-                    if( $new )
-                    {
-                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> Mainetenance details has been updated.');
-                        $msg = array( 'success' => 1 );
-                    }
-                    else
-                    {
-                        $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Ooops!</strong> There\s something wrong.' );
-                    }
+                	if( is_array($this->input->post('parts')) )
+                	{
+                		$new = $this->maintenance_model->update( $this->input->post() );
+                		$parts = $this->input->post('parts');
+                		$parts_cnt = $this->input->post('parts_count');
+
+                		for ($i = 0; $i < count($parts); $i++) {
+                			$this->maintenance_model->assign_parts( $this->input->post('id'), $parts[$i], $parts_cnt[$i] );
+                		}
+                	}
+                	else
+                	{
+                		$new = $this->maintenance_model->update( $this->input->post() );
+                		$mparts = $this->maintenance_model->check_maintenance_parts($this->input->post('id'));
+                		if( $mparts > 0 )
+                			$this->maintenance_model->remove_maintenance_parts($this->input->post('id'));
+                	}
+					
+                	$this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> Mainetenance details has been updated.');
+					$msg = array( 'success' => 1 );
 
                     echo json_encode( $msg );
                     break;
                 
                 
                 case 'get_parts':
-                    $parts = $this->parts_model->read( array( 'wh|parts_id' => $this->input->post('parts_id') ) );
+                    $parts = $this->parts_model->read( array( 'wh|id' => $this->input->post('parts_id') ) );
                     if( $parts->num_rows() > 0 )                        
                         $result = array( 'success' => 1, 'result' => $parts->result());
                     else

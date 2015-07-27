@@ -106,7 +106,7 @@
                                 <option value="">----</option>
                                 <?php if( $drivers->num_rows() ) { ?>
                                 <?php foreach ($drivers->result() as $driver) { ?>
-                                <option value="<?=$driver->driver_id?>"><?=$driver->first_name?> <?=$driver->last_name?></option>
+                                <option value="<?=$driver->id?>"><?=$driver->first_name?> <?=$driver->last_name?></option>
                                 <?php } ?>
                                 <?php } ?>
                             </select>

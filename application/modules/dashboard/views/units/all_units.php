@@ -11,6 +11,7 @@
                             <th>Coding Day</th>
                             <th>Franchise Until</th>
                             <th>Renew By</th>
+                            <th>Odometer</th>
                             <th>Status</th>
                             <th>&nbsp;</th>
                         </tr>
@@ -25,10 +26,23 @@
                             <td><?=codingDay($unit->coding_day)?></td>
                             <td><?=dateFormat($unit->franchise_until, 'M d, Y')?></td>
                             <td><?=dateFormat($unit->renew_by, 'M d, Y')?></td>
+                            <td id="odometer_<?=$unit->unit_id?>"><?=number_format($unit->odometer)?></td>
                             <td><?=unitStatus($unit->unit_status)?></td>
                             <td>
-                                <a href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
-                                <a href="<?=dashboard_url('units/maintenance/scheduled/'.$unit->unit_id)?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a>
+                            	<div id="units_opt_<?php echo $unit->unit_id; ?>">
+                            		<a href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
+	                                <a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a> &nbsp;
+	                                <a href="javascript:show_odometer('<?=$unit->unit_id?>');" rel="tooltip" data-original-title="Odometer"><i class="fa fa-tachometer"></i></a>
+                            	</div>
+                            	<div id="input_odometer_<?=$unit->unit_id?>" style="width: 130px;display: none;">
+                            		<div class="input-group">
+					                    <input type="text" id="odometer" name="odometer" class="form-control input-sm" value="<?=$unit->odometer?>">
+					                    <span class="input-group-btn">
+					                        <button class="btn btn-primary btn-sm" type="button" data-id="<?=$unit->unit_id?>" id="btnUpdateOdo">Update</button>
+					                    </span>
+					                </div>
+                            		<a style="float: right;margin-top: -25px;margin-right: -15px;" href="javascript:show_odometer('<?=$unit->unit_id?>');" rel="tooltip" data-original-title="Close"><i class="fa fa-times"></i></a>
+                            	</div>
                             </td>
                         </tr>
                         <?php } ?>
@@ -228,6 +242,69 @@
         </div>
     </div>
 </div>
+
+<!-- Details Modal -->
+<div class="modal fade" id="maintenanceModal" tabindex="-1" role="dialog" aria-labelledby="maintenanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="maintenanceModalLabel">UNIT MAINTENANCE</h4>
+            </div>
+            <div class="modal-body">
+                <div id="failed_msg" class="alert alert-danger" role="alert" style="display:none;">
+                    <span></span>
+                </div>
+                <form class="form-horizontal" id="frmModalMaintenance" method="post" action="<?=dashboard_url('units/ajax')?>">
+                    <input type="hidden" name="action" id="action" value="create_maintenance">
+                    <input type="hidden" name="unit_id" id="unit_id" value="<?=$this->uri->segment('5')?>">
+                    <table id="tbl_all_maintenance" class="table table-striped tablesorter">
+	                    <thead style="background-color:#fff;">
+	                        <tr>
+	                            <th>Maintenance</th>
+	                            <th>Interval</th>
+	                            <th>Last Date</th>
+	                            <th>Last Odometer</th>
+	                            <th>Next Date</th>
+	                            <th>Next Odometer</th>
+	                            <th>&nbsp;</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody>
+	                    	<?php 
+                    			if( $maintenance->num_rows() ){
+                    				foreach( $maintenance->result() as $maintain ) {
+                    		?>
+                    		<tr>
+	                            <td><?php echo $maintain->name; ?></td>
+	                            <td>Every <?php echo number_format($maintain->interval_value); ?> <?=maintenanceInterval($maintain->interval)?></td>
+	                            <td></td>
+	                            <td></td>
+	                            <td></td>
+	                            <td></td>
+	                            <td><a href="#" rel="tooltip" data-original-title="Apply"><i class="fa fa-caret-square-o-right"></i></a></td>
+	                        </tr>
+	                    	<?php 
+                    				} 
+                    			}
+                    			else{
+                    		?>
+                    		<tr>
+	                            <td colspan="8"><div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> No maintenance found!</div></td>
+	                        </tr>
+                    		<?php } ?>
+	                    </tbody>
+	                </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnModalMaintenanceSave" onclick="$('#frmModalMaintenance').submit()" data-loading-text="Saving..." class="btn btn-primary" autocomplete="off">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     var units_data = <?php echo $units->num_rows() ? json_encode( $json_units ) : '[]'; ?>;
+    //var maintenance_data = <?php //echo isset($maintenance) ? $maintenance : '[]'; ?>;
 </script>

@@ -32,7 +32,7 @@ class Frontend_library
 		{
 			$css[] = CSS_DIR.'plugins/metisMenu/metisMenu.min.css';
 			$css[] = CSS_DIR.'bootstrap-datetimepicker.css';
-			// $css[] = CSS_DIR.'bootstrap-switch.min.css';
+			$css[] = CSS_DIR.'bootstrap-switch.min.css';
 			$css[] = CSS_DIR.'tablesorter.css';
 			$css[] = CSS_DIR.'bootstrap-multiselect.css';
 		}

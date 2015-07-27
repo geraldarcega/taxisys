@@ -19,6 +19,14 @@ class Administrator extends MY_Framework
         $this->load_view( 'garrage' );
     }
 
+    public function settings( )
+    {
+        $this->data['sub_nav'] = 'garrage';
+        $this->data['garrage'] = $this->garrage_model->read();
+
+        $this->load_view( 'garrage' );
+    }
+
     public function ajax()
     {
         if( $this->input->is_ajax_request() )

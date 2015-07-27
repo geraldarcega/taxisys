@@ -7,6 +7,10 @@ class Maintenance_model extends CI_Model {
 	private $parts = 'parts';
 	private $units = 'units_maintenance';
 	
+	const INTERVAL_ODOMETER = 1;
+	const INTERVAL_MONTHLY	= 2;
+	const INTERVAL_WEEKLY	= 3;
+	
 	function __construct(){
 		parent::__construct();
 	}
@@ -20,14 +24,14 @@ class Maintenance_model extends CI_Model {
 	
 		return $this->db
 					->select( $this->table.'.*, '.$this->mparts.'.parts_id, '.$this->mparts.'.count' )
-					->join( $this->mparts, $this->mparts.'.maintenance_id = '.$this->table.'.id', 'left' )
+					->join( $this->mparts, $this->mparts.'.maintenance_id = '.$this->table.'.id AND '.$this->mparts.'.deleted_at IS NULL', 'left' )
 					->get( $this->table );
 	}
 	
 	public function create( $db_data ) {
 		$db_data['name'] = $db_data['m_type'];
 	
-		unset($db_data['maintenance_id']);
+		unset($db_data['id']);
 		unset($db_data['action']);
 		unset($db_data['m_type']);
 		unset($db_data['parts']);
@@ -35,28 +39,45 @@ class Maintenance_model extends CI_Model {
 
 		if( $this->check_exists( $db_data['name'] ) > 0 )
 			return array( 'exists' => true );
-	
+			
 		$this->db->insert( $this->table, $db_data );
 	
 		return $this->db->insert_id();
 	}
 	
 	public function assign_parts( $maintenance_id, $parts_id, $cnt ) {
-		$this->db->insert( $this->mparts, array( 'maintenance_id' => $maintenance_id, 'parts_id' => $parts_id, 'count' => $cnt ) );
-	
-		return $this->db->insert_id();
+		$check = $this->check_maintenance_parts($maintenance_id, $parts_id);
+		if( $check > 0 )
+		{
+			$now = date('Y-m-d H:i:s');
+			$this->db
+				 ->where('maintenance_id', $maintenance_id)
+				 ->where('parts_id', $parts_id)
+				 ->update( $this->mparts, array( 'count' => $cnt, 'updated_at' => $now, 'deleted_at' => null ) );
+			return $this->db->affected_rows();
+		}
+		else
+		{
+			$this->db->insert( $this->mparts, array( 'maintenance_id' => $maintenance_id, 'parts_id' => $parts_id, 'count' => $cnt ) );
+			return $this->db->insert_id();
+		}
 	}
 	
 	public function update( $db_data ) {
-		$maintenance_id = $db_data['maintenance_id'];
+		$maintenance_id = $db_data['id'];
 		$db_data['name'] = $db_data['m_type'];
 	
-		unset($db_data['maintenance_id']);
+		unset($db_data['id']);
 		unset($db_data['action']);
 		unset($db_data['m_type']);
-	
+		unset($db_data['parts']);
+		unset($db_data['parts_count']);
+		
+		if( !isset($db_data['is_scheduled']) )
+			$db_data['is_scheduled'] = 0;
+			
 		$this->db
-			 ->where( 'maintenance_id', $maintenance_id )
+			 ->where( 'id', $maintenance_id )
 			 ->update( $this->table, $db_data );
 	
 		return $this->db->affected_rows();
@@ -77,6 +98,7 @@ class Maintenance_model extends CI_Model {
 	
 		return $this->db
 					->join( $this->parts, $this->parts.'.id = '.$this->mparts.'.parts_id', 'left' )
+					->where( $this->mparts.'.deleted_at IS NULL', null )
 					->get( $this->mparts );
 	}
 
@@ -106,6 +128,26 @@ class Maintenance_model extends CI_Model {
 		
 		return $this->db
 					->get( $this->units, $limit, $offset );
+	}
+	
+	public function check_maintenance_parts($maintenance_id, $parts_id = null) {
+		if( !is_null($parts_id) )
+			$this->db->where('parts_id', $parts_id);
+		
+		return $this->db
+					->where('maintenance_id', $maintenance_id)
+					->count_all_results($this->mparts);
+	}
+	
+
+
+	public function remove_maintenance_parts($maintenance_id) {
+		$now = date('Y-m-d H:i:s');
+		$this->db
+			->where('maintenance_id', $maintenance_id)
+			->update($this->mparts, array( 'deleted_at' => $now ) );
+		
+		return $this->db->affected_rows();
 	}
 }
 

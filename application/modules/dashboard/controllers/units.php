@@ -21,7 +21,18 @@ class Units extends MY_Framework
 
         # Units data
         $this->data['units'] = $this->units_model->read( $filter, null, null, $sort );
-
+        
+        # Maintenance data
+        $maintenance = $this->maintenance_model->read();
+//         if( $maintenance->num_rows() > 0 )
+//         {
+//         	$_maintenance = array();
+//         	foreach ($maintenance->result() as $m) {
+//         		$_maintenance[ $m->id ] = $m;
+//         	}
+        	$this->data['maintenance'] = $maintenance;
+//         }
+        
         $this->load_view( 'all_units' );
     }
 

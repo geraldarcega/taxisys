@@ -52,16 +52,14 @@ class Pos extends MY_Framework
                     break;
                 
                 case 'u_update':
-                    debug($this->input->post());exit();
-                    $return = $this->pos_model->create($this->input->post());
+                    $return = $this->pos_model->create($this->input->post(), $this->userdata->id);
                     $msg = array( 'text' => '<strong>Well done!</strong> Trasaction saved!', 'class' => 'alert-success' );
-                    // if( $return > 0 )
-                    // {
-                    //     $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> New driver has been created.');
-                    //     $msg = array( 'success' => 1 );
-                    // }
-                    // else
-                    //     $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Ooops!</strong> Driver '.$this->input->post('fname').' '.$this->input->post('lname').' is already exists.' );
+                    if( $return > 0 )
+                    {
+                        $msg = array( 'success' => 1 );
+                    }
+                    else
+                        $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Ooops!</strong> Driver '.$this->input->post('fname').' '.$this->input->post('lname').' is already exists.' );
                     break;
                 
                 default:

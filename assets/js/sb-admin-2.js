@@ -8,6 +8,8 @@ $(function() {
                                 ,'content' : data
                             })
     })
+    
+    $('.BSswitch').bootstrapSwitch();
 });
 
 //Loads the correct sidebar on window load,
@@ -50,4 +52,8 @@ function readableDate( date ){
     month_name[11]="Dec"
 
     return month_name[d.getMonth()]+" "+d.getDate()+" , "+d.getFullYear();
+}
+
+function formatNumber( num ) {
+	return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }

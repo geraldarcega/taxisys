@@ -7,6 +7,7 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Interval</th>
+                            <th>Scheduled</th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
@@ -16,7 +17,8 @@
                         <tr>
                             <td><?=$i?></td>
                             <td><?=ucwords($_m->name)?></td>
-                            <td><?=$_m->interval?></td>
+                            <td>Every <?=number_format($_m->interval_value)?> <?=maintenanceInterval($_m->interval)?></td>
+                            <td><?=$_m->is_scheduled ? 'Yes' : 'No'?></td>
                             <td>
                                 <a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?=$_m->id?>" data-backdrop="static" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
                                 <a href="#" data-id="<?=$_m->id?>" rel="tooltip" data-original-title="Remove"><i class="fa fa-times"></i></a>
@@ -58,9 +60,22 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="interval" class="col-xs-3 control-label">Interval</label>
+                        <label for="price" class="col-xs-3 control-label">Scheduled</label>
                         <div class="col-xs-9">
-                            <input type="number" class="form-control unit-field" id="interval" name="interval" placeholder="10000" required>
+                        	<input id="is_scheduled" name="is_scheduled" type="checkbox" checked="false" data-size="small" data-off-text="No" data-on-text="Yes" class="BSswitch" value="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="interval" class="col-xs-3 control-label">Interval</label>
+                        <div class="col-xs-5">
+                            <select id="interval" name="interval" class="form-control">
+                            	<option value="1">Odometer</option>
+                            	<option value="2">Monthly</option>
+                            	<option value="3">Weekly</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4">
+                        	<input type="number" class="form-control unit-field" id="interval_value" name="interval_value" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -82,7 +97,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnModalMaintenanceSave" onclick="$('#frmModalMaintenance').submit()" data-loading-text="Saving..." class="btn btn-primary" autocomplete="off">Save changes</button>
+                <button type="button" class="btn btn-primary" id="btnModalMaintenanceSave" onclick="$('#frmModalMaintenance').submit()" data-loading-text="Saving..." class="btn btn-primary" autocomplete="off">Save</button>
             </div>
         </div>
     </div>

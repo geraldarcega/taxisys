@@ -6,7 +6,7 @@ $(document).ready(function() {
              0: { sorter: false }
             ,4: { sorter: 'shortDate' }
             ,5: { sorter: 'shortDate' }
-            ,7: { sorter: false } 
+            ,8: { sorter: false } 
         } 
     });
 
@@ -94,10 +94,12 @@ $(document).ready(function() {
         $('#maintenance').html(options)
     }
     $('#parts_included').hide()
+    
+    $('#scheduled').bootstrapSwitch('state', false)
 });
 
 $('#unitsModal').on('show.bs.modal', function (e) {
-    var data_id = e.relatedTarget.attributes[3];
+    var data_id = e.relatedTarget.attributes[3]['value'];
     
     $('.unit-field').val('')
     $('#unitsModalLabel').html('CREATE NEW UNIT')
@@ -105,12 +107,12 @@ $('#unitsModal').on('show.bs.modal', function (e) {
     $('#failed_msg').hide()
     $('#action').val('create')
 
-    if( typeof units_data[data_id['value']] !== "undefined" )
+    if( typeof units_data[data_id] !== "undefined" )
     {
         $('#unitsModalLabel').html('UPDATE UNIT')
         $('#action').val('update')
-        $('#unit_id').val(data_id['value'])
-        $.each( units_data[data_id['value']], function( i, v ){
+        $('#unit_id').val(data_id)
+        $.each( units_data[data_id], function( i, v ){
             if( $('#'+i).length )
             {
                 if( i.indexOf('date') > -1 )
@@ -130,10 +132,23 @@ $('#unitsModal').on('show.bs.modal', function (e) {
     }
 })
 
+$('#maintenanceModal').on('show.bs.modal', function (e) {
+    var data_id = e.relatedTarget.attributes[3]['value'];
+
+//    if( typeof units_data[data_id] !== "undefined" )
+//    {
+//        $('#maintenanceModalLabel').html( 'UNIT MAINTENANCE: '+units_data[data_id].plate_number.toUpperCase() )
+//        console.log($('#odometer_'+data_id).html())
+//        $('span#modalOdometer').html( $('#odometer_'+data_id).html() )
+//    }
+})
+
 $('#maintenance').on( 'change', function(){
     $('#tbl_maintenance_parts tbody').html('')
     if( $(this).val() != '' )
     {
+    	$('#interval').html( formatNumber(maintenance_data[$(this).val()].interval) )
+    	$('#price').html( formatNumber(maintenance_data[$(this).val()].price) )
         $.getJSON( base_url+'dashboard/units/ajax', { action: "get_parts", maintenance_id: $(this).val() } )
         .done(function( data ) {
             if( data.success )
@@ -148,6 +163,8 @@ $('#maintenance').on( 'change', function(){
                     $('#parts_included').slideDown("fast")
                 }
             }
+            else
+            	$('#parts_included').slideUp("fast")
         });
     }
     else
@@ -163,10 +180,11 @@ $('#btnUpdateOdo').on( 'click', function() {
         alert('Please enter valid number for odometer')
         return false
     }
+    var new_odometer = $('#odometer').val()
     $.ajax({
         type: 'POST',
         url: base_url+'dashboard/units/ajax',
-        data: { 'action' : 'update_odometer','unit_id' : $('#btnUpdateOdo').attr('data-id'), 'odometer' : $('#odometer').val() },
+        data: { 'action' : 'update_odometer','unit_id' : $('#btnUpdateOdo').attr('data-id'), 'odometer' : new_odometer },
         dataType: "JSON",
         beforeSend: function() {
             $('#btnUpdateOdo').button('loading')
@@ -174,6 +192,7 @@ $('#btnUpdateOdo').on( 'click', function() {
         success: function(data){
             if( data.success )
             {
+            	$('#odometer_'+$('#btnUpdateOdo').attr('data-id')).html(formatNumber(new_odometer))
                 $('#btnUpdateOdo').button('reset')
                 $('#odotitle').hide()
                 $('#odomsg').slideDown().delay(400).slideUp()
@@ -182,3 +201,19 @@ $('#btnUpdateOdo').on( 'click', function() {
         }
     });
 })
+
+function show_odometer( unit_id ) {
+	var odometer = $('#input_odometer_'+unit_id)
+	var opts = $('#units_opt_'+unit_id)
+
+	if( odometer.is(":visible") == false )
+	{
+		odometer.slideDown("fast")
+		opts.hide()
+	}
+	else
+	{
+		odometer.hide()
+		opts.show()
+	}
+}

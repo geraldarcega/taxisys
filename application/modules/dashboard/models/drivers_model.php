@@ -12,6 +12,7 @@ class Drivers_model extends CI_Model {
     		$this->db->filter( $filter );
 
     	return $this->db
+    				->select( 'd.*, u.id unit_id, u.plate_number' )
                     ->join( 'units u', 'd.unit_id = u.id', 'left' )
                     ->order_by( 'u.plate_number', 'ASC' )
                     ->get( $this->table.' d' );
@@ -52,7 +53,7 @@ class Drivers_model extends CI_Model {
 
     public function assign( $driver_id, $unit_id, $status = DRIVER_DUTY ) {
         $this->db
-             ->where( 'driver_id', $driver_id )
+             ->where( 'id', $driver_id )
              ->update( $this->table, array( 'unit_id' => $unit_id, 'status' => $status ) );
 
         return $this->db->affected_rows();

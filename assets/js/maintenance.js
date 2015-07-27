@@ -4,7 +4,7 @@ $(document).ready(function() {
     $("#tbl_all_maintenance").tablesorter({
         headers: { 
              0: { sorter: false }
-            ,3: { sorter: false }
+            ,4: { sorter: false }
         } 
     });
 
@@ -52,18 +52,22 @@ $('#maintenanceModal').on('show.bs.modal', function (e) {
 
     if( typeof maintenance_data[data_id] !== "undefined" )
     {
+    	$('#parts_wrapper').html('');
         $('#maintenanceModalLabel').html('UPDATE MAINTENANCE ITEM')
         $('#action').val('update')
         $('#maintenance_id').val(data_id)
 
         $.each( maintenance_data[data_id], function( i, v ){
-            if( $('#'+i).length )
+            if( $('#'+i).length && i != 'is_scheduled' )
                 $('#'+i).val( v )
 
             if( i == 'name' )
                 $('#m_type').val( v )
 
-            if( i == 'parts_idFK' )
+            if( i == 'is_scheduled' )
+            	$('#is_scheduled').bootstrapSwitch('state', v == 1 ? true : false)
+
+            if( i == 'parts_id' )
             {
                 $.ajax({
                     type: 'POST',
@@ -75,7 +79,7 @@ $('#maintenanceModal').on('show.bs.modal', function (e) {
                         {
                             $('#parts_wrapper').html('')
                             $.each( data.result, function( key, val ) {
-                                add_parts( val.parts_id, maintenance_data[data_id].count )
+                                add_parts( val.id, maintenance_data[data_id].count )
                             })
                         }
                     }

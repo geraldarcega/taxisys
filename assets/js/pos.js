@@ -30,22 +30,22 @@ $(document).ready( function(){
                         $('#btnModalUnitsave').button('loading')
                     },
                     success: function(data){
-                        console.log(data)
-                        // $('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
-                        // $('#'+data.taxi).hide()
-                        //                 .appendTo("#"+data.element.div)
-                        //                 .removeClass(data.element.old_class)
-                        //                 .addClass(data.element.new_class)
-                        //                 .fadeIn(1000)
+                    	$('#old_status').val( $('#status').val() )
+                         $('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
+                         $('#'+data.taxi).hide()
+                                         .appendTo("#"+data.element.div)
+                                         .removeClass(data.element.old_class)
+                                         .addClass(data.element.new_class)
+                                         .fadeIn(1000)
 
-                        // $('#unitsModal').modal('hide')
+                         $('#unitsModal').modal('hide')
 
-                        // $('#pos_alert .msg').html(data.msg.text)
-                        // $('#pos_alert').addClass(data.msg.class)
-                        //                .show()
-                        //                .fadeOut(4000)
+                         $('#pos_alert .msg').html(data.msg.text)
+                         $('#pos_alert').addClass(data.msg.class)
+                                        .show()
+                                        .fadeOut(4000)
 
-                        // init()
+                         init()
                     }
                 });
             }
@@ -101,7 +101,7 @@ $('#unitsModal').on('show.bs.modal', function (e) {
                 if( data.driver_id )
                 {
                     $('#old_driver').val( data.driver_id )
-                    $('#driver').html(data.fname+' '+data.lname)
+                    $('#driver').html(data.first_name+' '+data.last_name)
                 }
                 
                 $('#status option[value="1"]').hide()

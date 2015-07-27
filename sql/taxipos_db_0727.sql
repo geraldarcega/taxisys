@@ -2,8 +2,7 @@
 SQLyog Ultimate v11.11 (64 bit)
 MySQL - 5.5.5-10.1.5-MariaDB : Database - taxipos
 *********************************************************************
-*/
-
+*/
 
 /*!40101 SET NAMES utf8 */;
 
@@ -46,7 +45,7 @@ CREATE TABLE `drivers` (
 
 /*Data for the table `drivers` */
 
-insert  into `drivers`(`id`,`unit_id`,`first_name`,`middle_name`,`last_name`,`address`,`birthday`,`sss`,`philhealth`,`pagibig`,`photo`,`status`,`created_at`,`deleted_at`) values (1,1,'Jason','Again','Bourne','Quezon City','1980-08-08','324562342','','',NULL,1,NULL,'0000-00-00 00:00:00');
+insert  into `drivers`(`id`,`unit_id`,`first_name`,`middle_name`,`last_name`,`address`,`birthday`,`sss`,`philhealth`,`pagibig`,`photo`,`status`,`created_at`,`deleted_at`) values (1,1,'Jason','Again','Bourne','Quezon City','1980-08-08','324562342','','',NULL,2,NULL,'2015-07-26 14:35:47');
 
 /*Table structure for table `drivers_acct` */
 
@@ -56,8 +55,8 @@ CREATE TABLE `drivers_acct` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pos_id` int(11) DEFAULT NULL,
   `driver_id` int(11) DEFAULT NULL,
-  `in` decimal(4,2) DEFAULT NULL,
-  `out` decimal(4,2) DEFAULT NULL,
+  `in` decimal(6,2) DEFAULT NULL,
+  `out` decimal(6,2) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `pos_id` (`pos_id`),
@@ -65,9 +64,11 @@ CREATE TABLE `drivers_acct` (
   KEY `created_at` (`created_at`),
   KEY `in` (`in`),
   KEY `out` (`out`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `drivers_acct` */
+
+insert  into `drivers_acct`(`id`,`pos_id`,`driver_id`,`in`,`out`,`created_at`) values (1,1,1,0.00,550.00,'2015-07-26 14:35:47');
 
 /*Table structure for table `garrage` */
 
@@ -93,20 +94,27 @@ DROP TABLE IF EXISTS `maintenance`;
 CREATE TABLE `maintenance` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(80) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `interval` int(6) DEFAULT NULL COMMENT 'odometer',
+  `interval` tinyint(1) DEFAULT NULL COMMENT '1-odometer 2-monthly 3-weekly',
+  `interval_value` int(6) DEFAULT NULL,
   `price` decimal(6,2) DEFAULT NULL,
+  `is_scheduled` tinyint(1) DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `price` (`price`),
   KEY `interval` (`interval`),
   KEY `name` (`name`),
-  KEY `created_at` (`created_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `created_at` (`created_at`),
+  KEY `interval_value` (`interval_value`),
+  KEY `is_scheduled` (`is_scheduled`),
+  KEY `updated_at` (`updated_at`),
+  KEY `deleted_at` (`deleted_at`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `maintenance` */
 
-insert  into `maintenance`(`id`,`name`,`interval`,`price`,`created_at`,`updated_at`) values (1,'change oil',5000,2000.00,'2015-07-19 09:39:03',NULL),(2,'tune up',10000,5000.00,'2015-07-19 09:40:43',NULL);
+insert  into `maintenance`(`id`,`name`,`interval`,`interval_value`,`price`,`is_scheduled`,`created_at`,`updated_at`,`deleted_at`) values (1,'General Check Up',1,10000,5000.00,1,'2015-07-27 16:07:23',NULL,NULL);
 
 /*Table structure for table `maintenance_parts` */
 
@@ -118,10 +126,13 @@ CREATE TABLE `maintenance_parts` (
   `count` tinyint(2) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   KEY `maintenance_id` (`maintenance_id`),
   KEY `parts_id` (`parts_id`),
   KEY `count` (`count`),
-  KEY `created_at` (`created_at`)
+  KEY `created_at` (`created_at`),
+  KEY `updated_at` (`updated_at`),
+  KEY `deleted_at` (`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `maintenance_parts` */
@@ -148,9 +159,11 @@ CREATE TABLE `parts` (
   KEY `created_at` (`created_at`),
   KEY `deleted_at` (`deleted_at`),
   KEY `supplier` (`supplier`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `parts` */
+
+insert  into `parts`(`id`,`name`,`purchase_date`,`supplier`,`price`,`stock`,`created_at`,`updated_at`,`deleted_at`) values (1,'oil','2015-07-25','test',2000.00,5,'2015-07-25 16:53:11','0000-00-00 00:00:00',NULL);
 
 /*Table structure for table `parts_logs` */
 
@@ -192,9 +205,12 @@ CREATE TABLE `pos` (
   KEY `updated_at` (`updated_at`),
   KEY `updated_by` (`updated_by`),
   KEY `rate_type` (`rate_type`),
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  FULLTEXT KEY `reference` (`reference`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `pos` */
+
+insert  into `pos`(`id`,`reference`,`unit_id`,`driver_id`,`rate_type`,`amount`,`short`,`remarks`,`created_at`,`created_by`,`updated_at`,`updated_by`) values (1,NULL,1,1,3,1000.00,550.00,'natulog lang','2015-07-26 14:35:47',1,'0000-00-00 00:00:00',NULL);
 
 /*Table structure for table `units` */
 
@@ -239,7 +255,7 @@ CREATE TABLE `units` (
 
 /*Data for the table `units` */
 
-insert  into `units`(`id`,`garrage_id`,`plate_number`,`year_model`,`reg_rate`,`coding_rate`,`holiday_rate`,`sunday_rate`,`coding_day`,`resealing_date1`,`resealing_date2`,`franchise_until`,`renew_by`,`overhead_fund`,`docs_fund`,`replacement_fund`,`status`,`odometer`,`created_at`) values (1,NULL,'aaa 123',2014,1500.00,800.00,1000.00,1000.00,1,'2015-08-17','2015-09-28','2020-11-25','2017-07-26',2000.00,800.00,5000.00,2,NULL,'2015-07-12 12:38:16');
+insert  into `units`(`id`,`garrage_id`,`plate_number`,`year_model`,`reg_rate`,`coding_rate`,`holiday_rate`,`sunday_rate`,`coding_day`,`resealing_date1`,`resealing_date2`,`franchise_until`,`renew_by`,`overhead_fund`,`docs_fund`,`replacement_fund`,`status`,`odometer`,`created_at`) values (1,NULL,'aaa 123',2014,1500.00,800.00,1000.00,1000.00,1,'2015-08-17','2015-09-28','2020-11-25','2017-07-26',2000.00,800.00,5000.00,2,8000,'2015-07-26 14:35:47');
 
 /*Table structure for table `units_logs` */
 

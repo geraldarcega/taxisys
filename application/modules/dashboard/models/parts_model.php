@@ -18,6 +18,7 @@ class Parts_model extends CI_Model {
 			$this->db->limit( $limit, $offset );
 	
 		return $this->db
+					->where( 'deleted_at IS NULL', null )
 					->get( $this->table );
 	}
 	
