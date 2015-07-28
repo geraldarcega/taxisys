@@ -58,4 +58,18 @@ class Parts extends MY_Framework
         else
             redirect( dashboard_url(), '301' );
     }
+    
+    function get_parts( $filter = array() ) {
+    	$parts = $this->parts_model->read( $filter );
+    	if( $parts->num_rows() > 0 )
+    	{
+    		$_parts = array();
+    		foreach ($parts->result() as $part) {
+    			$_parts[ $part->id ] = $part;
+    		}
+    		return $_parts;
+    	}
+    	else
+    		return false;
+    }
 }

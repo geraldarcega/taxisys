@@ -23,15 +23,7 @@ class Units extends MY_Framework
         $this->data['units'] = $this->units_model->read( $filter, null, null, $sort );
         
         # Maintenance data
-        $maintenance = $this->maintenance_model->read();
-//         if( $maintenance->num_rows() > 0 )
-//         {
-//         	$_maintenance = array();
-//         	foreach ($maintenance->result() as $m) {
-//         		$_maintenance[ $m->id ] = $m;
-//         	}
-        	$this->data['maintenance'] = $maintenance;
-//         }
+        $this->data['maintenance'] = Modules::run( 'dashboard/maintenance/get_maintenance', array( 'wh|is_scheduled' => 1 ), true );
         
         $this->load_view( 'all_units' );
     }
@@ -59,6 +51,20 @@ class Units extends MY_Framework
             $this->data['maintenance'] = json_encode($_maintenance);
         }
         $this->load_view( 'maintenance' );
+    }
+
+    public function get_unit_maintenance( $unit_id, $maintenance_id )
+    {
+    	$maintenance = $this->maintenance_model->get_unit_maintenance( 
+    		 array( 'wh|unit_id' => $unit_id, 'wh|maintenance_id' => $maintenance_id )
+    		,1
+    		,null
+    		,'unit_id, maintenance_id'
+    	);
+    	if( $maintenance->num_rows() > 0 )
+    		return $maintenance->result_array();
+    	else
+    		return false;
     }
 
     public function ajax()
@@ -124,7 +130,20 @@ class Units extends MY_Framework
                     $update = $this->units_model->update($this->input->post());
                     echo json_encode( array( 'success' => $update ) );
                     break;
-
+                
+                case 'apply_maintenance':
+//                     $update = $this->units_model->update($this->input->post());
+//                     echo json_encode( array( 'success' => $update ) );
+                	echo json_encode( $this->input->post() );
+                    break;
+                
+                case 'get_unit_maintenance':
+                    $maintenance = $this->get_unit_maintenance( $this->input->post('unit_id'), $this->input->post('maintenance_id') );
+                    $success = is_array( $maintenance ) ? 1 : 0;
+                    
+                	echo json_encode( array('success' => $success, 'data' => $maintenance) );
+                    break;
+				
                 default:
                     # code...
                     break;

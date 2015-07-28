@@ -20,9 +20,9 @@
 			return $user_data;
 		else
 		{
-			$ci->load->library('user_agent');
-			if( $ci->agent->is_referral() )
-				$ci->session->set_userdata('r', urlencode($ci->agent->referrer()));
+// 			$ci->load->library('user_agent');
+// 			if( $ci->agent->is_referral() )
+// 				$ci->session->set_userdata('r', urlencode($ci->agent->referrer()));
 
 			if( uri_string() != 'pos/login' )
         		redirect( pos_url('login') );

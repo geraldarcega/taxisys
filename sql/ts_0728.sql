@@ -1,0 +1,3 @@
+ALTER TABLE `units_maintenance` DROP COLUMN `repeat_type`, DROP COLUMN `repeat_value`, ADD COLUMN `odometer` INT(6) NULL AFTER `maintenance_id`, ADD COLUMN `deleted_at` TIMESTAMP NULL AFTER `updated_by`, ADD COLUMN `deleted_by` INT NULL AFTER `deleted_at`, DROP INDEX `repeat_type`, ADD INDEX (`deleted_at`), ADD INDEX (`deleted_by`), ADD INDEX (`odometer`); 
+
+ALTER TABLE `units` CHANGE `odometer` `odometer` INT(6) NULL;

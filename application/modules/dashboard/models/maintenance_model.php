@@ -23,8 +23,6 @@ class Maintenance_model extends CI_Model {
 			$this->db->limit( $limit, $offset );
 	
 		return $this->db
-					->select( $this->table.'.*, '.$this->mparts.'.parts_id, '.$this->mparts.'.count' )
-					->join( $this->mparts, $this->mparts.'.maintenance_id = '.$this->table.'.id AND '.$this->mparts.'.deleted_at IS NULL', 'left' )
 					->get( $this->table );
 	}
 	
@@ -121,10 +119,13 @@ class Maintenance_model extends CI_Model {
 		return $this->db->insert_id();
 	}
 
-	public function get_unit_maintenance( $filter = array(), $limit = null, $offset = null, $one = false )
+	public function get_unit_maintenance( $filter = array(), $limit = null, $offset = null, $group = null, $order = array() )
 	{
 		if (!empty($filter))
 			$this->db->filter($filter);
+		
+		if( !is_null($group) )
+			$this->db->group_by( $group );
 		
 		return $this->db
 					->get( $this->units, $limit, $offset );

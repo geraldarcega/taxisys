@@ -255,9 +255,9 @@
                 <div id="failed_msg" class="alert alert-danger" role="alert" style="display:none;">
                     <span></span>
                 </div>
+                <label class="label label-info">Current odometer: <span id="modalOdometer"></span></label>
                 <form class="form-horizontal" id="frmModalMaintenance" method="post" action="<?=dashboard_url('units/ajax')?>">
-                    <input type="hidden" name="action" id="action" value="create_maintenance">
-                    <input type="hidden" name="unit_id" id="unit_id" value="<?=$this->uri->segment('5')?>">
+                    <input type="hidden" name="m_unit_id" id="m_unit_id" value="">
                     <table id="tbl_all_maintenance" class="table table-striped tablesorter">
 	                    <thead style="background-color:#fff;">
 	                        <tr>
@@ -272,17 +272,50 @@
 	                    </thead>
 	                    <tbody>
 	                    	<?php 
-                    			if( $maintenance->num_rows() ){
-                    				foreach( $maintenance->result() as $maintain ) {
+                    			if( count($maintenance) ){
+                    				foreach( $maintenance as $maintain ) {
                     		?>
                     		<tr>
-	                            <td><?php echo $maintain->name; ?></td>
-	                            <td>Every <?php echo number_format($maintain->interval_value); ?> <?=maintenanceInterval($maintain->interval)?></td>
+	                            <td><?php echo $maintain['name']; ?></td>
+	                            <td>Every <?php echo number_format($maintain['interval_value']); ?> <?=maintenanceInterval($maintain['interval'])?></td>
 	                            <td></td>
 	                            <td></td>
 	                            <td></td>
 	                            <td></td>
-	                            <td><a href="#" rel="tooltip" data-original-title="Apply"><i class="fa fa-caret-square-o-right"></i></a></td>
+	                            <td>
+	                            	<a href="javascript:show_maintenance_info('<?php echo $maintain['id']; ?>');" rel="tooltip" data-original-title="Info"><i class="fa fa-info-circle"></i></a> &nbsp;
+	                            	<a href="javascript:apply_maintenance('<?php echo $maintain['id']; ?>');" rel="tooltip" data-original-title="Apply"><i id="apply_link_<?=$maintain['id']?>" class="fa fa-caret-square-o-right"></i></a>
+                            	</td>
+	                        </tr>
+	                        <tr id="maintenance_info_<?php echo $maintain['id']; ?>" class="maintenance-info" style="display: none;">
+	                        	<td colspan="8">
+	                        		<h4>Parts Included</h4>
+	                        		<table class="table table-condensed">
+	                        			<thead>
+	                        				<tr>
+	                        					<th>Name</th>
+	                        					<th>Count</th>
+	                        				</tr>
+	                        			</thead>
+	                        			<tbody>
+	                        				<?php 
+	                        					if( count($maintain['parts']) > 0 ){
+	                        						for ( $i=0; $i < count($maintain['parts']); $i++) {
+                        					?>
+	                        				<tr>
+	                        					<td><?php echo $maintain['parts'][$i]['name']; ?></td>
+	                        					<td><?php echo $maintain['parts'][$i]['count']; ?></td>
+	                        				</tr>
+	                        				<?php } } else { ?>
+	                        				<tr>
+	                        					<td colspan="2">
+	                        						<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> No parts included!</div>
+	                        					</td>
+	                        				</tr>
+	                        				<?php } ?>
+	                        			</tbody>
+	                        		</table>
+	                        	</td>
 	                        </tr>
 	                    	<?php 
                     				} 

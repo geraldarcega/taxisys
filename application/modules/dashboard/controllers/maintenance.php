@@ -14,16 +14,20 @@ class Maintenance extends MY_Framework
 
     public function index( )
     {
-        $this->data['maintenance'] = $this->maintenance_model->read();
-        $parts = $this->parts_model->read( array( 'wh|stock >' => 0 ) );
-        if( $parts->num_rows() > 0 )
-        {
-            $_parts = array();
-            foreach ($parts->result() as $part) {
-                $_parts[ $part->id ] = $part;
-            }
-            $this->data['parts'] = json_encode($_parts);
-        }
+    	$this->get_maintenance();
+    	
+    	#get all parts
+    	$this->data['parts'] = json_encode( Modules::run( 'dashboard/parts/get_parts', array( 'wh|stock >' => 0 ) ) );
+//         $this->data['maintenance'] = $this->maintenance_model->read();
+//         $parts = $this->parts_model->read( array( 'wh|stock >' => 0 ) );
+//         if( $parts->num_rows() > 0 )
+//         {
+//             $_parts = array();
+//             foreach ($parts->result() as $part) {
+//                 $_parts[ $part->id ] = $part;
+//             }
+//             $this->data['parts'] = json_encode($_parts);
+//         }
 
         $this->load_view( 'index' );
     }
@@ -107,5 +111,21 @@ class Maintenance extends MY_Framework
         }
         else
             redirect( dashboard_url(), '301' );
+    }
+    
+    public function get_maintenance( $filter = array(), $return = false ) {
+    	$maintenance = $this->maintenance_model->read( $filter )->result_array();
+    	#get maintenance parts
+    	foreach ($maintenance as &$maintain) {
+    		$parts = $this->maintenance_model->get_maintenance_parts( array( 'wh|maintenance_id' => $maintain['id'] ) );
+    		if( $parts->num_rows() > 0 )
+    			$maintain['parts'] = $parts->result_array();
+    		else
+    			$maintain['parts'] = array();
+    	}
+    	if( $return )
+    		return $maintenance;
+    	else
+    		$this->data['maintenance'] = $maintenance;
     }
 }

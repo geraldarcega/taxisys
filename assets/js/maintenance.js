@@ -66,25 +66,13 @@ $('#maintenanceModal').on('show.bs.modal', function (e) {
 
             if( i == 'is_scheduled' )
             	$('#is_scheduled').bootstrapSwitch('state', v == 1 ? true : false)
-
-            if( i == 'parts_id' )
-            {
-                $.ajax({
-                    type: 'POST',
-                    url: base_url+'dashboard/maintenance/ajax',
-                    data: { 'action' : 'get_parts', 'parts_id' : v },
-                    dataType: "JSON",
-                    success: function(data){
-                        if( data.success )
-                        {
-                            $('#parts_wrapper').html('')
-                            $.each( data.result, function( key, val ) {
-                                add_parts( val.id, maintenance_data[data_id].count )
-                            })
-                        }
-                    }
-                });
-            }
+            
+            if( i == 'parts' )
+        	{
+            	$.each( v, function(i, v){
+            		add_parts( v.id, v.count )
+            	} )
+        	}
         })
     }
 })
@@ -128,14 +116,15 @@ function add_parts( parts, count ) {
         for (var i = 1; i <= max; i++) {
             parts_select += '<option value="'+i+'">'+i+'</option>'
         };
-        $('#'+parent+' .parts-stock-select').html(parts_select)
+
+    	$('#'+parent+' .parts-stock-select').html(parts_select)
     } )
 
     if( parts != '' && count != '' )
     {
         $('#'+input_id+' .parts-select').val(parts)
         $('.parts-select').change()
-        $('#'+input_id+' .parts-stock-select').val(count)
+        $('#'+input_id+' .parts-stock-select option[value='+count+']').attr('selected','selected');
     }
 }
 

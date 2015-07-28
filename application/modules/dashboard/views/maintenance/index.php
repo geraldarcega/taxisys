@@ -12,16 +12,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if( $maintenance->num_rows() ) { $i = 0; ?>
-                        <?php foreach ($maintenance->result() as $_m) { $i++; $json_maintenance[$_m->id] = $_m; ?>
+                        <?php if( count($maintenance) > 0 ) { $i = 0; ?>
+                        <?php foreach ($maintenance as $_m) { $i++; $json_maintenance[$_m['id']] = $_m; ?>
                         <tr>
                             <td><?=$i?></td>
-                            <td><?=ucwords($_m->name)?></td>
-                            <td>Every <?=number_format($_m->interval_value)?> <?=maintenanceInterval($_m->interval)?></td>
-                            <td><?=$_m->is_scheduled ? 'Yes' : 'No'?></td>
+                            <td><?=ucwords($_m['name'])?></td>
+                            <td>Every <?=number_format($_m['interval_value'])?> <?=maintenanceInterval($_m['interval'])?></td>
+                            <td><?=$_m['is_scheduled'] ? 'Yes' : 'No'?></td>
                             <td>
-                                <a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?=$_m->id?>" data-backdrop="static" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
-                                <a href="#" data-id="<?=$_m->id?>" rel="tooltip" data-original-title="Remove"><i class="fa fa-times"></i></a>
+                                <a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?=$_m['id']?>" data-backdrop="static" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
+                                <a href="#" data-id="<?=$_m['id']?>" rel="tooltip" data-original-title="Remove"><i class="fa fa-times"></i></a>
                             </td>
                         </tr>
                         <?php } ?>
@@ -96,13 +96,13 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="btnModalMaintenanceSave" onclick="$('#frmModalMaintenance').submit()" data-loading-text="Saving..." class="btn btn-primary" autocomplete="off">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    var maintenance_data = <?php echo $maintenance->num_rows() ? json_encode( $json_maintenance ) : '[]'; ?>;
+    var maintenance_data = <?php echo count($maintenance) > 0 ? json_encode( $json_maintenance ) : '[]'; ?>;
     var parts_data = <?php echo isset($parts) ? $parts : '[]'; ?>;
 </script>

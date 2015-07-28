@@ -85,15 +85,15 @@ $(document).ready(function() {
         })
     }
 
-    if( !$.isEmptyObject(maintenance_data) )
-    {
-        var options = '<option value=""> --- </option>'
-        $.each( maintenance_data, function( i, v ){
-            options += '<option value="'+i+'">'+v.name+'</option>'
-        } )
-        $('#maintenance').html(options)
-    }
-    $('#parts_included').hide()
+//    if( !$.isEmptyObject(maintenance_data) )
+//    {
+//        var options = '<option value=""> --- </option>'
+//        $.each( maintenance_data, function( i, v ){
+//            options += '<option value="'+i+'">'+v.name+'</option>'
+//        } )
+//        $('#maintenance').html(options)
+//    }
+//    $('#parts_included').hide()
     
     $('#scheduled').bootstrapSwitch('state', false)
 });
@@ -134,13 +134,12 @@ $('#unitsModal').on('show.bs.modal', function (e) {
 
 $('#maintenanceModal').on('show.bs.modal', function (e) {
     var data_id = e.relatedTarget.attributes[3]['value'];
-
-//    if( typeof units_data[data_id] !== "undefined" )
-//    {
-//        $('#maintenanceModalLabel').html( 'UNIT MAINTENANCE: '+units_data[data_id].plate_number.toUpperCase() )
-//        console.log($('#odometer_'+data_id).html())
-//        $('span#modalOdometer').html( $('#odometer_'+data_id).html() )
-//    }
+    $('#m_unit_id').val(data_id)
+    if( typeof units_data[data_id] !== "undefined" )
+    {
+        $('#maintenanceModalLabel').html( 'UNIT MAINTENANCE: '+units_data[data_id].plate_number.toUpperCase() )
+        $('span#modalOdometer').html( $('#odometer_'+data_id).html() )
+    }
 })
 
 $('#maintenance').on( 'change', function(){
@@ -216,4 +215,39 @@ function show_odometer( unit_id ) {
 		odometer.hide()
 		opts.show()
 	}
+}
+
+function apply_maintenance( maintenance_id ) {
+	var ans = confirm('Are you sure you want to apply this maintenance?')
+	
+	if( ans )
+	{
+		$.ajax({
+	        type: $('#frmModalMaintenance').attr('method'),
+	        url: $('#frmModalMaintenance').attr('action'),
+	        data: { 'action' : 'apply_maintenance','unit_id' : $('#m_unit_id').val(), 'maintenance_id' : maintenance_id },
+	        dataType: "JSON",
+	        beforeSend: function() {
+	            $('#apply_link_'+maintenance_id).removeClass('fa-caret-square-o-right').addClass('fa-cog fa-spin')
+	        },
+	        success: function(data){
+	        	$('#apply_link_'+maintenance_id).removeClass('fa-cog fa-spin').addClass('fa-check-square')
+//	            if( data.success )
+//	            {
+//	            	$('#odometer_'+$('#btnUpdateOdo').attr('data-id')).html(formatNumber(new_odometer))
+//	                $('#btnUpdateOdo').button('reset')
+//	                $('#odotitle').hide()
+//	                $('#odomsg').slideDown().delay(400).slideUp()
+//	                $('#odotitle').delay(1000).slideDown('fast')
+//	            }
+	        }
+	    });
+	}
+}
+
+function show_maintenance_info(maintenance_id) {
+	if( !$('#maintenance_info_'+maintenance_id).is(':visible') )
+		$('.maintenance-info').hide()
+
+	$('#maintenance_info_'+maintenance_id).slideToggle()
 }
