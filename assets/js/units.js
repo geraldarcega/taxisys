@@ -139,6 +139,7 @@ $('#maintenanceModal').on('show.bs.modal', function (e) {
     {
         $('#maintenanceModalLabel').html( 'UNIT MAINTENANCE: '+units_data[data_id].plate_number.toUpperCase() )
         $('span#modalOdometer').html( $('#odometer_'+data_id).html() )
+        $('#current_odometer').val(units_data[data_id].odometer)
     }
 })
 
@@ -225,21 +226,24 @@ function apply_maintenance( maintenance_id ) {
 		$.ajax({
 	        type: $('#frmModalMaintenance').attr('method'),
 	        url: $('#frmModalMaintenance').attr('action'),
-	        data: { 'action' : 'apply_maintenance','unit_id' : $('#m_unit_id').val(), 'maintenance_id' : maintenance_id },
+	        data: { 'action' : 'apply_maintenance', 'unit_id' : $('#m_unit_id').val(), 'maintenance_id' : maintenance_id, 'odometer' : $('#current_odometer').val() },
 	        dataType: "JSON",
 	        beforeSend: function() {
 	            $('#apply_link_'+maintenance_id).removeClass('fa-caret-square-o-right').addClass('fa-cog fa-spin')
 	        },
 	        success: function(data){
-	        	$('#apply_link_'+maintenance_id).removeClass('fa-cog fa-spin').addClass('fa-check-square')
-//	            if( data.success )
-//	            {
-//	            	$('#odometer_'+$('#btnUpdateOdo').attr('data-id')).html(formatNumber(new_odometer))
-//	                $('#btnUpdateOdo').button('reset')
-//	                $('#odotitle').hide()
-//	                $('#odomsg').slideDown().delay(400).slideUp()
-//	                $('#odotitle').delay(1000).slideDown('fast')
-//	            }
+	            if( data.success )
+            	{
+	            	$('#apply_link_'+maintenance_id).removeClass('fa-cog fa-spin').addClass('fa-gears')
+	            	location.reload()
+            	}
+	            else
+            	{
+	            	$('#maintenanceModal #msg').removeClass('alert-success')
+	            	$('#maintenanceModal #msg span').html(data.alert.msg)
+	            	$('#maintenanceModal #msg').addClass(data.alert.class).fadeIn().fadeOut(5000)
+            	}
+	        	
 	        }
 	    });
 	}
@@ -250,4 +254,8 @@ function show_maintenance_info(maintenance_id) {
 		$('.maintenance-info').hide()
 
 	$('#maintenance_info_'+maintenance_id).slideToggle()
+}
+
+function complete_maintenance( id ){
+	return false;
 }

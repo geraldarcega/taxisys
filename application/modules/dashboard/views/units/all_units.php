@@ -252,12 +252,13 @@
                 <h4 class="modal-title" id="maintenanceModalLabel">UNIT MAINTENANCE</h4>
             </div>
             <div class="modal-body">
-                <div id="failed_msg" class="alert alert-danger" role="alert" style="display:none;">
+                <div id="msg" class="alert" role="alert" style="display:none;">
                     <span></span>
                 </div>
                 <label class="label label-info">Current odometer: <span id="modalOdometer"></span></label>
                 <form class="form-horizontal" id="frmModalMaintenance" method="post" action="<?=dashboard_url('units/ajax')?>">
                     <input type="hidden" name="m_unit_id" id="m_unit_id" value="">
+                    <input type="hidden" name="current_odometer" id="current_odometer" value="">
                     <table id="tbl_all_maintenance" class="table table-striped tablesorter">
 	                    <thead style="background-color:#fff;">
 	                        <tr>
@@ -284,7 +285,7 @@
 	                            <td></td>
 	                            <td>
 	                            	<a href="javascript:show_maintenance_info('<?php echo $maintain['id']; ?>');" rel="tooltip" data-original-title="Info"><i class="fa fa-info-circle"></i></a> &nbsp;
-	                            	<a href="javascript:apply_maintenance('<?php echo $maintain['id']; ?>');" rel="tooltip" data-original-title="Apply"><i id="apply_link_<?=$maintain['id']?>" class="fa fa-caret-square-o-right"></i></a>
+	                            	<a id="apply_link_<?php echo $maintain['id']; ?>" href="javascript:apply_maintenance('<?php echo $maintain['id']; ?>');" rel="tooltip" data-original-title="Apply"><i id="apply_link_<?=$maintain['id']?>" class="fa fa-caret-square-o-right"></i></a>
                             	</td>
 	                        </tr>
 	                        <tr id="maintenance_info_<?php echo $maintain['id']; ?>" class="maintenance-info" style="display: none;">
@@ -317,6 +318,16 @@
 	                        		</table>
 	                        	</td>
 	                        </tr>
+<!--                         <tr id="notes_<?php echo $maintain['id']; ?>" style="display: none;">
+<!-- 	                        	<td colspan="8"> -->
+<!-- 	                        		<div class="form-group"> -->
+<!-- 		                                <label for="reg_rate" class="col-xs-2 control-label">Notes</label> -->
+<!-- 		                                <div class="col-xs-10"> -->
+<!-- 		                                    <textarea class="form-control" rows="5" style="resize:none;"></textarea>
+<!-- 		                                </div> -->
+<!-- 		                            </div> -->
+<!-- 	                        	</td> -->
+<!-- 	                        </tr> -->
 	                    	<?php 
                     				} 
                     			}
@@ -329,10 +340,6 @@
 	                    </tbody>
 	                </table>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnModalMaintenanceSave" onclick="$('#frmModalMaintenance').submit()" data-loading-text="Saving..." class="btn btn-primary" autocomplete="off">Save changes</button>
             </div>
         </div>
     </div>

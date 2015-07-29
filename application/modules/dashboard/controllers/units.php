@@ -9,7 +9,9 @@ class Units extends MY_Framework
     {
         parent::__construct();
         $this->load->model('units_model');
-        $this->load->model('maintenance_model');        
+        $this->load->model('maintenance_model');
+        
+        $this->maintenance_model->user_id = $this->userdata->id;
     }
 
     public function index( )
@@ -132,9 +134,15 @@ class Units extends MY_Framework
                     break;
                 
                 case 'apply_maintenance':
-//                     $update = $this->units_model->update($this->input->post());
-//                     echo json_encode( array( 'success' => $update ) );
-                	echo json_encode( $this->input->post() );
+                    $new = $this->maintenance_model->add_unit_maintenance($this->input->post());
+                    if( $new ) {
+                    	$this->units_model->update_status($this->input->post('unit_id'), UNIT_MAINTENANCE);
+                    	$msg = array( 'success' => 1 );
+                    }
+                    else
+                    	$msg = array( 'success' => 0, 'alert' => array('class' => 'alert-warning', 'msg' => 'Failed! There\'s something wrong with the system, contact administrator.') );
+                    
+                    echo json_encode( $msg );
                     break;
                 
                 case 'get_unit_maintenance':
