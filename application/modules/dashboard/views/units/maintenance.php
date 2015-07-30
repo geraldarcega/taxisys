@@ -1,11 +1,12 @@
-    <main class="mainContainer">
+<?php $unit_id = $unit->id; ?>
+<main class="mainContainer">
         <div class="row" style="padding:10px 0px;">
             <article class="col-xs-3">
                 <strong id="odotitle">Current Odometer <span id="odomsg" class="label label-info" style="display:none;">Updated!</span></strong>
                 <div class="input-group col-xs-8">
                     <input type="text" id="odometer" name="odometer" class="form-control" placeholder="odometer" value="<?=$unit->odometer?>">
                     <span class="input-group-btn">
-                        <button class="btn btn-primary" type="button" data-id="<?=$this->uri->segment(4)?>" id="btnUpdateOdo">Update</button>
+                        <button class="btn btn-primary" type="button" data-id="<?=$unit_id?>" id="btnUpdateOdo">Update</button>
                     </span>
                 </div>
             </article>
@@ -13,24 +14,89 @@
         <div class="row">
             <article class="col-xs-12">
                 <table id="tbl_all_maintenance" class="table table-striped tablesorter">
-                    <thead style="background-color:#fff;">
-                        <tr>
-                            <th>#</th>
-                            <th>Maintenance</th>
-                            <th>Current</th>
-                            <th>Prev Date</th>
-                            <th>Prev Odometer</th>
-                            <th>Next Date</th>
-                            <th>Next Odometer</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="8"><div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> No maintenance found!</div></td>
-                        </tr>
-                    </tbody>
-                </table>
+	                    <thead style="background-color:#fff;">
+	                        <tr>
+	                            <th>Maintenance</th>
+	                            <th>Interval</th>
+	                            <th>Last Date</th>
+	                            <th>Last Odometer</th>
+	                            <th>Next Date</th>
+	                            <th>Next Odometer</th>
+	                            <th>&nbsp;</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody>
+	                    	<?php 
+                    			if( count($maintenance) ){
+                    				foreach( $maintenance as $maintain ) {
+                    		?>
+                    		<tr>
+	                            <td><?php echo $maintain['name']; ?></td>
+	                            <td>Every <?php echo number_format($maintain['interval_value']); ?> <?=maintenanceInterval($maintain['interval'])?></td>
+	                            <td></td>
+	                            <td></td>
+	                            <td></td>
+	                            <td></td>
+	                            <td>
+	                            	<a href="javascript:show_maintenance_info('<?php echo $maintain['id']; ?>');" rel="tooltip" data-original-title="Info"><i class="fa fa-info-circle"></i></a> &nbsp;
+	                            	<?php if( isset($unit->maintenance[ $unit_id ][ $maintain['id'] ]) ) { ?> 
+									Yey!
+	                            	<?php } else { ?>
+	                            	<a id="apply_link_<?php echo $maintain['id']; ?>" href="javascript:apply_maintenance('<?php echo $maintain['id']; ?>');" rel="tooltip" data-original-title="Apply"><i id="apply_link_<?=$maintain['id']?>" class="fa fa-caret-square-o-right"></i></a>
+	                            	<?php } ?>
+                            	</td>
+	                        </tr>
+	                        <tr id="maintenance_info_<?php echo $maintain['id']; ?>" class="maintenance-info" style="display: none;">
+	                        	<td colspan="8">
+	                        		<h4>Parts Included</h4>
+	                        		<table class="table table-condensed">
+	                        			<thead>
+	                        				<tr>
+	                        					<th>Name</th>
+	                        					<th>Count</th>
+	                        				</tr>
+	                        			</thead>
+	                        			<tbody>
+	                        				<?php 
+	                        					if( count($maintain['parts']) > 0 ){
+	                        						for ( $i=0; $i < count($maintain['parts']); $i++) {
+                        					?>
+	                        				<tr>
+	                        					<td><?php echo $maintain['parts'][$i]['name']; ?></td>
+	                        					<td><?php echo $maintain['parts'][$i]['count']; ?></td>
+	                        				</tr>
+	                        				<?php } } else { ?>
+	                        				<tr>
+	                        					<td colspan="2">
+	                        						<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> No parts included!</div>
+	                        					</td>
+	                        				</tr>
+	                        				<?php } ?>
+	                        			</tbody>
+	                        		</table>
+	                        	</td>
+	                        </tr>
+<!--                         <tr id="notes_<?php echo $maintain['id']; ?>" style="display: none;">
+<!-- 	                        	<td colspan="8"> -->
+<!-- 	                        		<div class="form-group"> -->
+<!-- 		                                <label for="reg_rate" class="col-xs-2 control-label">Notes</label> -->
+<!-- 		                                <div class="col-xs-10"> -->
+<!-- 		                                    <textarea class="form-control" rows="5" style="resize:none;"></textarea>
+<!-- 		                                </div> -->
+<!-- 		                            </div> -->
+<!-- 	                        	</td> -->
+<!-- 	                        </tr> -->
+	                    	<?php 
+                    				} 
+                    			}
+                    			else{
+                    		?>
+                    		<tr>
+	                            <td colspan="8"><div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> No maintenance found!</div></td>
+	                        </tr>
+                    		<?php } ?>
+	                    </tbody>
+	                </table>
             </article>
         </div>
     </main>

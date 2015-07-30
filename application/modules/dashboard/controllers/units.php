@@ -30,28 +30,37 @@ class Units extends MY_Framework
         $this->load_view( 'all_units' );
     }
 
-    public function maintenance( $unit_id )
+    public function maintenance( $type, $unit_id )
     {
-        if( $unit_id == '' || !is_numeric($unit_id) )
-            redirect( dashboard_url('units') );
+    	$_type = array('scheduled' => 1, 'unscheduled' => 0);
 
+        if( !isset($_type[$type]) && ($unit_id == '' || !is_numeric($unit_id)) )
+            redirect( dashboard_url('units') );
+        
+        # Maintenance data
+        $this->data['maintenance'] = Modules::run( 'dashboard/maintenance/get_maintenance', array( 'wh|is_scheduled' => $_type[$type] ), true );
+        
         # Unit data
         $unit = $this->units_model->read( array( 'wh|u.id' => $unit_id ) );
-        if( !$unit->num_rows() )
+		
+        if( $unit->num_rows() > 0 )
+        {
+        	$unit = $unit->row_array();
+        	$unit_maintenance = $this->maintenance_model->get_unit_maintenance( array( 'wh|unit_id' => $unit['id'] ) );
+        	$_maintenance = array();
+        	if( $unit_maintenance->num_rows() > 0 )
+        	{
+        		foreach ($unit_maintenance->result() as $maintenance)
+        			$_maintenance[ $maintenance->unit_id ][ $maintenance->maintenance_id ] = $maintenance;
+        	}
+        	$unit['maintenance'] = $_maintenance;
+        }
+        else
             redirect( dashboard_url('units') );
-
-        $this->data['unit']    = $unit->row();
+		
+        $this->data['unit']    = (object) $unit;
         $this->data['sub_nav'] = 'maintenance ('.strtoupper($this->data['unit']->plate_number).')';
 
-        $maintenance = $this->maintenance_model->read();
-        if( $maintenance->num_rows() > 0 )
-        {
-            $_maintenance = array();
-            foreach ($maintenance->result() as $m) {
-                $_maintenance[ $m->id ] = $m;
-            }
-            $this->data['maintenance'] = json_encode($_maintenance);
-        }
         $this->load_view( 'maintenance' );
     }
 
