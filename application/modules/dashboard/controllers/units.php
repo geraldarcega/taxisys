@@ -30,9 +30,9 @@ class Units extends MY_Framework
         $this->load_view( 'all_units' );
     }
 
-    public function maintenance( $type, $unit_id )
+    public function maintenance( $unit_id )
     {
-        if( ($type == '' && ($unit_id == '' || !is_numeric($unit_id))) )
+        if( $unit_id == '' || !is_numeric($unit_id) )
             redirect( dashboard_url('units') );
 
         # Unit data
@@ -41,7 +41,7 @@ class Units extends MY_Framework
             redirect( dashboard_url('units') );
 
         $this->data['unit']    = $unit->row();
-        $this->data['sub_nav'] = $type.' maintenance ('.strtoupper($this->data['unit']->plate_number).')';
+        $this->data['sub_nav'] = 'maintenance ('.strtoupper($this->data['unit']->plate_number).')';
 
         $maintenance = $this->maintenance_model->read();
         if( $maintenance->num_rows() > 0 )

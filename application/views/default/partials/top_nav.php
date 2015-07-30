@@ -28,10 +28,6 @@
 
                     <?php if( $this->_class == 'units' ) { ?>
                     <?php if( $this->_method == 'maintenance' ) { ?>
-                    <ul class="nav navbar-nav">
-                        <li <?=$this->uri->segment('4') == 'scheduled' ? 'class="active"' : ''?>><a href="<?=dashboard_url('units/maintenance/scheduled/'.$this->uri->segment('5'))?>">SCHEDULED</a></li>
-                        <li <?=$this->uri->segment('4') == 'unscheduled' ? 'class="active"' : ''?>><a href="<?=dashboard_url('units/maintenance/unscheduled/'.$this->uri->segment('5'))?>">UNSCHEDULED</a></li>
-                    </ul>
                     <div class="navbar-right" style="margin-right:10px;">
                         <button type="button" class="btn btn-default navbar-btn ts-navbar-btn" data-toggle="modal" data-target="#maintenanceModal" data-backdrop="static"><i class="fa fa-plus-square"></i> Add maintenance</button>
                     </div>

@@ -2,7 +2,8 @@
 SQLyog Ultimate v11.11 (64 bit)
 MySQL - 5.5.5-10.1.5-MariaDB : Database - taxipos
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -204,8 +205,7 @@ CREATE TABLE `pos` (
   KEY `created_by` (`created_by`),
   KEY `updated_at` (`updated_at`),
   KEY `updated_by` (`updated_by`),
-  KEY `rate_type` (`rate_type`),
-  FULLTEXT KEY `reference` (`reference`)
+  KEY `rate_type` (`rate_type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `pos` */

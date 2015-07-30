@@ -31,7 +31,8 @@
                             <td>
                             	<div id="units_opt_<?php echo $unit->unit_id; ?>">
                             		<a href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
-	                                <a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a> &nbsp;
+                            		<a href="<?=dashboard_url('units/maintenance/'.$unit->unit_id)?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a> &nbsp;
+	                                <?php /*<a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a> &nbsp; */ ?>
 	                                <a href="javascript:show_odometer('<?=$unit->unit_id?>');" rel="tooltip" data-original-title="Odometer"><i class="fa fa-tachometer"></i></a>
                             	</div>
                             	<div id="input_odometer_<?=$unit->unit_id?>" style="width: 130px;display: none;">

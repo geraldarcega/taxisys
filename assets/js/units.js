@@ -194,9 +194,7 @@ $('#btnUpdateOdo').on( 'click', function() {
             {
             	$('#odometer_'+$('#btnUpdateOdo').attr('data-id')).html(formatNumber(new_odometer))
                 $('#btnUpdateOdo').button('reset')
-                $('#odotitle').hide()
                 $('#odomsg').slideDown().delay(400).slideUp()
-                $('#odotitle').delay(1000).slideDown('fast')
             }
         }
     });

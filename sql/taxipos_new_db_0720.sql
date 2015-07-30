@@ -191,7 +191,7 @@ CREATE TABLE `pos` (
   KEY `created_by` (`created_by`),
   KEY `updated_at` (`updated_at`),
   KEY `updated_by` (`updated_by`),
-  KEY `rate_type` (`rate_type`),
+  KEY `rate_type` (`rate_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `pos` */

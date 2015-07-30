@@ -1,12 +1,11 @@
     <main class="mainContainer">
         <div class="row" style="padding:10px 0px;">
-            <article class="col-xs-2">
-                <strong id="odotitle">Current Odometer</strong>
-                <span id="odomsg" class="label label-info" style="display:none;">Updated!</span>
-                <div class="input-group">
+            <article class="col-xs-3">
+                <strong id="odotitle">Current Odometer <span id="odomsg" class="label label-info" style="display:none;">Updated!</span></strong>
+                <div class="input-group col-xs-8">
                     <input type="text" id="odometer" name="odometer" class="form-control" placeholder="odometer" value="<?=$unit->odometer?>">
                     <span class="input-group-btn">
-                        <button class="btn btn-primary" type="button" data-id="<?=$this->uri->segment(5)?>" id="btnUpdateOdo">Update</button>
+                        <button class="btn btn-primary" type="button" data-id="<?=$this->uri->segment(4)?>" id="btnUpdateOdo">Update</button>
                     </span>
                 </div>
             </article>

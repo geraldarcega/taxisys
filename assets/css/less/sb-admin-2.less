@@ -355,8 +355,41 @@ body {
     }
 }
 .mainContainer {
+    
+     
+    .Units {
+       position: relative;
+       padding-left: 45px;
+       padding-bottom: 15px;
+       border-bottom: 1px solid @gray-light;
+       .panel-heading {
+        padding:2px 8px;
+       }
+       .col {
+        padding: 0 10px;
+       }
+    }
+    .thisDay {
+    .allday {
+        padding: 0 8px 0 0;
+        border: 0;
+        left: 30px;
+        position: absolute;
+        top: 50%;
+        position: absolute;
+        -ms-transform: rotate(-90deg); /* IE 9 */
+        -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+        transform: rotate(-90deg);
+        -webkit-transform-origin: bottom bottom 0; /* Chrome, Safari, Opera */
+        transform-origin: left bottom 0;
+        line-height: 34px;
+        border-radius:  0 0 4px 4px;
+        overflow: hidden;
+        text-transform: uppercase;
+        }
+    }
     article {
-padding-right: 0;
+        padding-right: 0;
     }
     aside {
         padding-left: 0;
@@ -457,7 +490,7 @@ table.dataTable thead .sorting:after {
 // Custom Colored Panels
 
 .huge {
-    font-size: 25px;
+    font-size: 18px;
     display: inline-block;
 }
 
@@ -475,19 +508,20 @@ table.dataTable thead .sorting:after {
         padding: 5px;
         text-align: center;
         color: #fff; 
-        height: 36px;
+        height: 28px;
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
-        line-height: 25px;
+        line-height: 26px;
+        padding: 0;
     }
     .dash-units {
         text-align:center;
-        font-size: 30px;
+        font-size: 18px;
     }
 }
 .panel {
     margin-bottom: 0;
-    margin-top: 20px;
+    margin-top:10px;
     position: relative;
     .updateEditbtn {
         text-align: center;
@@ -502,6 +536,10 @@ table.dataTable thead .sorting:after {
         top: 0px;
         right: 32.33px;
         height: 33.33px;
+        font-size: 10px !important;
+        .fa {
+            margin-left: 5px;
+        }
     }
     a.panel-side-link {
         color:@gray;
@@ -510,7 +548,7 @@ table.dataTable thead .sorting:after {
 }
 .Units {
     .updateEditbtn {
-        width: 98.889px;
+            width: 59px;
     }
 }
 .panel-green {

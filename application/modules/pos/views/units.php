@@ -1,32 +1,11 @@
 <?php $pos_data = array(); ?>
-    <main class="mainContainer">
-        <div class="row">
-            <article class="col-xs-12">
-                <div class="dash-border Units">
-                    <div class="col-xs-4 border-right" id="duty_wrapper">
-                        <i class="dashboard-label">On-duty</i>
-                        <?php if( $units['on_duty']->num_rows() ) { ?>
-                        <?php foreach ($units['on_duty']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
-                        <div class="panel panel-green" id="taxi_<?=$unit->unit_id?>">
-                           <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_DUTY?>" data-backdrop="static">
-                                <div class="updateEditbtn">
-                                    UPDATE<i class="fa fa-angle-right"></i>
-                                </div><!-- updateEditbtn -->
-                            </a>
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-12 dash-units">
-                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-body panel-nametag"><?=ucwords($unit->first_name.' '.$unit->last_name)?></div>
-                        </div>
-                        <?php } ?>
-                        <?php } ?>
-                    </div>
-                    <div class="col-xs-4 border-right" id="garrage_wrapper">
-                        <i class="dashboard-label">On-garrage</i>
+    <main class="mainContainer" id="garrage_wrapper">
+        <div class="Units"  >
+            <div class="thisDay">
+                <h4 class="allday monday">MONDAY</h4>
+            </div><!-- thisDay -->
+            <div class="row">
+                <div class="col col-md-3 ">
                         <?php if( $units['on_garrage']->num_rows() ) { ?>
                         <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
                         <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
@@ -47,12 +26,11 @@
                         <?php } ?>
                         <?php } ?>
                     </div>
-                    <div class="col-xs-4 border-right" id="maintenance_wrapper">
-                        <i class="dashboard-label">On-maintenance</i>
-                        <?php if( $units['on_maintenance']->num_rows() ) { ?>
-                        <?php foreach ($units['on_maintenance']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
-                        <div class="panel panel-red" id="taxi_<?=$unit->unit_id?>">
-                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_MAINTENANCE?>" data-backdrop="static">
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
                                 <div class="updateEditbtn">
                                     UPDATE<i class="fa fa-angle-right"></i>
                                 </div><!-- updateEditbtn -->
@@ -69,12 +47,844 @@
                         <?php } ?>
                         <?php } ?>
                     </div>
-                </div>
-            </article>
-            <aside class="col-xs-3">
-                <?=@$chat;?>
-            </aside>
-        </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+            </div><!-- row -->
+            <div class="row">
+                <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+            </div><!-- row -->
+        </div><!-- units -->
+        <div class="Units"  >
+            <div class="thisDay">
+                <h4 class="allday tuesday">TUESDAY</h4>
+            </div><!-- thisDay -->
+            <div class="row">
+                <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+            </div><!-- row -->
+            <div class="row">
+                <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+            </div><!-- row -->
+        </div><!-- units -->
+        <div class="Units"  >
+            <div class="thisDay">
+                <h4 class="allday wednesday">Wednesday</h4>
+            </div><!-- thisDay -->
+            <div class="row">
+                <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+            </div><!-- row -->
+            <div class="row">
+                <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+            </div><!-- row -->
+        </div><!-- units -->
+        <div class="Units"  >
+            <div class="thisDay">
+                <h4 class="allday thursday">THURSDAY</h4>
+            </div><!-- thisDay -->
+            <div class="row">
+                <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+            </div><!-- row -->
+            <div class="row">
+                <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+            </div><!-- row -->
+        </div><!-- units -->
+        <div class="Units"  >
+            <div class="thisDay">
+                <h4 class="allday FRIDAY">friday</h4>
+            </div><!-- thisDay -->
+            <div class="row">
+                <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+            </div><!-- row -->
+            <div class="row">
+                <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+                    <div class="col col-md-3 ">
+                        <?php if( $units['on_garrage']->num_rows() ) { ?>
+                        <?php foreach ($units['on_garrage']->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+                        <div class="panel panel-yellow" id="taxi_<?=$unit->unit_id?>"> 
+                            <a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=UNIT_GARRAGE?>" data-backdrop="static">
+                                <div class="updateEditbtn">
+                                    UPDATE<i class="fa fa-angle-right"></i>
+                                </div><!-- updateEditbtn -->
+                            </a>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-12 dash-units">
+                                        <i class="fa fa-taxi"></i> <div class="huge"><?=strtoupper($unit->plate_number)?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-nametag"><?=$unit->first_name != '' && $unit->last_name != '' ? ucwords($unit->first_name.' '.$unit->last_name) : 'No Driver'?></div>
+                        </div>
+                        <?php } ?>
+                        <?php } ?>
+                    </div>
+            </div><!-- row -->
+        </div><!-- units -->
     </main>
 </div>
 <!-- Modal -->
@@ -106,7 +916,7 @@
                                 <option value="">----</option>
                                 <?php if( $drivers->num_rows() ) { ?>
                                 <?php foreach ($drivers->result() as $driver) { ?>
-                                <option value="<?=$driver->id?>"><?=$driver->first_name?> <?=$driver->last_name?></option>
+                                <option value="<?=$driver->driver_id?>"><?=$driver->first_name?> <?=$driver->last_name?></option>
                                 <?php } ?>
                                 <?php } ?>
                             </select>
