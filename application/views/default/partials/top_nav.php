@@ -7,11 +7,14 @@
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
-    <?php if( $this->session->flashdata('msg') ){ ?>
+    <?php 
+    	$msg = $this->session->flashdata('msg'); 
+    	if( is_array($msg) ){
+	?>
     <!-- /message -->
-    <div class="alert alert-success alert-dismissible" role="alert">
+    <div class="alert <?php echo $msg['class']; ?> alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <?=$this->session->flashdata('msg')?>
+        <?=$msg['value']?>
     </div>
     <?php } ?>
     <?php if( $this->top_nav ) { ?>

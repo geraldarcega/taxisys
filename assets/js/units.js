@@ -10,7 +10,8 @@ $(document).ready(function() {
         } 
     });
 
-    $('#schedule_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
+    $('#prefered_date_dp').datetimepicker({ 'minDate': new Date(), 'format': 'MMM DD, YYYY' });
+    $('#prefered_time_dp').datetimepicker({ 'format': 'hh:mm A' });
     $('#resealing_date1_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
     $('#resealing_date2_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
     $('#franchise_until_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
@@ -55,30 +56,7 @@ $(document).ready(function() {
     {
         $('#frmModalMaintenance').validate({
             submitHandler: function(form) {
-                var ans = confirm('Continue saving?')
-
-                if( ans )
-                {
-                    $.ajax({
-                        type: $(form).attr("method"),
-                        url: $(form).attr("action"),
-                        data: $(form).serialize(),
-                        dataType: "JSON",
-                        beforeSend: function() {
-                            $('#btnModalUnitsave').button('loading')
-                        },
-                        success: function(data){
-                            if( data.success )
-                                location.reload()
-                            else
-                            {
-                                $('#btnModalUnitsave').button('reset')
-                                $('#failed_msg span').html( data.msg )
-                                $('#failed_msg').show()
-                            }
-                        }
-                    });
-                }
+            	apply_maintenance()
 
                 return false
             }
@@ -133,13 +111,13 @@ $('#unitsModal').on('show.bs.modal', function (e) {
 })
 
 $('#maintenanceModal').on('show.bs.modal', function (e) {
-    var data_id = e.relatedTarget.attributes[3]['value'];
-    $('#m_unit_id').val(data_id)
-    if( typeof units_data[data_id] !== "undefined" )
+    var data_id = e.relatedTarget.attributes[3]['value']
+    var unit_id = unit_data.id
+    $('#maintenance_id').val(data_id)
+    console.log(unit_data.maintenance.ongoing[unit_id][data_id])
+    if( typeof maintenance_data[data_id] !== "undefined" )
     {
-        $('#maintenanceModalLabel').html( 'UNIT MAINTENANCE: '+units_data[data_id].plate_number.toUpperCase() )
-        $('span#modalOdometer').html( $('#odometer_'+data_id).html() )
-        $('#current_odometer').val(units_data[data_id].odometer)
+        $('#maintenanceModalLabel').html('SET-UP MAINTENANCE: '+maintenance_data[data_id].name.toUpperCase())
     }
 })
 
@@ -216,7 +194,7 @@ function show_odometer( unit_id ) {
 	}
 }
 
-function apply_maintenance( maintenance_id ) {
+function apply_maintenance() {
 	var ans = confirm('Are you sure you want to apply this maintenance?')
 	
 	if( ans )
@@ -224,24 +202,18 @@ function apply_maintenance( maintenance_id ) {
 		$.ajax({
 	        type: $('#frmModalMaintenance').attr('method'),
 	        url: $('#frmModalMaintenance').attr('action'),
-	        data: { 'action' : 'apply_maintenance', 'unit_id' : $('#m_unit_id').val(), 'maintenance_id' : maintenance_id, 'odometer' : $('#current_odometer').val() },
+//	        data: { 'action' : 'apply_maintenance', 'unit_id' : $('#m_unit_id').val(), 'maintenance_id' : maintenance_id, 'odometer' : $('#current_odometer').val() },
+	        data: $('#frmModalMaintenance').serialize(),
 	        dataType: "JSON",
 	        beforeSend: function() {
-	            $('#apply_link_'+maintenance_id).removeClass('fa-caret-square-o-right').addClass('fa-cog fa-spin')
+	            $('#btnModalMaintenanceSave').button('loading')
 	        },
 	        success: function(data){
 	            if( data.success )
             	{
-	            	$('#apply_link_'+maintenance_id).removeClass('fa-cog fa-spin').addClass('fa-gears')
+	            	$('#btnModalMaintenanceSave').button('resest')
 	            	location.reload()
-            	}
-	            else
-            	{
-	            	$('#maintenanceModal #msg').removeClass('alert-success')
-	            	$('#maintenanceModal #msg span').html(data.alert.msg)
-	            	$('#maintenanceModal #msg').addClass(data.alert.class).fadeIn().fadeOut(5000)
-            	}
-	        	
+            	}	        	
 	        }
 	    });
 	}

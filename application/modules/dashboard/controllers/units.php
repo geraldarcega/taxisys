@@ -46,14 +46,23 @@ class Units extends MY_Framework
         if( $unit->num_rows() > 0 )
         {
         	$unit = $unit->row_array();
-        	$unit_maintenance = $this->maintenance_model->get_unit_maintenance( array( 'wh|unit_id' => $unit['id'] ) );
-        	$_maintenance = array();
-        	if( $unit_maintenance->num_rows() > 0 )
-        	{
-        		foreach ($unit_maintenance->result() as $maintenance)
-        			$_maintenance[ $maintenance->unit_id ][ $maintenance->maintenance_id ] = $maintenance;
-        	}
-        	$unit['maintenance'] = $_maintenance;
+        	$unit ['maintenance'] ['ongoing'] = $this->get_unit_maintenance_by_status (
+        			$unit ['id'], 
+        			Maintenance_model::STATUS_ONGOING
+        	);
+        	$unit ['maintenance'] ['past'] = $this->get_unit_maintenance_by_status ( 
+        			$unit ['id'], 
+        			Maintenance_model::STATUS_DONE, 
+        			array (), 
+        			1, 
+        			'unit_id,maintenance_id', 
+        			array (
+						'desc' => array (
+								'prefered_date',
+								'prefered_time' 
+						) 
+					) 
+			);
         }
         else
             redirect( dashboard_url('units') );
@@ -62,6 +71,25 @@ class Units extends MY_Framework
         $this->data['sub_nav'] = 'maintenance ('.strtoupper($this->data['unit']->plate_number).')';
 
         $this->load_view( 'maintenance' );
+    }
+    
+    public function get_unit_maintenance_by_status( $unit_id, $status, $filter = array(), $limit = null, $group = null, $sort = array() ) {
+    	$filter1 = array (
+				'wh|unit_id' => $unit_id,
+				'wh|status' => $status 
+		);
+    	if( !empty( $filter ) )
+    		$filter1 = array_merge($filter1, $filter);
+    	
+    	$unit_maintenance = $this->maintenance_model->get_unit_maintenance ( $filter1, $limit, null, $group, $sort );
+    	$_maintenance = array();
+    	if( $unit_maintenance->num_rows() > 0 )
+    	{
+    		foreach ($unit_maintenance->result() as $maintenance)
+    			$_maintenance[ $maintenance->unit_id ][ $maintenance->maintenance_id ] = $maintenance;
+    	}
+    	
+    	return $_maintenance;
     }
 
     public function get_unit_maintenance( $unit_id, $maintenance_id )
@@ -146,6 +174,7 @@ class Units extends MY_Framework
                     $new = $this->maintenance_model->add_unit_maintenance($this->input->post());
                     if( $new ) {
                     	$this->units_model->update_status($this->input->post('unit_id'), UNIT_MAINTENANCE);
+                    	$this->session->set_flashdata('msg', array('class' => 'alert-success', 'value' => '<strong><i class="fa fa-database"></i> Success!</strong> Unit is now under maintenance.') );
                     	$msg = array( 'success' => 1 );
                     }
                     else

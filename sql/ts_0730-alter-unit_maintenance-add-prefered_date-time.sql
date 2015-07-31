@@ -1,0 +1,1 @@
+ALTER TABLE `units_maintenance` ADD COLUMN `prefered_date` DATE NULL AFTER `status`, ADD COLUMN `prefered_time` TIME NULL AFTER `prefered_date`, ADD INDEX (`prefered_date`), ADD INDEX (`prefered_time`);

@@ -13,6 +13,9 @@ class Maintenance_model extends CI_Model {
 	const INTERVAL_MONTHLY	= 2;
 	const INTERVAL_WEEKLY	= 3;
 	
+	const STATUS_ONGOING	= 0;
+	const STATUS_DONE		= 1;
+	
 	function __construct(){
 		parent::__construct();
 	}
@@ -58,8 +61,11 @@ class Maintenance_model extends CI_Model {
 		}
 		else
 		{
-			$this->db->insert( $this->mparts, array( 'maintenance_id' => $maintenance_id, 'parts_id' => $parts_id, 'count' => $cnt ) );
-			return $this->db->insert_id();
+			if( $parts_id != '' )
+			{
+				$this->db->insert( $this->mparts, array( 'maintenance_id' => $maintenance_id, 'parts_id' => $parts_id, 'count' => $cnt ) );
+				return $this->db->insert_id();
+			}
 		}
 	}
 	
@@ -104,21 +110,31 @@ class Maintenance_model extends CI_Model {
 
 	public function add_unit_maintenance( $db_data )
 	{
-		unset($db_data['action']);
-		$db_data['created_by'] = $this->user_id;
+		$db_data ['odometer'] = $db_data ['m_odometer'];
+		$db_data ['created_by'] = $this->user_id;
+		$db_data ['prefered_date'] = date ( 'Y-m-d', strtotime ( $db_data ['prefered_date'] ) );
+		$db_data ['prefered_time'] = date ( 'H:i:s', strtotime ( $db_data ['prefered_time'] ) );
+		
+		unset ( $db_data ['action'] );
+		unset ( $db_data ['unit_maintenance_id'] );
+		unset ( $db_data ['uns_maintenance'] );
+		unset ( $db_data ['m_odometer'] );
 		
 		$this->db->insert( $this->units, $db_data );
 	
 		return $this->db->insert_id();
 	}
 
-	public function get_unit_maintenance( $filter = array(), $limit = null, $offset = null, $group = null, $order = array() )
+	public function get_unit_maintenance( $filter = array(), $limit = null, $offset = null, $group = null, $sort = array() )
 	{
 		if (!empty($filter))
 			$this->db->filter($filter);
 		
 		if( !is_null($group) )
 			$this->db->group_by( $group );
+
+		if( !empty($sort) )
+			$this->db->sort( $sort );
 		
 		return $this->db
 					->get( $this->units, $limit, $offset );

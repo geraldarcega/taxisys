@@ -542,3 +542,6 @@ table.dataTable thead .sorting:after {
   height: 200px;
   overflow-y: auto;
 }
+.maintenance-info {
+  background-color: #fff;
+}
