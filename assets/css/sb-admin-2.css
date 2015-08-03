@@ -299,6 +299,7 @@ body {
   padding-left: 45px;
   padding-bottom: 15px;
   border-bottom: 1px solid #b0adb0;
+  min-height: 80px;
 }
 .mainContainer .Units .panel-heading {
   padding: 2px 8px;
@@ -310,7 +311,7 @@ body {
   padding: 0 8px 0 0;
   border: 0;
   left: 30px;
-  top: 50%;
+  top: 20%;
   position: absolute;
   -ms-transform: rotate(-90deg);
   /* IE 9 */
@@ -400,7 +401,7 @@ table.dataTable thead .sorting:after {
   margin: 15px 0;
 }
 .huge {
-  font-size: 18px;
+  font-size: 12px;
   display: inline-block;
 }
 .panel a {
@@ -421,10 +422,12 @@ table.dataTable thead .sorting:after {
   border-bottom-right-radius: 4px;
   line-height: 26px;
   padding: 0;
+  font-size: 12px;
 }
 .panel .dash-units {
   text-align: center;
-  font-size: 18px;
+  font-size: 12px;
+  padding-left: 0px !important;
 }
 .panel {
   margin-bottom: 0;
@@ -454,7 +457,7 @@ table.dataTable thead .sorting:after {
   line-height: 33.33px;
 }
 .Units .updateEditbtn {
-  width: 59px;
+  width: 51px;
 }
 .panel-green {
   border-color: #529e52;

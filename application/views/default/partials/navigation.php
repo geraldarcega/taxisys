@@ -260,11 +260,11 @@
                 <li>
                     <a <?=$this->_class == 'parts' ? 'class="active"' : '' ?> href="<?=dashboard_url('parts');?>"><i class="fa fa-gears fa-fw"></i> PARTS</a>
                 </li>
-                <li>
+                <li <?=$this->_class == 'reports' ? 'class="active"' : '' ?>>
                     <a href="#"><i class="fa fa-line-chart fa-fw"></i> REPORTS<span class="fa arrow"></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a <?=@$sub_nav == 'boundary' ? 'class="active"' : '' ?> href="<?=dashboard_url('reports/boundary');?>"><i class="fa fa-money fa-fw"></i> BOUNDARY</a>
+                            <a <?=$this->_method == 'boundary' ? 'class="active"' : '' ?> href="<?=dashboard_url('reports/boundary');?>"><i class="fa fa-money fa-fw"></i> BOUNDARY</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->

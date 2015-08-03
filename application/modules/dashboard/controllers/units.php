@@ -41,30 +41,9 @@ class Units extends MY_Framework
         $this->data['maintenance'] = Modules::run( 'dashboard/maintenance/get_maintenance', array( 'wh|is_scheduled' => $_type[$type] ), true );
         
         # Unit data
-        $unit = $this->units_model->read( array( 'wh|u.id' => $unit_id ) );
+        $unit = $this->get_unit_details($unit_id);
 		
-        if( $unit->num_rows() > 0 )
-        {
-        	$unit = $unit->row_array();
-        	$unit ['maintenance'] ['ongoing'] = $this->get_unit_maintenance_by_status (
-        			$unit ['id'], 
-        			Maintenance_model::STATUS_ONGOING
-        	);
-        	$unit ['maintenance'] ['past'] = $this->get_unit_maintenance_by_status ( 
-        			$unit ['id'], 
-        			Maintenance_model::STATUS_DONE, 
-        			array (), 
-        			1, 
-        			'unit_id,maintenance_id', 
-        			array (
-						'desc' => array (
-								'prefered_date',
-								'prefered_time' 
-						) 
-					) 
-			);
-        }
-        else
+        if( !$unit )
             redirect( dashboard_url('units') );
 		
         $this->data['unit']    = (object) $unit;
@@ -167,7 +146,9 @@ class Units extends MY_Framework
                 
                 case 'update_odometer':
                     $update = $this->units_model->update($this->input->post());
-                    echo json_encode( array( 'success' => $update ) );
+                    $unit = $this->get_unit_details($this->input->post('unit_id'));
+                    
+                    echo json_encode( array( 'success' => $update, 'unit_data' => json_encode( $unit ) ) );
                     break;
                 
                 case 'apply_maintenance':
@@ -175,6 +156,26 @@ class Units extends MY_Framework
                     if( $new ) {
                     	$this->units_model->update_status($this->input->post('unit_id'), UNIT_MAINTENANCE);
                     	$this->session->set_flashdata('msg', array('class' => 'alert-success', 'value' => '<strong><i class="fa fa-database"></i> Success!</strong> Unit is now under maintenance.') );
+                    	$msg = array( 'success' => 1 );
+                    }
+                    else
+                    	$msg = array( 'success' => 0, 'alert' => array('class' => 'alert-warning', 'msg' => 'Failed! There\'s something wrong with the system, contact administrator.') );
+                    
+                    echo json_encode( $msg );
+                    break;
+                
+                case 'update_applied_maintenance':
+                    $update = $this->maintenance_model->update_unit_maintenance($this->input->post());
+                    if( $update ) {
+                    	if( $this->input->post('status') != '' )
+                    	{
+                    		$msg_val = $this->input->post('status') == 1 ? 'Unit maintenance has been completed.' : 'Unit maintenance has been cancelled.';
+                    		$this->units_model->update_status($this->input->post('unit_id'), 2);
+                    	}
+						else
+							$msg_val = 'Unit maintenance details is now updated.';
+
+                    	$this->session->set_flashdata('msg', array('class' => 'alert-success', 'value' => '<strong><i class="fa fa-database"></i> Success!</strong> '.$msg_val) );
                     	$msg = array( 'success' => 1 );
                     }
                     else
@@ -198,4 +199,34 @@ class Units extends MY_Framework
         else
             redirect( dashboard_url(), '301' );
     }
+    
+   public function get_unit_details( $unit_id ) {
+   	# Unit data
+   	$unit = $this->units_model->read( array( 'wh|u.id' => $unit_id ) );
+   	
+   	if( $unit->num_rows() > 0 )
+   	{
+   		$unit = $unit->row_array();
+   		$unit ['maintenance'] ['ongoing'] = $this->get_unit_maintenance_by_status (
+   				$unit ['id'],
+   				Maintenance_model::STATUS_ONGOING
+   		);
+   		$unit ['maintenance'] ['past'] = $this->get_unit_maintenance_by_status (
+   				$unit ['id'],
+   				Maintenance_model::STATUS_DONE,
+   				array (),
+   				1,
+   				'unit_id,maintenance_id',
+   				array (
+   						'desc' => array (
+   								'prefered_date',
+   								'prefered_time'
+   						)
+   				)
+   		);
+   		return $unit;
+   	}
+   	else
+   		return false;
+   }
 }

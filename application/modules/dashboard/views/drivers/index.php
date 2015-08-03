@@ -9,6 +9,7 @@
                         <tr>
                             <th>#</th>
                             <th>Current Unit</th>
+                            <th>Nickname</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>On-duty</th>
@@ -21,6 +22,7 @@
                         <tr>
                             <td><?=$cnt?></td>
                             <td><?=strtoupper($driver->plate_number)?></td>
+                            <td><?=ucwords($driver->nickname)?></td>
                             <td><?=ucwords($driver->first_name)?></td>
                             <td><?=ucwords($driver->last_name)?></td>
                             <td><?=driverStatus($driver->status)?></td>
@@ -82,6 +84,12 @@
                         <label for="last_name" class="col-xs-4 control-label">&nbsp;</label>
                         <div class="col-xs-8">
                             <input type="text" class="form-control driver-field" id="last_name" name="last_name" placeholder="Last name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nickname" class="col-xs-4 control-label">Nickname</label>
+                        <div class="col-xs-5">
+                            <input type="text" class="form-control driver-field" id="nickname" name="nickname" required>
                         </div>
                     </div>
                     <div class="form-group">

@@ -33,7 +33,6 @@ $(document).ready( function(){
                     	$('#old_status').val( $('#status').val() )
                          $('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
                          $('#'+data.taxi).hide()
-                                         .appendTo("#"+data.element.div)
                                          .removeClass(data.element.old_class)
                                          .addClass(data.element.new_class)
                                          .fadeIn(1000)
@@ -71,6 +70,7 @@ $(document).ready( function(){
 $('#unitsModal').on('show.bs.modal', function (e) {
     var data_id   = e.relatedTarget.attributes[4]['value']
     var data_type = e.relatedTarget.attributes[5]['value']
+    var data_coding = e.relatedTarget.attributes[6]['value']
     var data      = (typeof pos_json[data_id] !== "undefined") ? pos_json[data_id] : ''
 
     init()
@@ -116,9 +116,24 @@ $('#unitsModal').on('show.bs.modal', function (e) {
     }
 })
 
+$('#unitsModal').on('show.bs.modal', function (e) {
+	var data_type = e.relatedTarget.attributes[5]['value']
+    var data_coding = e.relatedTarget.attributes[6]['value']
+	
+	if( data_type == "1" && data_coding === "yes" )
+	{
+		$('#rate_input .btn-group').hide();
+		$('#rate_type input[type="radio"]').prop('checked', false)
+		$('#rate_input .coding').show()
+	}
+})
+
 function init() {
     $('#select_driver').tooltip('hide')
 
     $('#frmModalPOS input[type="text"]').val('')
     $('#frmModalPOS textarea').val('')
+    
+    $('#rate_input .btn-group').show();
+	$('#rate_input .coding').hide()
 }

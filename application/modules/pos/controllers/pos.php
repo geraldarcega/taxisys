@@ -20,10 +20,17 @@ class Pos extends MY_Framework
         $now = date('Y-m-d');
 
         $this->data['sub_nav']    = 'units';
-
-        $this->data['units']['on_duty']        = $this->units_model->read( array( 'wh|u.status' => UNIT_DUTY, 'wh|d.status' => DRIVER_DUTY ) );
-        $this->data['units']['on_garrage']     = $this->units_model->read( array( 'wh|u.status' => UNIT_GARRAGE ) );
-        $this->data['units']['on_maintenance'] = $this->units_model->read( array( 'wh|u.status' => UNIT_MAINTENANCE ) );
+        $groups = array (
+        		'MON' => 'monday',
+        		'TUE' => 'tuesday',
+        		'WED' => 'wednesday',
+        		'THUR' => 'thursday',
+        		'FRI' => 'friday'
+        );
+        $this->data['groups'] = $groups;
+        
+        foreach ( $groups as $key => $val )
+        	$this->data['units'][$val]		= $this->units_model->read( array( 'wh|u.coding_day' => constant("DAY_{$key}") ) );
 
         $this->data['drivers'] = $this->drivers_model->read(array( 'wh|d.status' => 2 ));
 

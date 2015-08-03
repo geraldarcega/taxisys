@@ -74,6 +74,7 @@ $(document).ready(function() {
 //    $('#parts_included').hide()
     
     $('#scheduled').bootstrapSwitch('state', false)
+    $('#frmModalMaintenance .update-flds').hide()
 });
 
 $('#unitsModal').on('show.bs.modal', function (e) {
@@ -113,11 +114,28 @@ $('#unitsModal').on('show.bs.modal', function (e) {
 $('#maintenanceModal').on('show.bs.modal', function (e) {
     var data_id = e.relatedTarget.attributes[3]['value']
     var unit_id = unit_data.id
+    var unit_maintenance = typeof unit_data.maintenance.ongoing[unit_id][data_id] === "object" ? unit_data.maintenance.ongoing[unit_id][data_id] : ''
+    
     $('#maintenance_id').val(data_id)
-    console.log(unit_data.maintenance.ongoing[unit_id][data_id])
+    console.log(unit_maintenance)
+    init_unit_maintenance()
     if( typeof maintenance_data[data_id] !== "undefined" )
     {
-        $('#maintenanceModalLabel').html('SET-UP MAINTENANCE: '+maintenance_data[data_id].name.toUpperCase())
+    	var suffix_title = ''
+        if( unit_maintenance != '' )
+    	{
+        	var time = unit_maintenance.prefered_time.split(':')
+        	var a_p = time[0] > 11 ? 'PM' : 'AM'
+        	$('#action').val('update_applied_maintenance')
+        	$('#unit_maintenance_id').val(unit_maintenance.id)
+        	$('#prefered_date').val( readableDate(unit_maintenance.prefered_date) )
+        	$('#prefered_time').val( time[0]+':'+time[1]+' '+a_p )
+        	$('textarea#notes').val( unit_maintenance.notes )
+        	
+        	$('#frmModalMaintenance .update-flds').show()
+        	suffix_title = 'UPDATE '
+    	}
+        $('#maintenanceModalLabel').html(suffix_title+'SET-UP MAINTENANCE: '+maintenance_data[data_id].name.toUpperCase())
     }
 })
 
@@ -228,4 +246,11 @@ function show_maintenance_info(maintenance_id) {
 
 function complete_maintenance( id ){
 	return false;
+}
+
+function init_unit_maintenance() {
+	$('#frmModalMaintenance .update-flds').hide()
+	$('#notes').val('')
+    $('#prefered_time').val('')
+    $('#prefered_date').val('')
 }

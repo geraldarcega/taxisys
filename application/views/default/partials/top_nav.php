@@ -17,17 +17,17 @@
         <?=$msg['value']?>
     </div>
     <?php } ?>
-    <?php if( $this->top_nav ) { ?>
+    <?php if( $this->top_nav && $this->_class != 'pos' ) { ?>
     <div class="mainNav">
         <div class="row">
             <div class="col-xs-12 leftNavi">
                 <nav class="navbar navbar-default ts-navbar-inner" style="margin-bottom: -1px; line-height: 47px;">
-                    <?php if( $this->_class == 'pos' ) { ?>
+                    <?php /* if( $this->_class == 'pos' ) { ?>
                     <ul class="nav navbar-nav">
                         <li <?=@$sub_nav=='units' ? 'class="active"' : '';?>><a href="<?=pos_url()?>">UNITS</a></li>
                         <li <?=@$sub_nav=='drivers' ? 'class="active"' : '';?>><a href="<?=pos_url('drivers')?>">DRIVERS</a></li>
                     </ul>
-                    <?php } ?>
+                    <?php } */ ?>
 
                     <?php if( $this->_class == 'units' ) { ?>
                     <?php if( $this->_method == 'maintenance' ) { ?>

@@ -42,7 +42,7 @@ class Drivers extends MY_Framework
                     $new = $this->drivers_model->update( $this->input->post() );
                     if( !isset($new['exist']) )
                     {
-                        $this->units_model->create_log( array( 'unit_idFK' => $this->input->post('unit'), 'driver_idFK' => $this->input->post('driver_id') ) );
+//                         $this->units_model->create_log( array( 'unit_idFK' => $this->input->post('unit'), 'driver_idFK' => $this->input->post('driver_id') ) );
                         $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> Driver\'s details is now updated.');
                         $msg = array( 'success' => 1 );
                     }

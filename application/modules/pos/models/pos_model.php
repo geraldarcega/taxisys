@@ -16,7 +16,9 @@ class Pos_model extends CI_Model {
       $this->db->filter( $filter );
 
     if( count( $sort ) )
-      $this->db->order_by( $sort['field'], $sort['direction'] );
+		$this->db->order_by( $sort['field'], $sort['direction'] );
+    else
+    	$this->db->order_by('u.id', 'asc');
     
     return $this->db
                 ->select( $fields )

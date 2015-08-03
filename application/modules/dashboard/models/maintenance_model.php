@@ -15,6 +15,7 @@ class Maintenance_model extends CI_Model {
 	
 	const STATUS_ONGOING	= 0;
 	const STATUS_DONE		= 1;
+	const STATUS_CANCELLED	= 2;
 	
 	function __construct(){
 		parent::__construct();
@@ -119,10 +120,34 @@ class Maintenance_model extends CI_Model {
 		unset ( $db_data ['unit_maintenance_id'] );
 		unset ( $db_data ['uns_maintenance'] );
 		unset ( $db_data ['m_odometer'] );
+		unset ( $db_data ['status'] );
 		
 		$this->db->insert( $this->units, $db_data );
 	
 		return $this->db->insert_id();
+	}
+
+	public function update_unit_maintenance( $db_data )
+	{
+		$m_unit_id = $db_data ['unit_maintenance_id'];
+		$db_data ['odometer'] = $db_data ['m_odometer'];
+		$db_data ['updated_by'] = $this->user_id;
+		$db_data ['updated_at'] = date('Y-m-d H:i:s');
+		$db_data ['prefered_date'] = date ( 'Y-m-d', strtotime ( $db_data ['prefered_date'] ) );
+		$db_data ['prefered_time'] = date ( 'H:i:s', strtotime ( $db_data ['prefered_time'] ) );
+		
+		unset ( $db_data ['action'] );
+		unset ( $db_data ['unit_maintenance_id'] );
+		unset ( $db_data ['uns_maintenance'] );
+		unset ( $db_data ['m_odometer'] );
+		unset ( $db_data ['unit_id'] );
+		unset ( $db_data ['maintenance_id'] );
+
+		$this->db
+			 ->where( 'id', $m_unit_id )
+			 ->update( $this->units, $db_data );
+	
+		return $this->db->affected_rows();
 	}
 
 	public function get_unit_maintenance( $filter = array(), $limit = null, $offset = null, $group = null, $sort = array() )

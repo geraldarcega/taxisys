@@ -45,7 +45,7 @@ class Drivers_model extends CI_Model {
         $db_data['birthday'] = dateFormat( $db_data['birthday'] );
 
         $this->db
-             ->where( 'driver_id', $driver_id )
+             ->where( 'id', $driver_id )
              ->update( $this->table, $db_data );
 
         return $this->db->affected_rows();

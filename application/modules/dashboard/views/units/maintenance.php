@@ -74,9 +74,11 @@
                             	</td>
 	                            <td>
 	                            	<a href="javascript:show_maintenance_info('<?php echo $maintain['id']; ?>');" rel="tooltip" data-original-title="Info"><i class="fa fa-info-circle"></i></a> &nbsp;
+	                            	<?php if( $unit->status != UNIT_DUTY ) { ?>
 	                            	<a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?php echo $maintain['id']; ?>" rel="tooltip" rel="tooltip" data-original-title="<?php echo isset($unit->maintenance['ongoing'][ $unit_id ][ $maintain['id'] ]) ? 'On-going' : 'Apply';?>">
 	                            		<?php echo !isset($unit->maintenance['ongoing'][ $unit_id ][ $maintain['id'] ]) ? '<i class="fa fa-caret-square-o-right"></i>' : '<i class="fa fa-gears"></i>';?>
 	                            	</a>
+	                            	<?php } ?>
                             	</td>
 	                        </tr>
 	                        <tr id="maintenance_info_<?php echo $maintain['id']; ?>" class="maintenance-info" style="display: none;">
@@ -183,6 +185,16 @@
                         <label for="notes" class="col-xs-3 control-label">Notes</label>
                         <div class="col-xs-9">
                             <textarea id="notes" name="notes" rows="5" class="form-control" style="resize:none;"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group update-flds">
+                        <label for="notes" class="col-xs-3 control-label">Status</label>
+                        <div class="col-xs-5">
+                            <select class="form-control" id="status" name="status">
+                            	<option value="">----</option>
+                            	<option value="<?php echo Maintenance_model::STATUS_DONE; ?>">Completed</option>
+                            	<option value="<?php echo Maintenance_model::STATUS_CANCELLED; ?>">Cancelled</option>
+                            </select>
                         </div>
                     </div>
                 </form>

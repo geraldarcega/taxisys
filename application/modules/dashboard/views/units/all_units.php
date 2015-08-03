@@ -237,115 +237,12 @@
                 </form>
             </div>
             <div class="modal-footer">
+            	<button type="button" class="btn btn-primary" id="btnModalUnitsave" onclick="$('#frmModalUnits').submit()" data-loading-text="Saving..." class="btn btn-primary" autocomplete="off">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnModalUnitsave" onclick="$('#frmModalUnits').submit()" data-loading-text="Saving..." class="btn btn-primary" autocomplete="off">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Details Modal -->
-<div class="modal fade" id="maintenanceModal" tabindex="-1" role="dialog" aria-labelledby="maintenanceModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 800px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="maintenanceModalLabel">UNIT MAINTENANCE</h4>
-            </div>
-            <div class="modal-body">
-                <div id="msg" class="alert" role="alert" style="display:none;">
-                    <span></span>
-                </div>
-                <label class="label label-info">Current odometer: <span id="modalOdometer"></span></label>
-                <form class="form-horizontal" id="frmModalMaintenance" method="post" action="<?=dashboard_url('units/ajax')?>">
-                    <input type="hidden" name="m_unit_id" id="m_unit_id" value="">
-                    <input type="hidden" name="current_odometer" id="current_odometer" value="">
-                    <table id="tbl_all_maintenance" class="table table-striped tablesorter">
-	                    <thead style="background-color:#fff;">
-	                        <tr>
-	                            <th>Maintenance</th>
-	                            <th>Interval</th>
-	                            <th>Last Date</th>
-	                            <th>Last Odometer</th>
-	                            <th>Next Date</th>
-	                            <th>Next Odometer</th>
-	                            <th>&nbsp;</th>
-	                        </tr>
-	                    </thead>
-	                    <tbody>
-	                    	<?php 
-                    			if( count($maintenance) ){
-                    				foreach( $maintenance as $maintain ) {
-                    		?>
-                    		<tr>
-	                            <td><?php echo $maintain['name']; ?></td>
-	                            <td>Every <?php echo number_format($maintain['interval_value']); ?> <?=maintenanceInterval($maintain['interval'])?></td>
-	                            <td></td>
-	                            <td></td>
-	                            <td></td>
-	                            <td></td>
-	                            <td>
-	                            	<a href="javascript:show_maintenance_info('<?php echo $maintain['id']; ?>');" rel="tooltip" data-original-title="Info"><i class="fa fa-info-circle"></i></a> &nbsp;
-	                            	<a id="apply_link_<?php echo $maintain['id']; ?>" href="javascript:apply_maintenance('<?php echo $maintain['id']; ?>');" rel="tooltip" data-original-title="Apply"><i id="apply_link_<?=$maintain['id']?>" class="fa fa-caret-square-o-right"></i></a>
-                            	</td>
-	                        </tr>
-	                        <tr id="maintenance_info_<?php echo $maintain['id']; ?>" class="maintenance-info" style="display: none;">
-	                        	<td colspan="8">
-	                        		<h4>Parts Included</h4>
-	                        		<table class="table table-condensed">
-	                        			<thead>
-	                        				<tr>
-	                        					<th>Name</th>
-	                        					<th>Count</th>
-	                        				</tr>
-	                        			</thead>
-	                        			<tbody>
-	                        				<?php 
-	                        					if( count($maintain['parts']) > 0 ){
-	                        						for ( $i=0; $i < count($maintain['parts']); $i++) {
-                        					?>
-	                        				<tr>
-	                        					<td><?php echo $maintain['parts'][$i]['name']; ?></td>
-	                        					<td><?php echo $maintain['parts'][$i]['count']; ?></td>
-	                        				</tr>
-	                        				<?php } } else { ?>
-	                        				<tr>
-	                        					<td colspan="2">
-	                        						<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> No parts included!</div>
-	                        					</td>
-	                        				</tr>
-	                        				<?php } ?>
-	                        			</tbody>
-	                        		</table>
-	                        	</td>
-	                        </tr>
-<!--                         <tr id="notes_<?php echo $maintain['id']; ?>" style="display: none;">
-<!-- 	                        	<td colspan="8"> -->
-<!-- 	                        		<div class="form-group"> -->
-<!-- 		                                <label for="reg_rate" class="col-xs-2 control-label">Notes</label> -->
-<!-- 		                                <div class="col-xs-10"> -->
-<!-- 		                                    <textarea class="form-control" rows="5" style="resize:none;"></textarea>
-<!-- 		                                </div> -->
-<!-- 		                            </div> -->
-<!-- 	                        	</td> -->
-<!-- 	                        </tr> -->
-	                    	<?php 
-                    				} 
-                    			}
-                    			else{
-                    		?>
-                    		<tr>
-	                            <td colspan="8"><div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> No maintenance found!</div></td>
-	                        </tr>
-                    		<?php } ?>
-	                    </tbody>
-	                </table>
-                </form>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
     var units_data = <?php echo $units->num_rows() ? json_encode( $json_units ) : '[]'; ?>;
-    //var maintenance_data = <?php //echo isset($maintenance) ? $maintenance : '[]'; ?>;
 </script>
