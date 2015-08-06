@@ -124,4 +124,20 @@ class Units_model extends CI_Model {
     $this->db->insert('units_logs', $data);
     return $this->db->affected_rows();
   }
+  
+  # Get units schedules
+  public function get_schedules( $from, $to ) {
+  	return $this->db
+  				->select( 'id, plate_number, resealing_date1, resealing_date2, franchise_until, renew_by' )
+  				->where( 'resealing_date1 >=', $from)
+  				->where( 'resealing_date1 <=', $to)
+  				->where( 'resealing_date2 >=', $from)
+  				->where( 'resealing_date2 <=', $to)
+  				->where( 'franchise_until >=', $from)
+  				->where( 'franchise_until <=', $to)
+  				->where( 'renew_by >=', $from)
+  				->where( 'renew_by <=', $to)
+  				->get( $this->table );
+  }
+  
 }

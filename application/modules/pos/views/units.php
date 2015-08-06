@@ -100,22 +100,19 @@
 					<div class="form-group onduty-input">
 						<label for="boundary" class="col-xs-3 control-label">Boundary</label>
 						<div class="col-xs-9">
-							<input type="number" class="form-control" id="boundary"
-								name="boundary" placeholder="1500" maxlength="5" required>
+							<input type="number" class="form-control" id="boundary" name="boundary" placeholder="1500" maxlength="5" required>
 						</div>
 					</div>
 					<div class="form-group onduty-input">
-						<label for="drivers_fund" class="col-xs-3 control-label">Driver's
-							fund</label>
+						<label for="drivers_fund" class="col-xs-3 control-label">Driver's fund</label>
 						<div class="col-xs-9">
-							<input type="text" class="form-control" id="drivers_fund"
-								name="drivers_fund" placeholder="50">
+							<input type="number" class="form-control" id="drivers_fund" name="drivers_fund" maxlength="3" placeholder="50">
 						</div>
 					</div>
 					<div class="form-group onduty-input">
 						<label for="short" class="col-xs-3 control-label">Short</label>
 						<div class="col-xs-9">
-							<input type="text" class="form-control" id="short" name="short">
+							<input type="number" class="form-control" id="short" name="short" maxlength="5">
 						</div>
 					</div>
 					<div class="form-group">
@@ -137,9 +134,8 @@
 				</form>
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="$('#frmModalPOS').submit();">Save</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary"
-					onclick="$('#frmModalPOS').submit();">Save changes</button>
 			</div>
 		</div>
 	</div>

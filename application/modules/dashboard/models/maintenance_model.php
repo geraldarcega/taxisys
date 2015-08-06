@@ -184,6 +184,16 @@ class Maintenance_model extends CI_Model {
 		
 		return $this->db->affected_rows();
 	}
+	
+	public function get_maintenance_schedules( $from, $to ) {
+		return $this->db
+					->select('um.id, um.unit_id, um.maintenance_id, um.notes, um.odometer, um.prefered_date, um.prefered_time, um.status, u.plate_number, m.name, m.price')
+					->where( 'um.prefered_date >=', $from)
+					->where( 'um.prefered_date <=', $to)
+					->join( $this->table.' m', 'm.id = um.maintenance_id', 'left' )
+					->join( 'units u', 'u.id = um.unit_id', 'left' )
+					->get( $this->units.' um' );
+	}
 }
 
 /* End of file maintenance_model.php */

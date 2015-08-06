@@ -25,6 +25,12 @@
 									<a href="#" class="list-group-item label label-success">Docs</a>
 								</li>
 								<li role="presentation">
+									<a href="#" class="list-group-item label" style="background-color: #6227C7;">Resealing 1</a>
+								</li>
+								<li role="presentation">
+									<a href="#" class="list-group-item label" style="background-color: #C1DE17;">Resealing 2</a>
+								</li>
+								<li role="presentation">
 									<a href="#" class="list-group-item label label-info">Renewal</a>
 								</li>
 								<li role="presentation">
@@ -41,4 +47,34 @@
         </div>
     </main>
     <!-- /.row -->
+</div>
+<!-- Modal -->
+<div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="calendarModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="calendarModalLabel">UNIT - ABC 123</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" id="frmModalCalendar" method="POST" action="<?=base_url('pos/ajax')?>">
+					<input type="hidden" name="action" id="action" value="">
+					<input type="hidden" name="unit_id" id="unit_id" value="">
+					
+					<div class="form-group">
+						<label for="remarks" class="col-xs-3 control-label">Notes</label>
+						<div class="col-xs-9">
+							<textarea class="form-control" name="notes" id="notes" rows="7" style="resize:none;"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="$('#frmModalCalendar').submit();">Save</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
