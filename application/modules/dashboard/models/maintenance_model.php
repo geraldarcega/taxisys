@@ -121,6 +121,7 @@ class Maintenance_model extends CI_Model {
 		unset ( $db_data ['m_odometer'] );
 		unset ( $db_data ['status'] );
 		unset ( $db_data ['multi_day'] );
+		unset ( $db_data ['allday'] );
 		unset ( $db_data ['date_from'] );
 		unset ( $db_data ['time_from'] );
 		unset ( $db_data ['date_to'] );
@@ -137,8 +138,9 @@ class Maintenance_model extends CI_Model {
 		$db_data ['odometer'] = $db_data ['m_odometer'];
 		$db_data ['updated_by'] = $this->user_id;
 		$db_data ['updated_at'] = date('Y-m-d H:i:s');
-		$db_data ['prefered_date'] = date ( 'Y-m-d', strtotime ( $db_data ['prefered_date'] ) );
-		$db_data ['prefered_time'] = date ( 'H:i:s', strtotime ( $db_data ['prefered_time'] ) );
+		
+		if( $db_data['status'] == '' )
+			unset ( $db_data ['status'] );
 		
 		unset ( $db_data ['action'] );
 		unset ( $db_data ['unit_maintenance_id'] );
@@ -146,6 +148,12 @@ class Maintenance_model extends CI_Model {
 		unset ( $db_data ['m_odometer'] );
 		unset ( $db_data ['unit_id'] );
 		unset ( $db_data ['maintenance_id'] );
+		unset ( $db_data ['multi_day'] );
+		unset ( $db_data ['allday'] );
+		unset ( $db_data ['date_from'] );
+		unset ( $db_data ['time_from'] );
+		unset ( $db_data ['date_to'] );
+		unset ( $db_data ['time_to'] );
 
 		$this->db
 			 ->where( 'id', $m_unit_id )
@@ -166,7 +174,7 @@ class Maintenance_model extends CI_Model {
 			$this->db->sort( $sort );
 		
 		return $this->db
-					->select('um.*, c.id calendar_id, c.date_from, c.time_from, c.date_to, c.time_to, c.status')
+					->select('um.*, c.id calendar_id, c.date_from, c.time_from, c.date_to, c.time_to, c.status, c.allday')
 					->join($this->calendar.' c', 'c.unit_maintenance_id = um.id', 'left')
 					->get( $this->units.' um', $limit, $offset );
 	}

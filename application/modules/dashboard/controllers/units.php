@@ -158,7 +158,15 @@ class Units extends MY_Framework
                     	$this->units_model->update_status($this->input->post('unit_id'), UNIT_MAINTENANCE);
                     	
                     	# save to sched to calendar
-                    	$this->calendar_model->create( $this->input->post(), $this->input->post('unit_id'), $new );
+                    	$this->calendar_model->create(
+	                    	 $this->input->post('unit_id')
+	                    	,$new
+	                    	,$this->input->post('allday')
+	                    	,$this->input->post('date_from')
+	                    	,$this->input->post('time_from')
+	                    	,$this->input->post('date_to')
+	                    	,$this->input->post('time_to')
+	                    );;
                     	
                     	$this->session->set_flashdata('msg', array('class' => 'alert-success', 'value' => '<strong><i class="fa fa-database"></i> Success!</strong> Unit is now under maintenance.') );
                     	$msg = array( 'success' => 1 );
@@ -171,6 +179,18 @@ class Units extends MY_Framework
                 
                 case 'update_applied_maintenance':
                     $update = $this->maintenance_model->update_unit_maintenance($this->input->post());
+
+                    # save to sched to calendar
+                    $this->calendar_model->update(
+                    	 $this->input->post('unit_id')
+                    	,$this->input->post('unit_maintenance_id')
+                    	,$this->input->post('allday')
+                    	,$this->input->post('date_from')
+                    	,$this->input->post('time_from')
+                    	,$this->input->post('date_to')
+                    	,$this->input->post('time_to')
+                    );
+                    
                     if( $update ) {
                     	if( $this->input->post('status') != '' )
                     	{

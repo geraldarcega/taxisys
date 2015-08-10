@@ -76,6 +76,7 @@ $(document).ready(function() {
 //    $('#parts_included').hide()
     
     $('#multi_day').bootstrapSwitch('state', false)
+    $('#allday').bootstrapSwitch('state', false)
     $('#frmModalMaintenance .update-flds').hide()
 });
 
@@ -137,6 +138,18 @@ $('#maintenanceModal').on('show.bs.modal', function (e) {
         	$('#unit_maintenance_id').val(unit_maintenance.id)
         	$('#date_from').val( readableDate(unit_maintenance.date_from) )
         	$('#time_from').val( unit_maintenance.time_from )
+        	
+        	if( unit_maintenance.allday == '1' )
+    		{
+        		$('#allday').bootstrapSwitch('state', true)
+        		$('.time_field').hide()
+    		}
+			else
+			{
+				$('#allday').bootstrapSwitch('state', false)
+				$('.time_field').show()
+			}
+
         	if( unit_maintenance.date_to != null )
     		{
         		$('#date_to').val( readableDate(unit_maintenance.date_to) )
@@ -269,6 +282,7 @@ function init_unit_maintenance() {
 	$('#date_to').val( '' )
 	$('#time_to').val( '' )
 	$('#multi_day').bootstrapSwitch('state', false)
+	$('#allday').bootstrapSwitch('state', false)
 }
 
 $('input[name="multi_day"]').on('switchChange.bootstrapSwitch', function(event, state) {
@@ -276,4 +290,11 @@ $('input[name="multi_day"]').on('switchChange.bootstrapSwitch', function(event, 
 		$('.datetime_to').show()
 	else
 		$('.datetime_to').hide()
+})
+
+$('#allday').on('switchChange.bootstrapSwitch', function(event, state) {
+	if( $(this).is(':checked') === true )
+		$('.time_field').hide()
+	else
+		$('.time_field').show()
 })

@@ -158,8 +158,12 @@
                     
                     <div class="form-group">
 						<label for="rate_type" class="col-xs-3 control-label">Multi-day</label>
-						<div class="col-xs-9">
+						<div class="col-xs-3">
 							<input id="multi_day" name="multi_day" type="checkbox" checked="" data-size="small" data-on-text="Yes" data-off-text="No">
+						</div>
+						<label for="allday" class="col-xs-2 control-label">All day</label>
+						<div class="col-xs-3">
+							<input id="allday" name="allday" type="checkbox" value="1" checked="" data-size="small" data-on-text="Yes" data-off-text="No">
 						</div>
 					</div>
                     <div class="form-group">
@@ -172,7 +176,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-xs-4">
+                        <div class="col-xs-4 time_field">
                             <div class="input-group date" id="time_from_dp">
                                 <input type='text' class="form-control unit-field" id="time_from" name="time_from" required/>
                                 <span class="input-group-addon">
@@ -192,7 +196,7 @@
                             </div>
                         </div>
                         <div class="col-xs-4">
-                            <div class="input-group date" id="time_to_dp">
+                            <div class="input-group date time_field" id="time_to_dp">
                                 <input type='text' class="form-control unit-field" id="time_to" name="time_to" required/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-time"></span>

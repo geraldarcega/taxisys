@@ -77,8 +77,8 @@ class Calendar extends MY_Framework
 											'plate' => $plate_number,
 											'notes' => $u_maintenance->notes,
 											'title' => '['.$plate_number.'] '.$u_maintenance->name,
-											'start' => date( 'c', strtotime($u_maintenance->date_from.' '.$u_maintenance->time_from) ),
-											'end'	=> $u_maintenance->date_to != null ? date( 'c', strtotime($u_maintenance->date_to.' '.$u_maintenance->time_to) ) : null,
+											'start' => $u_maintenance->date_from,
+											'end'	=> $u_maintenance->date_to != null ? date( 'c', strtotime($u_maintenance->date_to) ) : null,
 											'color' => $sched['color']
 									);
 								}
