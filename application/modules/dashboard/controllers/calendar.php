@@ -33,7 +33,7 @@ class Calendar extends MY_Framework
 				case 'get':
 					$calendar = array();
 					$schedules = array(
-							'Maintenance' => array('key' => 'prefered_date', 'color' => '#d9534f')
+							'Maintenance' => array('key' => 'date_from', 'color' => '#d9534f')
 							,'Resealing 1' => array('key' => 'resealing_date1', 'color' => '#6227C7')
 							,'Resealing 2' => array('key' => 'resealing_date2', 'color' => '#C1DE17')
 							,'Franchise' => array('key' => 'franchise_until', 'color' => '#ec971f')
@@ -77,7 +77,8 @@ class Calendar extends MY_Framework
 											'plate' => $plate_number,
 											'notes' => $u_maintenance->notes,
 											'title' => '['.$plate_number.'] '.$u_maintenance->name,
-											'start' => date( 'c', strtotime($u_maintenance->prefered_date.' '.$u_maintenance->prefered_time) ),
+											'start' => date( 'c', strtotime($u_maintenance->date_from.' '.$u_maintenance->time_from) ),
+											'end'	=> $u_maintenance->date_to != null ? date( 'c', strtotime($u_maintenance->date_to.' '.$u_maintenance->time_to) ) : null,
 											'color' => $sched['color']
 									);
 								}

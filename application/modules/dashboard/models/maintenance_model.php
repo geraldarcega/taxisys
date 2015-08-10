@@ -6,6 +6,7 @@ class Maintenance_model extends CI_Model {
 	private $mparts = 'maintenance_parts';
 	private $parts = 'parts';
 	private $units = 'units_maintenance';
+	private $calendar = 'calendar';
 	
 	public $user_id;
 	
@@ -113,14 +114,17 @@ class Maintenance_model extends CI_Model {
 	{
 		$db_data ['odometer'] = $db_data ['m_odometer'];
 		$db_data ['created_by'] = $this->user_id;
-		$db_data ['prefered_date'] = date ( 'Y-m-d', strtotime ( $db_data ['prefered_date'] ) );
-		$db_data ['prefered_time'] = date ( 'H:i:s', strtotime ( $db_data ['prefered_time'] ) );
 		
 		unset ( $db_data ['action'] );
 		unset ( $db_data ['unit_maintenance_id'] );
 		unset ( $db_data ['uns_maintenance'] );
 		unset ( $db_data ['m_odometer'] );
 		unset ( $db_data ['status'] );
+		unset ( $db_data ['multi_day'] );
+		unset ( $db_data ['date_from'] );
+		unset ( $db_data ['time_from'] );
+		unset ( $db_data ['date_to'] );
+		unset ( $db_data ['time_to'] );
 		
 		$this->db->insert( $this->units, $db_data );
 	
@@ -162,7 +166,9 @@ class Maintenance_model extends CI_Model {
 			$this->db->sort( $sort );
 		
 		return $this->db
-					->get( $this->units, $limit, $offset );
+					->select('um.*, c.id calendar_id, c.date_from, c.time_from, c.date_to, c.time_to, c.status')
+					->join($this->calendar.' c', 'c.unit_maintenance_id = um.id', 'left')
+					->get( $this->units.' um', $limit, $offset );
 	}
 	
 	public function check_maintenance_parts($maintenance_id, $parts_id = null) {
@@ -187,10 +193,11 @@ class Maintenance_model extends CI_Model {
 	
 	public function get_maintenance_schedules( $from, $to ) {
 		return $this->db
-					->select('um.id, um.unit_id, um.maintenance_id, um.notes, um.odometer, um.prefered_date, um.prefered_time, um.status, u.plate_number, m.name, m.price')
-					->where( 'um.prefered_date >=', $from)
-					->where( 'um.prefered_date <=', $to)
+					->select('um.id, um.unit_id, um.maintenance_id, um.notes, um.odometer, um.prefered_date, um.prefered_time, um.status, u.plate_number, m.name, m.price, c.id calendar_id, c.date_from, c.time_from, c.date_to, c.time_to, c.status')
+					->where( 'c.date_from >=', $from)
+					->where( 'c.date_from <=', $to)
 					->join( $this->table.' m', 'm.id = um.maintenance_id', 'left' )
+					->join($this->calendar.' c', 'c.unit_maintenance_id = um.id', 'left')
 					->join( 'units u', 'u.id = um.unit_id', 'left' )
 					->get( $this->units.' um' );
 	}

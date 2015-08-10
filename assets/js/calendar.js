@@ -1,4 +1,6 @@
 $(function(){
+	$('#date_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
+	
 	$('#calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
@@ -16,8 +18,10 @@ $(function(){
 		    }
 		},
 	    eventClick: function(calEvent, jsEvent, view) {
-	    	$('#calendarModalLabel').html( calEvent.title +' : '+ readableDate(calEvent.start._i) )
+	    	var sched = readableDate(calEvent.start._i)
+	    	$('#calendarModalLabel').html( calEvent.title +' : '+ sched )
 	    	$('#calendarModal #unit_id').val(calEvent.unitid)
+	    	$('#calendarModal #date').val(sched)
 	    	$('#calendarModal #notes').val(calEvent.notes)
 	    	$('#calendarModal').modal('show')
 	    },

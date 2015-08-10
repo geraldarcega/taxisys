@@ -78,8 +78,7 @@ $('#unitsModal').on('show.bs.modal', function (e) {
     {
         switch( data_type ) {
             case '2':
-            case '3':
-                $('.onduty-input').hide()
+            	$('.onduty-input').hide()
                 $('#select_driver').show()
                 $('#driver').hide()
                 
@@ -93,6 +92,12 @@ $('#unitsModal').on('show.bs.modal', function (e) {
                 $('#status').val(data_type)
                 $('#old_status').val( data_type )
                 $('#action').val('s_update')
+                break;
+            case '3':
+            	$('#maintenance_notification', this).show()
+            	$('#maintenance_notification a', this).attr('href', dashboard_url+'/units/maintenance/scheduled/'+data_id)
+            	$('#frmModalPOS').hide()
+            	$('.modal-footer', this).hide()
                 break;
             default:
                 $('#select_driver').hide()
@@ -108,6 +113,13 @@ $('#unitsModal').on('show.bs.modal', function (e) {
                 $('#status').val('')
                 $('#action').val('u_update')
         }
+        
+        if( data_type == "1" && data_coding === "yes" )
+    	{
+    		$('#rate_input .btn-group').hide();
+    		$('#rate_type input[type="radio"]').prop('checked', false)
+    		$('#rate_input .coding').show()
+    	}
 
         $('#unitsModalLabel').html('UNIT: '+data.plate_number.toUpperCase())
         $('#unit_id').val(data_id)
@@ -116,16 +128,11 @@ $('#unitsModal').on('show.bs.modal', function (e) {
     }
 })
 
-$('#unitsModal').on('show.bs.modal', function (e) {
-	var data_type = e.relatedTarget.attributes[5]['value']
-    var data_coding = e.relatedTarget.attributes[6]['value']
-	
-	if( data_type == "1" && data_coding === "yes" )
-	{
-		$('#rate_input .btn-group').hide();
-		$('#rate_type input[type="radio"]').prop('checked', false)
-		$('#rate_input .coding').show()
-	}
+$('#unitsModal').on('hidden.bs.modal', function (e) {
+	$('#maintenance_notification', this).hide()
+	$('#maintenance_notification a', this).attr('href', '')
+	$('#frmModalPOS').show()
+	$('.modal-footer', this).show()
 })
 
 function init() {

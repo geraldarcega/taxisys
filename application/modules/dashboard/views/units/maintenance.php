@@ -1,4 +1,4 @@
-<?php $unit_id = $unit->id; ?>
+<?php $unit_id = $unit->unit_id; ?>
 <main class="mainContainer">
         <div class="row" style="padding:10px 0px;">
             <article class="col-xs-3">
@@ -34,7 +34,7 @@
                     		<tr>
 	                            <td><?php echo $maintain['name']; ?></td>
 	                            <td>Every <?php echo number_format($maintain['interval_value']); ?> <?=maintenanceInterval($maintain['interval'])?></td>
-	                            <td><?php echo $past != '' ? date( 'M d, Y', strtotime($past->prefered_date) ) : ''; ?></td>
+	                            <td><?php echo $past != '' ? date( 'M d, Y H:i', strtotime($past->date_from .' '. $past->time_from) ) : ''; ?></td>
 	                            <td><?php echo $past != '' ? $past->odometer : ''; ?></td>
 	                            <td>
 	                            	<?php 
@@ -156,25 +156,44 @@
                     <input type="hidden" name="unit_id" id="unit_id" value="<?=$unit_id?>">
                     <input type="hidden" name="m_odometer" id="m_odometer" value="<?=$unit->odometer?>">
                     
-                    <div class="form-group" style="display:none;">
-                        <label for="uns_maintenance" class="col-xs-3 control-label">Maintenance</label>
-                        <div class="col-xs-9">
-                            <input type="text" id="uns_maintenance" name="uns_maintenance" class="form-control" required>
-                        </div>
-                    </div>
                     <div class="form-group">
-                        <label for="prefered_date_dp" class="col-xs-3 control-label">Date & Time</label>
+						<label for="rate_type" class="col-xs-3 control-label">Multi-day</label>
+						<div class="col-xs-9">
+							<input id="multi_day" name="multi_day" type="checkbox" checked="" data-size="small" data-on-text="Yes" data-off-text="No">
+						</div>
+					</div>
+                    <div class="form-group">
+                        <label for="prefered_date_dp" class="col-xs-3 control-label">From Date & Time</label>
                         <div class="col-xs-5">
-                            <div class="input-group date" id="prefered_date_dp">
-                                <input type='text' class="form-control unit-field" id="prefered_date" name="prefered_date" required/>
+                            <div class="input-group date" id="date_from_dp">
+                                <input type='text' class="form-control unit-field" id="date_from" name="date_from" required/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
                         </div>
                         <div class="col-xs-4">
-                            <div class="input-group date" id="prefered_time_dp">
-                                <input type='text' class="form-control unit-field" id="prefered_time" name="prefered_time" required/>
+                            <div class="input-group date" id="time_from_dp">
+                                <input type='text' class="form-control unit-field" id="time_from" name="time_from" required/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group datetime_to">
+                        <label for="prefered_date_dp" class="col-xs-3 control-label">To Date & Time</label>
+                        <div class="col-xs-5">
+                            <div class="input-group date" id="date_to_dp">
+                                <input type='text' class="form-control unit-field" id="date_to" name="date_to" required/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="input-group date" id="time_to_dp">
+                                <input type='text' class="form-control unit-field" id="time_to" name="time_to" required/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-time"></span>
                                 </span>

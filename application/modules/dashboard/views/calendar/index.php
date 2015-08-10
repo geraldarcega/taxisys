@@ -62,7 +62,17 @@
 				<form class="form-horizontal" id="frmModalCalendar" method="POST" action="<?=base_url('pos/ajax')?>">
 					<input type="hidden" name="action" id="action" value="">
 					<input type="hidden" name="unit_id" id="unit_id" value="">
-					
+					<div class="form-group">
+						<label for="reg_rate" class="col-xs-3 control-label">Date</label>
+						<div class="col-xs-6">
+							<div class="input-group" id="date_dp">
+								<input type='text' class="form-control unit-field" id="date" name="date" required />
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</div>
+					</div>
 					<div class="form-group">
 						<label for="remarks" class="col-xs-3 control-label">Notes</label>
 						<div class="col-xs-9">

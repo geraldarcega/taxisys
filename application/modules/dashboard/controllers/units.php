@@ -10,6 +10,7 @@ class Units extends MY_Framework
         parent::__construct();
         $this->load->model('units_model');
         $this->load->model('maintenance_model');
+        $this->load->model('calendar_model');
         
         $this->maintenance_model->user_id = $this->userdata->id;
     }
@@ -45,7 +46,7 @@ class Units extends MY_Framework
 		
         if( !$unit )
             redirect( dashboard_url('units') );
-		
+
         $this->data['unit']    = (object) $unit;
         $this->data['sub_nav'] = 'maintenance ('.strtoupper($this->data['unit']->plate_number).')';
 
@@ -54,8 +55,8 @@ class Units extends MY_Framework
     
     public function get_unit_maintenance_by_status( $unit_id, $status, $filter = array(), $limit = null, $group = null, $sort = array() ) {
     	$filter1 = array (
-				'wh|unit_id' => $unit_id,
-				'wh|status' => $status 
+				'wh|um.unit_id' => $unit_id,
+				'wh|um.status' => $status 
 		);
     	if( !empty( $filter ) )
     		$filter1 = array_merge($filter1, $filter);
@@ -155,6 +156,10 @@ class Units extends MY_Framework
                     $new = $this->maintenance_model->add_unit_maintenance($this->input->post());
                     if( $new ) {
                     	$this->units_model->update_status($this->input->post('unit_id'), UNIT_MAINTENANCE);
+                    	
+                    	# save to sched to calendar
+                    	$this->calendar_model->create( $this->input->post(), $this->input->post('unit_id'), $new );
+                    	
                     	$this->session->set_flashdata('msg', array('class' => 'alert-success', 'value' => '<strong><i class="fa fa-database"></i> Success!</strong> Unit is now under maintenance.') );
                     	$msg = array( 'success' => 1 );
                     }
@@ -208,11 +213,11 @@ class Units extends MY_Framework
    	{
    		$unit = $unit->row_array();
    		$unit ['maintenance'] ['ongoing'] = $this->get_unit_maintenance_by_status (
-   				$unit ['id'],
+   				$unit_id,
    				Maintenance_model::STATUS_ONGOING
    		);
    		$unit ['maintenance'] ['past'] = $this->get_unit_maintenance_by_status (
-   				$unit ['id'],
+   				$unit_id,
    				Maintenance_model::STATUS_DONE,
    				array (),
    				1,

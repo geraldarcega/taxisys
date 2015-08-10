@@ -1,4 +1,7 @@
-<?php $pos_data = array(); ?>
+<?php
+	$pos_data = array();
+	$day = strtoupper( date('D') );
+?>
 	<main class="mainContainer" id="garrage_wrapper">
 		<?php foreach ( $groups as $key => $val ) { ?>
 		<div class="Units">
@@ -14,7 +17,7 @@
 				<div class="col col-md-2">
 					<div class="panel <?php echo unitStatusClass($unit->unit_status); ?>"
 						id="taxi_<?=$unit->unit_id?>">
-						<a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=$unit->unit_status?>" data-coding="<?=constant("DAY_{$key}") == $unit->coding_day ? 'yes' : 'no';?>" data-backdrop="static">
+						<a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=$unit->unit_status?>" data-coding="<?=constant("DAY_{$day}") == $unit->coding_day ? 'yes' : 'no';?>" data-backdrop="static">
 							<div class="updateEditbtn">
 								UPDATE<i class="fa fa-angle-right"></i>
 							</div> <!-- updateEditbtn -->
@@ -53,27 +56,27 @@
 				<h4 class="modal-title" id="unitsModalLabel">UNIT - ABC 123</h4>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" id="frmModalPOS" method="POST"
-					action="<?=base_url('pos/ajax')?>">
-					<input type="hidden" name="action" id="action" value=""> <input
-						type="hidden" name="unit_id" id="unit_id" value=""> <input
-						type="hidden" name="old_driver" id="old_driver" value=""> <input
-						type="hidden" name="old_status" id="old_status" value=""> <input
-						type="hidden" name="coding_day" id="coding_day" value="">
+				<div id="maintenance_notification" class="alert alert-info" role="alert" style="display: none;">
+					<strong>Oops!</strong> This unit is under maintenance, click <a href="" target="_blank">here</a> to update its status.
+				</div>
+				<form class="form-horizontal" id="frmModalPOS" method="POST" action="<?=base_url('pos/ajax')?>">
+					<input type="hidden" name="action" id="action" value="">
+					<input type="hidden" name="unit_id" id="unit_id" value="">
+					<input type="hidden" name="old_driver" id="old_driver" value="">
+					<input type="hidden" name="old_status" id="old_status" value="">
+					<input type="hidden" name="coding_day" id="coding_day" value="">
+
 					<div class="form-group">
 						<label for="date" class="col-xs-3 control-label">Date</label>
 						<div class="col-xs-9">
-							<span id="date_now"
-								style="padding-top: 7px; display: inline-block;"><?php echo date('M d, Y'); ?></span>
+							<span id="date_now" style="padding-top: 7px; display: inline-block;"><?php echo date('M d, Y'); ?></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="driver" class="col-xs-3 control-label">Driver</label>
 						<div class="col-xs-9">
-							<span id="driver"
-								style="padding-top: 7px; display: inline-block;"></span> <select
-								class="form-control" id="select_driver" name="select_driver"
-								required>
+							<span id="driver" style="padding-top: 7px; display: inline-block;"></span>
+							<select class="form-control" id="select_driver" name="select_driver" required>
 								<option value="">----</option>
                                 <?php if( $drivers->num_rows() ) { ?>
                                 <?php foreach ($drivers->result() as $driver) { ?>
@@ -94,7 +97,7 @@
 									Holiday
 								</label>
 							</div>
-							<label class="label label-info">Coding</label>
+							<label class="label label-info coding">Coding</label>
 						</div>
 					</div>
 					<div class="form-group onduty-input">
@@ -127,7 +130,7 @@
 							<select id="status" name="status" class="form-control" required>
 								<option value="<?=UNIT_DUTY?>">On-duty</option>
 								<option value="<?=UNIT_GARRAGE?>">On-garrage</option>
-								<option value="<?=UNIT_MAINTENANCE?>">On-maintenance</option>
+								<?php /*<option value="<?=UNIT_MAINTENANCE?>">On-maintenance</option>*/ ?>
 							</select>
 						</div>
 					</div>
