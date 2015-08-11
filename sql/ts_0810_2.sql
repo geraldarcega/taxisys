@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `drivers` (
   KEY `status` (`status`),
   KEY `created_at` (`created_at`),
   KEY `deleted_at` (`deleted_at`),
-  FULLTEXT KEY `nickname` (`nickname`)
+  KEY `nickname` (`nickname`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table taxipos.drivers: ~1 rows (approximately)
@@ -255,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `pos` (
   KEY `updated_at` (`updated_at`),
   KEY `updated_by` (`updated_by`),
   KEY `rate_type` (`rate_type`),
-  FULLTEXT KEY `reference` (`reference`)
+  KEY `reference` (`reference`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table taxipos.pos: ~0 rows (approximately)
