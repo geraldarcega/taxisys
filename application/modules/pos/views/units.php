@@ -2,7 +2,7 @@
 	$pos_data = array();
 	$day = strtoupper( date('D') );
 ?>
-	<main class="mainContainer" id="garrage_wrapper">
+	<main class="mainContainer" id="garage_wrapper">
 		<?php foreach ( $groups as $key => $val ) { ?>
 		<div class="Units">
 			<div class="thisDay">
@@ -93,7 +93,7 @@
 								<label class="btn btn-primary active"> <input type="radio" name="rate_type" id="rate_type1" value="<?=BTYPE_REGULAR?>" autocomplete="off">
 									Regular
 								</label>
-								<label class="btn btn-primary"> <input type="radio" name="rate_type" id="rate_type4" value="<?=BTYPE_HOLIDAY?>"autocomplete="off">
+								<label class="btn btn-primary"> <input type="radio" name="rate_type" id="rate_type4" value="<?=BTYPE_HOLIDAY?>" autocomplete="off">
 									Holiday
 								</label>
 							</div>
@@ -129,7 +129,7 @@
 						<div class="col-xs-5">
 							<select id="status" name="status" class="form-control" required>
 								<option value="<?=UNIT_DUTY?>">On-duty</option>
-								<option value="<?=UNIT_GARRAGE?>">On-garrage</option>
+								<option value="<?=UNIT_GARAGE?>">On-garage</option>
 								<?php /*<option value="<?=UNIT_MAINTENANCE?>">On-maintenance</option>*/ ?>
 							</select>
 						</div>

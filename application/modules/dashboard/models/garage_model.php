@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Garrage_model extends CI_Model {
-	private $table = 'garrage';
+class Garage_model extends CI_Model {
+	private $table = 'garage';
 
     function __construct(){
         parent::__construct();
@@ -19,7 +19,7 @@ class Garrage_model extends CI_Model {
     }
 
     public function create( $db_data ) {
-        unset($db_data['garrage_id']);
+        unset($db_data['garage_id']);
         unset($db_data['action']);
 
         $this->db->insert( $this->table, $db_data );
@@ -28,12 +28,12 @@ class Garrage_model extends CI_Model {
     }
 
     public function update( $db_data ) {
-        $garrage_id = $db_data['garrage_id'];
-        unset($db_data['garrage_id']);
+        $garage_id = $db_data['garage_id'];
+        unset($db_data['garage_id']);
         unset($db_data['action']);
 
         $this->db
-             ->where( 'garrage_id', $garrage_id )
+             ->where( 'garage_id', $garage_id )
              ->update( $this->table, $db_data );
 
         return $this->db->affected_rows();

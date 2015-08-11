@@ -32,7 +32,7 @@ class Pos extends MY_Framework
         foreach ( $groups as $key => $val )
         	$this->data['units'][$val]		= $this->units_model->read( array( 'wh|u.coding_day' => constant("DAY_{$key}") ) );
 
-        $this->data['drivers'] = $this->drivers_model->read(array( 'wh|d.status' => 2 ));
+        $this->data['drivers'] = $this->drivers_model->read();
 
         $this->load_view( 'units' );
     }

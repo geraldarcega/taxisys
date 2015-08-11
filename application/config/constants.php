@@ -65,7 +65,7 @@ define('FONT_DIR', SITE_URL.'assets/fonts/');
 
 # Unit Status
 define('UNIT_DUTY', 1);
-define('UNIT_GARRAGE', 2);
+define('UNIT_GARAGE', 2);
 define('UNIT_MAINTENANCE', 3);
 define('UNIT_REPLACED', 4);
 

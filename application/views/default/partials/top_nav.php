@@ -2,7 +2,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><?=strtoupper($this->_class)?><?=isset($sub_nav) ? ' - '.strtoupper(str_replace('_', ' ', $sub_nav)) : ''?></h1>
+            <h1 class="page-header"><?=strtoupper($this->_class)?><?=isset($sub_nav) ? ' - '.strtoupper(str_replace('_', ' ', $sub_nav)) : ''?> (<?php echo date('F d, Y'); ?>)</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -77,9 +77,9 @@
                     </div>
                     <?php } ?>
 
-                    <?php if( $this->_class == 'administrator' && $sub_nav == 'garrage' ) { ?>
+                    <?php if( $this->_class == 'administrator' && $sub_nav == 'garage' ) { ?>
                     <div class="pull-right" style="margin-right:5px;">
-                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#garrageModal" data-backdrop="static"><i class="fa fa-plus"></i> NEW GARRAGE</button>
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#garageModal" data-backdrop="static"><i class="fa fa-plus"></i> NEW GARRAGE</button>
                     </div>
                     <?php } ?>
                 </nav>

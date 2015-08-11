@@ -228,7 +228,7 @@
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
 <!--             	<li class="sidebar-search">
-                    <span style="color: #fff;">Garrage:</label>
+                    <span style="color: #fff;">Garage:</label>
                      <div class="btn-group"> -->
 <!-- 					  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
 <!-- 				    	Action <span class="caret"></span> -->
@@ -277,7 +277,7 @@
                             <a href="flot.html"><i class="fa fa-male fa-fw"></i> USERS</a>
                         </li>
                         <li>
-                            <a <?=@$sub_nav == 'garrage' ? 'class="active"' : '' ?> href="<?=dashboard_url('administrator/garrage');?>"><i class="fa fa-home fa-fw"></i> GARRAGE</a>
+                            <a <?=@$sub_nav == 'garage' ? 'class="active"' : '' ?> href="<?=dashboard_url('administrator/garage');?>"><i class="fa fa-home fa-fw"></i> GARAGE</a>
                         </li>
                         <li>
                             <a <?=@$sub_nav == 'settings' ? 'class="active"' : '' ?> href="<?=dashboard_url('administrator/settings');?>"><i class="fa fa-home fa-fw"></i> SETTINGS</a>

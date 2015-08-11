@@ -130,7 +130,7 @@
 
 	# Show readable unit status
 	function unitStatus( $stats ) {
-		$status = array( UNIT_DUTY => 'On-duty', UNIT_GARRAGE => 'On-garrage', UNIT_MAINTENANCE => 'Maintenance', UNIT_REPLACED => 'Replaced' );
+		$status = array( UNIT_DUTY => 'On-duty', UNIT_GARAGE => 'On-garage', UNIT_MAINTENANCE => 'Maintenance', UNIT_REPLACED => 'Replaced' );
 		return @$status[ $stats ];
 	}
 
@@ -148,13 +148,13 @@
 
 	# get unit wrapper by status
 	function unitStatusWrapper( $stats ) {
-		$status = array( UNIT_DUTY => 'duty_wrapper', UNIT_GARRAGE => 'garrage_wrapper', UNIT_MAINTENANCE => 'maintenance_wrapper' );
+		$status = array( UNIT_DUTY => 'duty_wrapper', UNIT_GARAGE => 'garage_wrapper', UNIT_MAINTENANCE => 'maintenance_wrapper' );
 		return @$status[ $stats ];
 	}
 
 	# get unit class by status
 	function unitStatusClass( $stats ) {
-		$status = array( UNIT_DUTY => 'panel-green', UNIT_GARRAGE => 'panel-yellow', UNIT_MAINTENANCE => 'panel-red' );
+		$status = array( UNIT_DUTY => 'panel-green', UNIT_GARAGE => 'panel-yellow', UNIT_MAINTENANCE => 'panel-red' );
 		return @$status[ $stats ];
 	}
 

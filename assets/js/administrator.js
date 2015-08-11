@@ -1,12 +1,12 @@
 $(document).ready(function() {
-    $("#tbl_garrage").tablesorter({
+    $("#tbl_garage").tablesorter({
         headers: { 
              0: { sorter: false }
             ,3: { sorter: false }
         } 
     });
 
-    $('#frmModalGarrage').validate({
+    $('#frmModalGarage').validate({
         submitHandler: function(form) {
             var ans = confirm('Continue saving?')
 
@@ -18,14 +18,14 @@ $(document).ready(function() {
                     data: $(form).serialize(),
                     dataType: "JSON",
                     beforeSend: function() {
-                        $('#btnModalGarrageSave').button('loading')
+                        $('#btnModalGarageSave').button('loading')
                     },
                     success: function(data){
                         if( data.success )
                             location.reload()
                         else
                         {
-                            $('#btnModalGarrageSave').button('reset')
+                            $('#btnModalGarageSave').button('reset')
                             $('#failed_msg span').html( data.msg )
                             $('#failed_msg').show()
                         }
@@ -38,21 +38,21 @@ $(document).ready(function() {
     })
 });
 
-$('#garrageModal').on('show.bs.modal', function (e) {
+$('#garageModal').on('show.bs.modal', function (e) {
     var data_id = e.relatedTarget.attributes[3];
     
     $('.unit-field').val('')
-    $('#garrageModalLabel').html('CREATE NEW GARRAGE')
+    $('#garageModalLabel').html('CREATE NEW GARRAGE')
     $('#failed_msg span').html('')
     $('#failed_msg').hide()
     $('#action').val('create')
 
-    if( typeof garrage_data[data_id['value']] !== "undefined" )
+    if( typeof garage_data[data_id['value']] !== "undefined" )
     {
-        $('#garrageModalLabel').html('UPDATE GARRAGE')
+        $('#garageModalLabel').html('UPDATE GARRAGE')
         $('#action').val('update')
         $('#unit_id').val(data_id['value'])
-        $.each( garrage_data[data_id['value']], function( i, v ){
+        $.each( garage_data[data_id['value']], function( i, v ){
             if( $('#'+i).length )
             {
                 $('#'+i).val( v )

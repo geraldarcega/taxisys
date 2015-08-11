@@ -8,23 +8,23 @@ class Administrator extends MY_Framework
     function __construct()
     {
         parent::__construct();
-        $this->load->model('garrage_model');
+        $this->load->model('garage_model');
     }
 
-    public function garrage( )
+    public function garage( )
     {
-        $this->data['sub_nav'] = 'garrage';
-        $this->data['garrage'] = $this->garrage_model->read();
+        $this->data['sub_nav'] = 'garage';
+        $this->data['garage'] = $this->garage_model->read();
 
-        $this->load_view( 'garrage' );
+        $this->load_view( 'garage' );
     }
 
     public function settings( )
     {
-        $this->data['sub_nav'] = 'garrage';
-        $this->data['garrage'] = $this->garrage_model->read();
+        $this->data['sub_nav'] = 'garage';
+        $this->data['garage'] = $this->garage_model->read();
 
-        $this->load_view( 'garrage' );
+        $this->load_view( 'garage' );
     }
 
     public function ajax()
@@ -33,9 +33,9 @@ class Administrator extends MY_Framework
         {
             switch ( $this->input->post( 'action' ) ) {
                 case 'create':
-                    if( $this->garrage_model->create( $this->input->post() ) )
+                    if( $this->garage_model->create( $this->input->post() ) )
                     {
-                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> New garrage has been created.');
+                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> New garage has been created.');
                         $msg = array( 'success' => 1 );
                     }
                     else
@@ -45,9 +45,9 @@ class Administrator extends MY_Framework
                     break;
                 
                 case 'update':
-                    if( $this->garrage_model->update( $this->input->post() ) )
+                    if( $this->garage_model->update( $this->input->post() ) )
                     {
-                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> Garrage details has been updated.');
+                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> Garage details has been updated.');
                         $msg = array( 'success' => 1 );
                     }
                     else

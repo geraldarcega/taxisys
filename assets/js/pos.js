@@ -100,14 +100,16 @@ $('#unitsModal').on('show.bs.modal', function (e) {
             	$('.modal-footer', this).hide()
                 break;
             default:
-                $('#select_driver').hide()
+//                $('#select_driver').hide()
+            	$('#old_driver').val( data.driver_id )
+            	$('#select_driver').val(data.driver_id)
                 $('.onduty-input').show()
-                $('#driver').show()
-                if( data.driver_id )
-                {
-                    $('#old_driver').val( data.driver_id )
-                    $('#driver').html(data.first_name+' '+data.last_name)
-                }
+//                $('#driver').show()
+//                if( data.driver_id )
+//                {
+//                    $('#old_driver').val( data.driver_id )
+//                    $('#driver').html(data.first_name+' '+data.last_name)
+//                }
                 
                 $('#status option[value="1"]').hide()
                 $('#status').val('')
