@@ -1,6 +1,7 @@
 <?php
 	$pos_data = array();
 	$day = strtoupper( date('D') );
+	$day = $day == 'THU' ? $day.'R' : $day;
 ?>
 	<main class="mainContainer" id="garage_wrapper">
 		<?php foreach ( $groups as $key => $val ) { ?>
