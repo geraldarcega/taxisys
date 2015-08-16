@@ -9,7 +9,7 @@ $(document).ready(function() {
         } 
     });
 
-    $('#purchase_date_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
+    $('#purchase_date').datetimepicker({ 'format': 'MMM DD, YYYY' });
 
     $('#frmModalParts').validate({
         submitHandler: function(form) {

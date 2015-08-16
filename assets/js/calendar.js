@@ -1,5 +1,5 @@
 $(function(){
-	$('#date_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
+	$('#date').datetimepicker({ 'format': 'MMM DD, YYYY' });
 	
 	$('#calendar').fullCalendar({
 		header: {

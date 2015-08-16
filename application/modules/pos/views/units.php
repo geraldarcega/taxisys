@@ -1,5 +1,6 @@
 <?php
 	$pos_data = array();
+	$drivers_data = array();
 	$day = strtoupper( date('D') );
 	$day = $day == 'THU' ? $day.'R' : $day;
 ?>
@@ -16,8 +17,7 @@
 			<div class="row">
 			<?php } ?>
 				<div class="col col-md-2">
-					<div class="panel <?php echo unitStatusClass($unit->unit_status); ?>"
-						id="taxi_<?=$unit->unit_id?>">
+					<div class="panel <?php echo unitStatusClass($unit->unit_status); ?>" id="taxi_<?=$unit->unit_id?>">
 						<a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=$unit->unit_status?>" data-coding="<?=constant("DAY_{$day}") == $unit->coding_day ? 'yes' : 'no';?>" data-backdrop="static">
 							<div class="updateEditbtn">
 								UPDATE<i class="fa fa-angle-right"></i>
@@ -76,11 +76,10 @@
 					<div class="form-group">
 						<label for="driver" class="col-xs-3 control-label">Driver</label>
 						<div class="col-xs-9">
-							<span id="driver" style="padding-top: 7px; display: inline-block;"></span>
 							<select class="form-control" id="select_driver" name="select_driver" required>
 								<option value="">----</option>
                                 <?php if( $drivers->num_rows() ) { ?>
-                                <?php foreach ($drivers->result() as $driver) { ?>
+                                <?php foreach ($drivers->result() as $driver) { $drivers_data[$driver->unit_id][$driver->id] = $driver; ?>
                                 <option value="<?=$driver->id?>"><?=$driver->first_name?> <?=$driver->last_name?></option>
                                 <?php } ?>
                                 <?php } ?>
@@ -138,7 +137,8 @@
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" onclick="$('#frmModalPOS').submit();">Save</button>
+				<button id="btnModalUnitsave" type="button" class="btn btn-primary" onclick="$('#frmModalPOS').submit();" data-loading-text="Saving...">Save</button>
+				<button id="btnModalUnitCancel" type="button" class="btn btn-danger onduty-input" onclick="cancel_pos();" data-loading-text="Cancelling..." >Cancel</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
@@ -146,5 +146,5 @@
 </div>
 <script type="text/javascript">
     var pos_json = <?=!empty($pos_data) ? json_encode($pos_data) : '[]'?>;
-    var drivers_json = <?=$drivers->num_rows() ? json_encode($drivers->result()) : '[]'?>;
+    var drivers_json = <?=$drivers->num_rows() ? json_encode($drivers_data) : '[]'?>;
 </script>

@@ -70,6 +70,7 @@ class Units_model extends CI_Model {
     }
 
     unset($db_data['action']);
+    unset($db_data['driver_id']);
 
     if( isset($db_data['unit_id']) )
     {

@@ -59,7 +59,6 @@ class Frontend_library
 			$js[] = JS_DIR.'bootstrap-switch.min.js';
 			$js[] = JS_DIR.'jquery.tablesorter.min.js';
 			// $js[] = JS_DIR.'bootstrap-multiselect.js';
-			$js[] = JS_DIR.'sb-admin-2.js';
 
 			if( $this->_class == 'calendar' )
 				$js[] = '//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.js';
@@ -67,6 +66,8 @@ class Frontend_library
 			$class_js = 'assets/js/'.$this->_class.'.js';
 			if( file_exists($class_js) )
 				$js[] = JS_DIR.$this->_class.'.js';
+			
+			$js[] = JS_DIR.'sb-admin-2.js';
 		}
 
 		return $this->_process( $js, 'js' );

@@ -30,7 +30,7 @@ class Drivers extends MY_Framework
                     if( !isset($new['exist']) )
                     {
                         // $this->units_model->create_log( array( 'unit_idFK' => $this->input->post('unit'), 'driver_idFK' => $new ) );
-                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> New driver has been created.');
+                        $this->session->set_flashdata('msg', array( 'text' => '<strong><i class="fa fa-database"></i> Success!</strong> New driver has been created.', 'class' => 'alert-success' ));
                         $msg = array( 'success' => 1 );
                     }
                     else
@@ -39,19 +39,32 @@ class Drivers extends MY_Framework
                     echo json_encode( $msg );
                     break;
                 case 'update':
-                    $new = $this->drivers_model->update( $this->input->post() );
-                    if( !isset($new['exist']) )
+                    $update = $this->drivers_model->update( $this->input->post() );
+                    if( !isset($update['exist']) )
                     {
 //                         $this->units_model->create_log( array( 'unit_idFK' => $this->input->post('unit'), 'driver_idFK' => $this->input->post('driver_id') ) );
-                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> Driver\'s details is now updated.');
+                        $this->session->set_flashdata('msg', array( 'text' => '<strong><i class="fa fa-database"></i> Success!</strong> Driver\'s details is now updated.', 'class' => 'alert-success' ));
                         $msg = array( 'success' => 1 );
                     }
                     else
-                        $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Ooops!</strong> Driver '.$this->input->post('fname').' '.$this->input->post('lname').' is already exists.' );
+                        $msg = array( 'success' => 0, array( 'text' => '<strong><i class="fa fa-exclamation-triangle"></i> Ooops!</strong> Driver '.$this->input->post('fname').' '.$this->input->post('lname').' is already exists.', 'class' => 'alert-success' ) );
 
                     echo json_encode( $msg );
                     break;
-                
+
+				case 'remove':
+					$remove = $this->drivers_model->update( $this->input->post() );
+					if( !isset($$remove['exist']) )
+					{
+						$this->session->set_flashdata('msg', array( 'text' => '<strong><i class="fa fa-database"></i> Success!</strong> '.$this->input->post('full_name').' has been '.($this->input->post('archived') ? 'archived' : 'removed'), 'class' => 'alert-success' ));
+						$msg = array( 'success' => 1 );
+					}
+					else
+						$msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Ooops!</strong> Driver '.$this->input->post('fname').' '.$this->input->post('lname').' is already exists.' );
+					                    
+					echo json_encode( $msg );
+					
+					break;
                 default:
                     # code...
                     break;

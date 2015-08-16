@@ -19,7 +19,7 @@ class Pos extends MY_Framework
     {
         $now = date('Y-m-d');
 
-        $this->data['sub_nav']    = 'units';
+//         $this->data['sub_nav']    = 'units';
         $groups = array (
         		'MON' => 'monday',
         		'TUE' => 'tuesday',
@@ -57,7 +57,7 @@ class Pos extends MY_Framework
                     $this->units_model->update_status( $this->input->post('unit_id'), $this->input->post('status') );
                     $msg = array( 'text' => '<strong>Success!</strong> Unit is now '.unitStatus($this->input->post('status')), 'class' => 'alert-success' );
                     break;
-                
+
                 case 'u_update':
                     $return = $this->pos_model->create($this->input->post(), $this->userdata->id);
                     $msg = array( 'text' => '<strong>Well done!</strong> Trasaction saved!', 'class' => 'alert-success' );
@@ -68,7 +68,18 @@ class Pos extends MY_Framework
                     else
                         $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Ooops!</strong> Driver '.$this->input->post('fname').' '.$this->input->post('lname').' is already exists.' );
                     break;
-                
+
+                case 'cancel':
+                    $return = $this->units_model->update($this->input->post());
+                    if( $this->input->post('driver_id') != "" )
+                    	$this->drivers_model->update( array( 'driver_id' => $this->input->post('driver_id'), 'status' => 2 ) );
+                    
+                    if( $return > 0 )
+                        $msg = array( 'text' => '<strong>Well done!</strong> Trasaction cancelled!', 'class' => 'alert-success' );
+                    else
+                        $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Ooops!</strong> Driver '.$this->input->post('fname').' '.$this->input->post('lname').' is already exists.' );
+                    break;
+
                 default:
                     # code...
                     break;
@@ -80,7 +91,7 @@ class Pos extends MY_Framework
                 $element = array( 'div' => unitStatusWrapper($new_status), 'old_class' => unitStatusClass($old_status), 'new_class' => unitStatusClass($new_status), 'data_type' => $new_status );
             }
 
-            $return = array( 'taxi' => 'taxi_'.$this->input->post('unit_id'), 'element' => $element, 'msg' => $msg );
+            $return = array( 'taxi' => 'taxi_'.$this->input->post('unit_id'), 'element' => @$element, 'msg' => $msg );
             echo json_encode($return);
             exit();
         }

@@ -89,7 +89,7 @@
                                 <label for="year_model" class="col-xs-4 control-label">Year Model</label>
                                 <div class="col-xs-8">
                                     <div class="input-group date" id="year_model_dp">
-                                        <input type="text" class="form-control unit-field" id="year_model" name="year_model" required/>
+                                        <input type="text" class="form-control unit-field open-datetimepicker" id="year_model" name="year_model" required/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -113,7 +113,7 @@
                                 <label for="reg_rate" class="col-xs-4 control-label">Resealing Date 1</label>
                                 <div class="col-xs-8">
                                     <div class="input-group date" id="resealing_date1_dp">
-                                        <input type='text' class="form-control unit-field" id="resealing_date1" name="resealing_date1" required/>
+                                        <input type='text' class="form-control unit-field open-datetimepicker" id="resealing_date1" name="resealing_date1" required/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -124,7 +124,7 @@
                                 <label for="reg_rate" class="col-xs-4 control-label">Resealing Date 2</label>
                                 <div class="col-xs-8">
                                     <div class="input-group date" id="resealing_date2_dp">
-                                        <input type='text' class="form-control unit-field" id="resealing_date2" name="resealing_date2" required/>
+                                        <input type='text' class="form-control unit-field open-datetimepicker" id="resealing_date2" name="resealing_date2" required/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -135,7 +135,7 @@
                                 <label for="reg_rate" class="col-xs-4 control-label">Franchise Until</label>
                                 <div class="col-xs-8">
                                     <div class="input-group date" id="franchise_until_dp">
-                                        <input type='text' class="form-control unit-field" id="franchise_until" name="franchise_until" required/>
+                                        <input type='text' class="form-control unit-field open-datetimepicker" id="franchise_until" name="franchise_until" required/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>

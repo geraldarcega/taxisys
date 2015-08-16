@@ -26,7 +26,13 @@
                             <td><?=ucwords($driver->first_name)?></td>
                             <td><?=ucwords($driver->last_name)?></td>
                             <td><?=driverStatus($driver->status)?></td>
-                            <td><a href="#driversModal" data-toggle="modal" data-target="#driversModal" data-id="<?=$driver->id?>" ><i class="fa fa-eye"></i></a></td>
+                            <td align="center">
+                            	<a href="#driversModal" data-toggle="modal" data-target="#driversModal" data-id="<?=$driver->id?>" rel="tooltip" data-original-title="View/Update"><i class="fa fa-eye"></i></a>
+                            	&nbsp;
+                            	<a href="javascript:remove('<?=$driver->id?>', 1);" ><i class="fa fa-archive" rel="tooltip" data-original-title="Archive"></i></a>
+                            	&nbsp;
+                            	<a  href="javascript:remove('<?=$driver->id?>', 0);"><i class="fa fa-trash" rel="tooltip" data-original-title="Remove"></i></a>
+                            </td>
                         </tr>                        
                         <?php } ?>
                         <?php } else { ?>
@@ -58,7 +64,7 @@
                     <div class="form-group">
                         <label for="unit" class="col-xs-4 control-label">Unit</label>
                         <div class="col-xs-4">
-                            <select id="unit" name="unit" class="form-control driver-field" required>
+                            <select id="unit" name="unit" class="form-control driver-field">
                                 <option value="">----</option>
                                 <?php if( $avail_units->num_rows() ){ ?>
                                 <?php foreach( $avail_units->result() as $unit ){ ?>
@@ -96,7 +102,7 @@
                         <label for="birthday" class="col-xs-4 control-label">Birth Date</label>
                         <div class="col-xs-5">
                             <div class="input-group date" id="birthday_dp">
-                                <input type="text" class="form-control driver-field" id="birthday" name="birthday" required/>
+                                <input type="text" class="form-control driver-field open-datetimepicker" id="birthday" name="birthday" required/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -112,7 +118,7 @@
                     <div class="form-group">
                         <label for="reg_rate" class="col-xs-4 control-label">SSS</label>
                         <div class="col-xs-5">
-                            <input type="text" class="form-control driver-field" id="sss" name="sss" required>
+                            <input type="text" class="form-control driver-field" id="sss" name="sss">
                         </div>
                     </div>
                     <div class="form-group">

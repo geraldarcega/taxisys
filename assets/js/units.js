@@ -10,16 +10,21 @@ $(document).ready(function() {
         } 
     });
 
-    $('#date_from_dp').datetimepicker({ 'minDate': new Date(), 'format': 'MMM DD, YYYY' });
-    $('#time_from_dp').datetimepicker({ 'format': 'hh:mm A' });
-    $('#date_to_dp').datetimepicker({ 'minDate': new Date(), 'format': 'MMM DD, YYYY' });
-    $('#time_to_dp').datetimepicker({ 'format': 'hh:mm A' });
-    $('#resealing_date1_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
-    $('#resealing_date2_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
-    $('#franchise_until_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
-    $('#renew_by_dp').datetimepicker({ 'format': 'MMM DD, YYYY' });
-    $('#year_model_dp').datetimepicker({format: "YYYY",viewMode: "years"});
-
+    $('#date_from').datetimepicker({ 'minDate': new Date(), 'format': 'MMM DD, YYYY' });
+    $('#time_from').datetimepicker({ 'format': 'hh:mm A' });
+    $('#date_to').datetimepicker({ 'minDate': new Date(), 'format': 'MMM DD, YYYY' });
+    $('#time_to').datetimepicker({ 'format': 'hh:mm A' });
+    $('#resealing_date1').datetimepicker({ 'format': 'MMM DD, YYYY' });
+    $('#resealing_date2').datetimepicker({ 'format': 'MMM DD, YYYY' });
+    $('#franchise_until').datetimepicker({ 'format': 'MMM DD, YYYY' });
+    $('#renew_by').datetimepicker({ 'format': 'MMM DD, YYYY' });
+    $('#year_model').datetimepicker({format: "YYYY",viewMode: "years"});
+    
+    $('#year_model').on('click', function(event){
+        event.preventDefault();
+        $('#datetimepicker').click();
+    });
+    
     if( $('#frmModalUnits').length )
     {
         $('#frmModalUnits').validate({

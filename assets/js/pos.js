@@ -1,3 +1,6 @@
+var current_data
+var current_unit
+
 $(document).ready( function(){
     init()
 
@@ -30,21 +33,23 @@ $(document).ready( function(){
                         $('#btnModalUnitsave').button('loading')
                     },
                     success: function(data){
-                    	$('#old_status').val( $('#status').val() )
-                         $('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
-                         $('#'+data.taxi).hide()
-                                         .removeClass(data.element.old_class)
-                                         .addClass(data.element.new_class)
-                                         .fadeIn(1000)
+                    	$('#btnModalUnitsave').button('reset')
+						$('#old_status').val( $('#status').val() )
+						$('#taxi_'+current_data.unit_id+' .panel-nametag').html( drivers_json[current_unit][$('#select_driver').val()].nickname )
+						$('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
+						$('#'+data.taxi).hide()
+							 .removeClass(data.element.old_class)
+							 .addClass(data.element.new_class)
+							 .fadeIn(1000)
 
-                         $('#unitsModal').modal('hide')
-
-                         $('#pos_alert .msg').html(data.msg.text)
-                         $('#pos_alert').addClass(data.msg.class)
-                                        .show()
-                                        .fadeOut(4000)
-
-                         init()
+	                     $('#unitsModal').modal('hide')
+	
+	                     $('#top_message .msg').html(data.msg.text)
+		                 $('#top_message').addClass(data.msg.class)
+		                    .show()
+		                    .fadeOut(5000)
+	
+	                     init()
                     }
                 });
             }
@@ -65,27 +70,42 @@ $(document).ready( function(){
             $('#select_driver').rules('add', 'required')
         }
     })
+    
+    $('input[type="radio"]').on('change', function() {
+    	if( current_data != '' )
+        {
+    		if( $(this).val() == "4" )
+    			$('#boundary').attr('placeholder', current_data.holiday_rate)
+    		else
+    			$('#boundary').attr('placeholder', current_data.reg_rate)    			
+        }
+    });
 })
 
 $('#unitsModal').on('show.bs.modal', function (e) {
     var data_id   = e.relatedTarget.attributes[4]['value']
     var data_type = e.relatedTarget.attributes[5]['value']
     var data_coding = e.relatedTarget.attributes[6]['value']
-    var data      = (typeof pos_json[data_id] !== "undefined") ? pos_json[data_id] : ''
-
+    
+    current_unit = data_id
+    current_data = (typeof pos_json[data_id] !== "undefined") ? pos_json[data_id] : '';
+    
     init()
-    if( data != '' )
+    
+    if( current_data != '' )
     {
+    	generate_drivers_select()
+    	
         switch( data_type ) {
             case '2':
             	$('.onduty-input').hide()
                 $('#select_driver').show()
                 $('#driver').hide()
                 
-                if( data.driver_id )
+                if( current_data.driver_id )
                 {
-                    $('#old_driver').val( data.driver_id )
-                    $('#select_driver').val( data.driver_id )
+                    $('#old_driver').val( current_data.driver_id )
+                    $('#select_driver').val( current_data.driver_id )
                 }
 
                 $('#status option[value="1"]').show()
@@ -101,14 +121,14 @@ $('#unitsModal').on('show.bs.modal', function (e) {
                 break;
             default:
 //                $('#select_driver').hide()
-            	$('#old_driver').val( data.driver_id )
-            	$('#select_driver').val(data.driver_id)
+            	$('#old_driver').val( current_data.driver_id )
+            	$('#select_driver').val(current_data.driver_id)
                 $('.onduty-input').show()
 //                $('#driver').show()
-//                if( data.driver_id )
+//                if( current_data.driver_id )
 //                {
-//                    $('#old_driver').val( data.driver_id )
-//                    $('#driver').html(data.first_name+' '+data.last_name)
+//                    $('#old_driver').val( current_data.driver_id )
+//                    $('#driver').html(current_data.first_name+' '+current_data.last_name)
 //                }
                 
                 $('#status option[value="1"]').hide()
@@ -123,10 +143,10 @@ $('#unitsModal').on('show.bs.modal', function (e) {
     		$('#rate_input .coding').show()
     	}
 
-        $('#unitsModalLabel').html('UNIT: '+data.plate_number.toUpperCase())
+        $('#unitsModalLabel').html('UNIT: '+current_data.plate_number.toUpperCase())
         $('#unit_id').val(data_id)
-        $('#coding_day').val(data.coding_day)
-        $('#boundary').prop('placeholder', data.reg_rate)
+        $('#coding_day').val(current_data.coding_day)
+        $('#boundary').prop('placeholder', current_data.reg_rate)
     }
 })
 
@@ -142,7 +162,69 @@ function init() {
 
     $('#frmModalPOS input[type="text"]').val('')
     $('#frmModalPOS textarea').val('')
+    $('#frmModalPOS #select_driver').val('')
     
     $('#rate_input .btn-group').show();
 	$('#rate_input .coding').hide()
+}
+
+function cancel_pos() {
+	var ans = confirm('Cancel this transaction?')
+
+    if( ans )
+    {
+        $.ajax({
+            type: "POST",
+            url: base_url+'pos/ajax',
+            data: { 'action' : 'cancel', 'unit_id' : current_unit, 'status' : '2', 'driver_id' : $('#select_driver').val() },
+            dataType: "JSON",
+            beforeSend: function() {
+                $('#btnModalUnitCancel').button('loading')
+            },
+            success: function(data){
+            	console.log(data)
+            	$('#btnModalUnitCancel').button('reset')
+				$('#old_status').val( $('#status').val() )
+
+				if( $('#select_driver').val() != '' )
+					$('#taxi_'+current_data.unit_id+' .panel-nametag').html( drivers_json[$('#select_driver').val()].nickname )
+					
+				$('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
+				$('#'+data.taxi).hide()
+					 .removeClass('panel-green')
+					 .addClass('panel-yellow')
+					 .fadeIn(1000)
+
+                 $('#unitsModal').modal('hide')
+
+                 $('#top_message .msg').html(data.msg.text)
+                 $('#top_message').addClass(data.msg.class)
+                    .show()
+                    .fadeOut(5000)
+
+                 init()
+            }
+        });
+    }
+}
+
+function generate_drivers_select( ) {
+	$('#select_driver').find("option:gt(0)").remove();
+	$('#select_driver optgroup').remove();
+	
+	var assigned = '<optgroup label="Assigned">'
+	var reserved = '<optgroup label="Reserved">'
+	$.each( drivers_json, function( i, drivers ){
+		$.each( drivers, function( key, v ){
+			if( current_unit == v.unit_id )
+				assigned += '<option value="'+v.id+'" '+(current_data.driver_id == v.id ? 'selected' : '')+'>'+v.first_name+' '+v.last_name+'</option>'
+			else
+				reserved += '<option value="'+v.id+'">'+v.first_name+' '+v.last_name+'</option>'
+		})
+	})
+	assigned += '</optgroup>'
+	reserved += '</optgroup>'
+
+	$('#select_driver option:first').after( assigned )
+	$('#select_driver optgroup:first').after( reserved )
 }

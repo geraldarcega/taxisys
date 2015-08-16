@@ -14,12 +14,14 @@ class Drivers_model extends CI_Model {
     	return $this->db
     				->select( 'd.*, u.id unit_id, u.plate_number' )
                     ->join( 'units u', 'd.unit_id = u.id', 'left' )
-                    ->order_by( 'u.plate_number', 'ASC' )
+                    ->where( 'd.deleted_at IS NULL', null, false )
+                    ->order_by( 'u.plate_number', 'DESC' )
                     ->get( $this->table.' d' );
     }
 
     public function create( $db_data ) {
-        $db_data['unit_id'] = $db_data['unit'];
+    	if( isset($db_data['unit']) )
+    		$db_data['unit_id'] = $db_data['unit'] != '' ? $db_data['unit'] : null;
 
         unset($db_data['unit']);
         unset($db_data['action']);
@@ -36,18 +38,24 @@ class Drivers_model extends CI_Model {
 
     public function update( $db_data ) {
         $driver_id = $db_data['driver_id'];
-        $db_data['unit_id'] = $db_data['unit'];
+        
+        if( isset($db_data['unit']) )
+        	$db_data['unit_id'] = $db_data['unit'] != '' ? $db_data['unit'] : null;
+        
+        if( $db_data['action'] == 'remove' )
+        	$db_data['deleted_at'] = date('Y-m-d H:i:s');
 
         unset($db_data['driver_id']);
+        unset($db_data['full_name']);
         unset($db_data['action']);
         unset($db_data['unit']);
-
-        $db_data['birthday'] = dateFormat( $db_data['birthday'] );
+		
+        if( isset( $db_data['birthday'] ) )
+        	$db_data['birthday'] = dateFormat( $db_data['birthday'] );
 
         $this->db
              ->where( 'id', $driver_id )
              ->update( $this->table, $db_data );
-
         return $this->db->affected_rows();
     }
 

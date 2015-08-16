@@ -1,13 +1,19 @@
 $(document).ready(function() {
+	$('[rel="tooltip"]').tooltip()
+	
     $("#tbl_drivers").tablesorter({
         headers: { 
              0: { sorter: false }
-            ,5: { sorter: false } 
+            ,6: { sorter: false } 
         } 
     });
 
     $('#birthday').datetimepicker({ 'format': 'MMM DD, YYYY' });
-
+    $('#birthday').on('click', function(event){
+        event.preventDefault();
+        $('#datetimepicker').click();
+    });
+    
     $('#frmModalDriver').validate({
         submitHandler: function(form) {
             var ans = confirm('Continue saving?')
@@ -80,3 +86,30 @@ $('#driversModal').on('show.bs.modal', function (e) {
         })
     }
 })
+
+function remove( id, archive ) {
+	var full_name = drivers_data[id].first_name+' '+drivers_data[id].last_name
+	var ans = confirm((archive == 1 ? 'Archive' : 'Remove') + ' '+full_name+'?')
+	if( ans )
+	{
+		$.ajax({
+	        type: 'POST',
+	        url: dashboard_url+'/drivers/ajax',
+	        data: { 'action' : 'remove', 'archived' : archive, 'driver_id' : id, 'full_name' : full_name },
+	        dataType: "JSON",
+	        beforeSend: function() {
+	            $('#btnModalDriversave').button('loading')
+	        },
+	        success: function(data){
+	            if( data.success )
+	                location.reload()
+	            else
+	            {
+	                $('#btnModalDriversave').button('reset')
+	                $('#failed_msg span').html( data.msg )
+	                $('#failed_msg').show()
+	            }
+	        }
+	    });
+	}
+}

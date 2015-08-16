@@ -2,21 +2,21 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><?=strtoupper($this->_class)?><?=isset($sub_nav) ? ' - '.strtoupper(str_replace('_', ' ', $sub_nav)) : ''?> (<?php echo date('F d, Y'); ?>)</h1>
+            <h1 class="page-header"><?=strtoupper($this->_class)?><?=isset($sub_nav) ? ' - '.strtoupper(str_replace('_', ' ', $sub_nav)) : ''?> <?php echo $this->_class == 'pos' ? date('F d, Y') : ''; ?></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
-    <?php 
+    <?php
+    	$show = false;
     	$msg = $this->session->flashdata('msg'); 
-    	if( is_array($msg) ){
-	?>
+    	if( is_array($msg) ) $show = true;
+    ?>
     <!-- /message -->
-    <div class="alert <?php echo $msg['class']; ?> alert-dismissible" role="alert">
+    <div id="top_message" class="alert <?php echo @$msg['class'] != $msg['class'] ? : 'alert-info'; ?> alert-dismissible" role="alert" style="display:<?php echo $show ? 'inherit' : 'none'; ?>;">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <?=$msg['value']?>
+        <span class="msg"><?=$msg['text']?></span>
     </div>
-    <?php } ?>
     <?php if( $this->top_nav && $this->_class != 'pos' ) { ?>
     <div class="mainNav">
         <div class="row">

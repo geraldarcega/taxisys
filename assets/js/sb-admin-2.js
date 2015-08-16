@@ -57,3 +57,9 @@ function readableDate( date ){
 function formatNumber( num ) {
 	return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
+
+function ucwords(str) {
+	return (str + '').replace(/^([a-z\u00E0-\u00FC])|\s+([a-z\u00E0-\u00FC])/g, function($1) {
+		return $1.toUpperCase();
+	});
+}
