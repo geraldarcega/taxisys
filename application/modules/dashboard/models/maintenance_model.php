@@ -115,6 +115,10 @@ class Maintenance_model extends CI_Model {
 		$db_data ['odometer'] = $db_data ['m_odometer'];
 		$db_data ['created_by'] = $this->user_id;
 		
+		$date_from = strtotime ( $db_data ['date_from'] );
+		if( $date_from >= strtotime( date('M d, Y') ) )
+			$db_data ['status'] = 1;
+
 		unset ( $db_data ['action'] );
 		unset ( $db_data ['unit_maintenance_id'] );
 		unset ( $db_data ['uns_maintenance'] );

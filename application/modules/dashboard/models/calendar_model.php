@@ -27,7 +27,7 @@ class Calendar_model extends CI_Model {
     	$db_data ['allday']	   = $allday;
         $db_data ['date_from'] = date ( 'Y-m-d', strtotime ( $date_from ) );
         $db_data ['time_from'] = !$allday ? date ( 'H:i:s', strtotime ( $time_from ) ) : null;
-        if( !is_null($date_to) )
+        if( !is_null($date_to) && $date_to != '' )
         {
         	$db_data ['date_to'] = date ( 'Y-m-d', strtotime ( $date_to ) );
         	$db_data ['time_to'] = !$allday ? date ( 'H:i:s', strtotime ( $time_to ) ) : null;

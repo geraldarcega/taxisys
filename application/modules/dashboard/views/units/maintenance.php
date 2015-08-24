@@ -74,7 +74,7 @@
                             	</td>
 	                            <td>
 	                            	<a href="javascript:show_maintenance_info('<?php echo $maintain['id']; ?>');" rel="tooltip" data-original-title="Info"><i class="fa fa-info-circle"></i></a> &nbsp;
-	                            	<?php if( $unit->status != UNIT_DUTY ) { ?>
+	                            	<?php if( $unit->unit_status != UNIT_DUTY ) { ?>
 	                            	<a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?php echo $maintain['id']; ?>" rel="tooltip" rel="tooltip" data-original-title="<?php echo isset($unit->maintenance['ongoing'][ $unit_id ][ $maintain['id'] ]) ? 'On-going' : 'Apply';?>">
 	                            		<?php echo !isset($unit->maintenance['ongoing'][ $unit_id ][ $maintain['id'] ]) ? '<i class="fa fa-caret-square-o-right"></i>' : '<i class="fa fa-gears"></i>';?>
 	                            	</a>
@@ -210,7 +210,7 @@
                             <textarea id="notes" name="notes" rows="5" class="form-control" style="resize:none;"></textarea>
                         </div>
                     </div>
-                    <div class="form-group update-flds">
+                    <div class="form-group status-fld">
                         <label for="notes" class="col-xs-3 control-label">Status</label>
                         <div class="col-xs-5">
                             <select class="form-control" id="status" name="status">

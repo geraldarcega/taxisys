@@ -28,12 +28,13 @@
                             <td><?=dateFormat($unit->renew_by, 'M d, Y')?></td>
                             <td id="odometer_<?=$unit->unit_id?>"><?=number_format($unit->odometer)?></td>
                             <td><?=unitStatus($unit->unit_status)?></td>
-                            <td>
+                            <td align="center">
                             	<div id="units_opt_<?php echo $unit->unit_id; ?>">
                             		<a href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
                             		<a href="<?=dashboard_url('units/maintenance/scheduled/'.$unit->unit_id)?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a> &nbsp;
 	                                <?php /*<a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a> &nbsp; */ ?>
-	                                <a href="javascript:show_odometer('<?=$unit->unit_id?>');" rel="tooltip" data-original-title="Odometer"><i class="fa fa-tachometer"></i></a>
+	                                <a href="javascript:show_odometer('<?=$unit->unit_id?>');" rel="tooltip" data-original-title="Odometer"><i class="fa fa-tachometer"></i></a> &nbsp;
+	                                <a id="archive_<?=$unit->unit_id?>" href="javascript:archive('<?=$unit->unit_id?>', '<?=strtoupper($unit->plate_number)?>');" rel="tooltip" data-original-title="Archive"><i class="fa fa-archive"></i></a>
                             	</div>
                             	<div id="input_odometer_<?=$unit->unit_id?>" style="width: 130px;display: none;">
                             		<div class="input-group">
@@ -107,6 +108,17 @@
                                         <option value="4">Thursday</option>
                                         <option value="5">Friday</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="registration_date" class="col-xs-4 control-label">Registration Date</label>
+                                <div class="col-xs-8">
+                                    <div class="input-group date" id=""registration_date_dp">
+                                        <input type='text' class="form-control unit-field open-datetimepicker" id="registration_date" name="registration_date" required/>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">

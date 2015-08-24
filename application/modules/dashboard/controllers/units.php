@@ -113,7 +113,7 @@ class Units extends MY_Framework
                     $update = $this->units_model->update( $this->input->post() );
                     if( $update )
                     {
-                        $this->session->set_flashdata('msg', '<strong><i class="fa fa-database"></i> Success!</strong> Unit\'s details has been updated.');
+                    	$this->session->set_flashdata('msg', array( 'text' => '<strong><i class="fa fa-database"></i> Success!</strong> Unit\'s details has been updated.', 'class' => 'alert-success' ));
                         $msg = array( 'success' => 1 );
                     }
                     else
@@ -155,7 +155,9 @@ class Units extends MY_Framework
                 case 'apply_maintenance':
                     $new = $this->maintenance_model->add_unit_maintenance($this->input->post());
                     if( $new ) {
-                    	$this->units_model->update_status($this->input->post('unit_id'), UNIT_MAINTENANCE);
+                    	$date_from = strtotime ( $this->input->post('date_from') );
+                    	if( $date_from >= strtotime( date('M d, Y') ) )
+                    		$this->units_model->update_status($this->input->post('unit_id'), UNIT_MAINTENANCE);
                     	
                     	# save to sched to calendar
                     	$this->calendar_model->create(
@@ -168,11 +170,11 @@ class Units extends MY_Framework
 	                    	,$this->input->post('time_to')
 	                    );;
                     	
-                    	$this->session->set_flashdata('msg', array('class' => 'alert-success', 'value' => '<strong><i class="fa fa-database"></i> Success!</strong> Unit is now under maintenance.') );
+                    	$this->session->set_flashdata('msg', array('class' => 'alert-success', 'text' => '<strong><i class="fa fa-database"></i> Success!</strong> Unit is now under maintenance.') );
                     	$msg = array( 'success' => 1 );
                     }
                     else
-                    	$msg = array( 'success' => 0, 'alert' => array('class' => 'alert-warning', 'msg' => 'Failed! There\'s something wrong with the system, contact administrator.') );
+                    	$msg = array( 'success' => 0, 'alert' => array('class' => 'alert-warning', 'text' => 'Failed! There\'s something wrong with the system, contact administrator.') );
                     
                     echo json_encode( $msg );
                     break;
@@ -215,7 +217,23 @@ class Units extends MY_Framework
                     
                 	echo json_encode( array('success' => $success, 'data' => $maintenance) );
                     break;
-				
+
+				case 'archive':
+					$archived = $this->units_model->archive( $this->input->post('unit_id') );
+                    if( $archived )
+                    {
+                    	$this->session->set_flashdata('msg', array( 'text' => '<strong><i class="fa fa-database"></i> Success!</strong> Unit\'s details has been updated.', 'class' => 'alert-success' ));
+                    	$msg = array( 'success' => 1 );
+                    }
+                    else
+                    {
+                    	$this->session->set_flashdata('msg', array( 'text' => '<strong><i class="fa fa-database"></i> Oops!</strong> Something is wrong with the system, contact admin.', 'class' => 'alert-danger' ));
+                    	$msg = array( 'success' => 0 );
+                    }
+                    
+                    echo json_encode( array('success' => $success, 'data' => $maintenance) );
+                    break;
+                    
                 default:
                     # code...
                     break;

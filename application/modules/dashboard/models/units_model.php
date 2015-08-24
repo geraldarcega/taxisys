@@ -55,9 +55,12 @@ class Units_model extends CI_Model {
   }
 
   public function update( $db_data ) {
+  	$db_data['updated_at'] = date('Y-m-d H:i:s');
+  	
     $date_fields = array(
                            'resealing_date1'
                           ,'resealing_date2'
+    					  ,'registration_date'
                           ,'franchise_until'
                           ,'renew_by'
                         );
@@ -140,6 +143,18 @@ class Units_model extends CI_Model {
   				->where( 'renew_by >=', $from)
   				->where( 'renew_by <=', $to)
   				->get( $this->table );
+  }
+
+  # archive unit
+  public function archive( $unit_id )
+  {
+  	$now = date('Y-m-d H:i:s');
+  	
+    $this->db
+         ->where( 'id', $unit_id )
+         ->update( $this->table, array( 'deleted_at' => $now ) );
+
+    return $this->db->affected_rows();
   }
   
 }

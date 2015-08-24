@@ -36,6 +36,9 @@ $(function() {
 })
 
 function readableDate( date ){
+	if( date == null )
+		return null
+
     var d =new Date(date);
     var month_name=new Array(12);
     month_name[0]="Jan"
