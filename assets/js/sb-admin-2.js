@@ -54,7 +54,7 @@ function readableDate( date ){
     month_name[10]="Nov"     
     month_name[11]="Dec"
 
-    return month_name[d.getMonth()]+" "+d.getDate()+" , "+d.getFullYear();
+    return month_name[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();
 }
 
 function formatNumber( num ) {
@@ -75,4 +75,20 @@ function show_alert_msg(msg, success) {
 
     $('#top_message span.msg').html(msg)
     $('#top_message').slideDown().delay(1000).slideUp()
+}
+
+function dateAdd(date, interval, units) {
+  var ret = new Date(date); //don't change original date
+  switch(interval.toLowerCase()) {
+    case 'year'   :  ret.setFullYear(ret.getFullYear() + units);  break;
+    case 'quarter':  ret.setMonth(ret.getMonth() + 3*units);  break;
+    case 'month'  :  ret.setMonth(ret.getMonth() + units);  break;
+    case 'week'   :  ret.setDate(ret.getDate() + 7*units);  break;
+    case 'day'    :  ret.setDate(ret.getDate() + units);  break;
+    case 'hour'   :  ret.setTime(ret.getTime() + units*3600000);  break;
+    case 'minute' :  ret.setTime(ret.getTime() + units*60000);  break;
+    case 'second' :  ret.setTime(ret.getTime() + units*1000);  break;
+    default       :  ret = undefined;  break;
+  }
+  return ret;
 }

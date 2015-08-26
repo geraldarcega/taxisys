@@ -17,10 +17,15 @@ $(document).ready(function() {
     $('#registration_date').datetimepicker({ 'format': 'MMM DD, YYYY' });
     $('#resealing_date1').datetimepicker({ 'format': 'MMM DD, YYYY' });
     $('#resealing_date2').datetimepicker({ 'format': 'MMM DD, YYYY' });
-    $('#franchise_until').datetimepicker({ 'format': 'MMM DD, YYYY' });
+    $('#franchise_until').datetimepicker({'format': 'MMM DD, YYYY' });
     $('#renew_by').datetimepicker({ 'format': 'MMM DD, YYYY' });
     $('#year_model').datetimepicker({format: "YYYY",viewMode: "years"});
     
+    $('#franchise_until').on('dp.change', function(e){
+        var renew_by = readableDate(dateAdd(e.date._d, 'day', 8))
+        $('#renew_by').val( renew_by )
+    })
+
     $('#year_model').on('click', function(event){
         event.preventDefault();
         $('#datetimepicker').click();
