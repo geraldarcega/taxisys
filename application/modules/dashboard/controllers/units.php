@@ -12,7 +12,7 @@ class Units extends MY_Framework
         $this->load->model('maintenance_model');
         $this->load->model('calendar_model');
         
-        $this->maintenance_model->user_id = $this->userdata->id;
+        $this->units_model->user_id = $this->maintenance_model->user_id = $this->userdata->id;
     }
 
     public function index( )
@@ -147,6 +147,9 @@ class Units extends MY_Framework
                 
                 case 'update_odometer':
                     $update = $this->units_model->update($this->input->post());
+                    
+                    $this->units_model->log_odometer( $this->input->post('unit_id'), $this->input->post('odometer') );
+
                     $unit = $this->get_unit_details($this->input->post('unit_id'));
                     
                     echo json_encode( array( 'success' => $update, 'unit_data' => json_encode( $unit ) ) );

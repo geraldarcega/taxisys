@@ -2,7 +2,10 @@
 
 class Units_model extends CI_Model {
   private $table  = 'units';
+  private $odometer_logs  = 'units_odometer_logs';
   public $fields  = 'u.*, d.*, u.id unit_id, d.id driver_id, u.status unit_status, d.status driver_status';
+
+  public $user_id;
 
   function __construct(){
     parent::__construct();
@@ -60,7 +63,7 @@ class Units_model extends CI_Model {
     $date_fields = array(
                            'resealing_date1'
                           ,'resealing_date2'
-    					  ,'registration_date'
+    					            ,'registration_date'
                           ,'franchise_until'
                           ,'renew_by'
                         );
@@ -153,6 +156,16 @@ class Units_model extends CI_Model {
     $this->db
          ->where( 'id', $unit_id )
          ->update( $this->table, array( 'deleted_at' => $now ) );
+
+    return $this->db->affected_rows();
+  }
+
+  # Logs odometer
+  public function log_odometer( $unit_id, $odometer )
+  {
+    $now = date('Y-m-d H:i:s');
+    
+    $this->db->insert( $this->odometer_logs, array( 'unit_id' => $unit_id, 'odometer' => $odometer, 'created_by' => $this->user_id, 'created_at' => $now ) );
 
     return $this->db->affected_rows();
   }

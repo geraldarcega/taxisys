@@ -84,6 +84,37 @@ $(document).ready(function() {
     $('#multi_day').bootstrapSwitch('state', false)
     $('#allday').bootstrapSwitch('state', false)
     $('#frmModalMaintenance .update-flds').hide()
+
+    $('.btnUpdateOdo').on( 'click', function() {
+        var unit_id = $(this).attr('data-id')
+        var new_odometer = $('#new_odometer_'+unit_id).val()
+        var rx = new RegExp(/^\d+$/);
+        console.log(unit_id, new_odometer)
+        if( new_odometer == '' || !rx.test(new_odometer) )
+        {
+            alert('Please enter valid number for odometer')
+            return false
+        }
+        
+        $.ajax({
+            type: 'POST',
+            url: base_url+'dashboard/units/ajax',
+            data: { 'action' : 'update_odometer','unit_id' : unit_id, 'odometer' : new_odometer },
+            dataType: "JSON",
+            beforeSend: function() {
+                $('.btnUpdateOdo').button('loading')
+            },
+            success: function(data){
+                if( data.success )
+                {
+                    $('#odometer_'+unit_id).html(formatNumber(new_odometer))
+                    $('.btnUpdateOdo').button('reset')
+                    show_odometer(unit_id)
+                    show_alert_msg('Unit odometer has been updated.', true);
+                }
+            }
+        });
+    })
 });
 
 $('#unitsModal').on('show.bs.modal', function (e) {
@@ -201,33 +232,6 @@ $('#maintenance').on( 'change', function(){
         $('#parts_included').slideUp("fast")
     }
 } )
-
-$('#btnUpdateOdo').on( 'click', function() {
-    var rx = new RegExp(/^\d+$/);
-    if( $('#odometer').val() == '' || !rx.test($('#odometer').val()) )
-    {
-        alert('Please enter valid number for odometer')
-        return false
-    }
-    var new_odometer = $('#odometer').val()
-    $.ajax({
-        type: 'POST',
-        url: base_url+'dashboard/units/ajax',
-        data: { 'action' : 'update_odometer','unit_id' : $('#btnUpdateOdo').attr('data-id'), 'odometer' : new_odometer },
-        dataType: "JSON",
-        beforeSend: function() {
-            $('#btnUpdateOdo').button('loading')
-        },
-        success: function(data){
-            if( data.success )
-            {
-            	$('#odometer_'+$('#btnUpdateOdo').attr('data-id')).html(formatNumber(new_odometer))
-                $('#btnUpdateOdo').button('reset')
-                $('#odomsg').slideDown().delay(400).slideUp()
-            }
-        }
-    });
-})
 
 function show_odometer( unit_id ) {
 	var odometer = $('#input_odometer_'+unit_id)

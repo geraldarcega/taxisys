@@ -4,9 +4,9 @@
             <article class="col-xs-3">
                 <strong id="odotitle">Current Odometer <span id="odomsg" class="label label-info" style="display:none;">Updated!</span></strong>
                 <div class="input-group col-xs-8">
-                    <input type="text" id="odometer" name="odometer" class="form-control" placeholder="odometer" value="<?=$unit->odometer?>">
+                    <input type="text" id="new_odometer_<?=$unit_id?>" class="form-control" placeholder="odometer" value="<?=$unit->odometer?>">
                     <span class="input-group-btn">
-                        <button class="btn btn-primary" type="button" data-id="<?=$unit_id?>" id="btnUpdateOdo">Update</button>
+                        <button class="btn btn-primary btnUpdateOdo" type="button" data-id="<?=$unit_id?>">Update</button>
                     </span>
                 </div>
             </article>

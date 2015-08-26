@@ -38,9 +38,9 @@
                             	</div>
                             	<div id="input_odometer_<?=$unit->unit_id?>" style="width: 130px;display: none;">
                             		<div class="input-group">
-					                    <input type="text" id="odometer" name="odometer" class="form-control input-sm" value="<?=$unit->odometer?>">
+					                    <input type="text" id="new_odometer_<?=$unit->unit_id?>" class="form-control input-sm" placeholder="<?=$unit->odometer?>">
 					                    <span class="input-group-btn">
-					                        <button class="btn btn-primary btn-sm" type="button" data-id="<?=$unit->unit_id?>" id="btnUpdateOdo">Update</button>
+					                        <button class="btn btn-primary btn-sm btnUpdateOdo" type="button" data-id="<?=$unit->unit_id?>" data-loading-text="Saving">Update</button>
 					                    </span>
 					                </div>
                             		<a style="float: right;margin-top: -25px;margin-right: -15px;" href="javascript:show_odometer('<?=$unit->unit_id?>');" rel="tooltip" data-original-title="Close"><i class="fa fa-times"></i></a>
@@ -113,7 +113,7 @@
                             <div class="form-group">
                                 <label for="registration_date" class="col-xs-4 control-label">Registration Date</label>
                                 <div class="col-xs-8">
-                                    <div class="input-group date" id=""registration_date_dp">
+                                    <div class="input-group date" id="registration_date_dp">
                                         <input type='text' class="form-control unit-field open-datetimepicker" id="registration_date" name="registration_date" required/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>

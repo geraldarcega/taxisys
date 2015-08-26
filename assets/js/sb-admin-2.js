@@ -66,3 +66,13 @@ function ucwords(str) {
 		return $1.toUpperCase();
 	});
 }
+
+function show_alert_msg(msg, success) {
+    if( success )
+        $('#top_message').addClass('alert-info').removeClass('alert-danger')
+    else
+        $('#top_message').addClass('alert-danger').removeClass('alert-info')
+
+    $('#top_message span.msg').html(msg)
+    $('#top_message').slideDown().delay(1000).slideUp()
+}
