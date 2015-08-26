@@ -27,12 +27,12 @@ $working_dir = realpath('../');
 <html lang="en-US">
 <head>
 	<meta charset="UTF-8">
-	<title>GIT DEPLOYMENT SCRIPT</title>
+	<title>GIT PULL-ME SCRIPT</title>
 </head>
 <body style="background-color: #000000; color: #FFFFFF; font-weight: bold; padding: 0 10px;">
 <pre>
 
-- Git Deployment Script v1 -<br/>
+- Git PULL-ME Script v1 -<br/>
  
 <?php echo $output; ?>
 </pre>
