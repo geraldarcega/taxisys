@@ -15,6 +15,7 @@
   <script type="text/javascript">
 	var base_url = '<?php echo base_url();?>'
 	var dashboard_url = '<?php echo dashboard_url();?>'
+	var search = '<?php echo $this->input->get("column");?>'
   </script>
 </head>
 <body>

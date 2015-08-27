@@ -14,8 +14,54 @@ class Drivers extends MY_Framework
 
     public function index( )
     {
-        $this->data['drivers']     = $this->drivers_model->read();
-        $this->data['avail_units'] = $this->units_model->read();
+        $filter = array();
+        $limit = LIMIT;
+        $page = $this->input->get('page') ? $this->input->get('page') : 0;
+        $baseurl = dashboard_url($this->_class).'?';
+
+        if( !empty($_GET) )
+        {
+            $uri = array();
+            foreach ($_GET as $key => $value) {
+                if( $key != 'page' )
+                    $uri[] = $key.'='.$value;
+            }
+            $baseurl .= implode('&', $uri);
+        }
+
+        if( $this->input->get('search') )
+        {
+            switch ($this->input->get('column')) {
+                case 'name':
+                    $filter = array('lk|first_name' => $this->input->get('search'), 'or_lk|last_name' => $this->input->get('search'), 'or_lk|nickname' => $this->input->get('search'));
+                    break;
+                
+                case 'plate_number':
+                    if( $this->input->get('search') != '' )
+                        $filter = array('lk|plate_number' => $this->input->get('search'));
+                    else
+                        $filter = array('wh|plate_number' => null);
+                    break;
+                
+                default:
+                    $filter = array('wh|d.status' => $this->input->get('search'));
+                    break;
+            }
+        }
+
+
+        if( $this->input->get('limit') ) $limit = $this->input->get('limit') != 'all' ? $this->input->get('limit') : null;
+
+        $this->data['drivers']     = $this->drivers_model->read( $filter, $limit, $page );
+        $this->data['avail_units'] = $this->units_model->read( );
+
+        $this->data['pagination'] = setup_pagination(
+             $baseurl
+            ,true
+            ,$this->drivers_model->count( $filter )
+            ,$page
+            ,$limit
+        );
 
         $this->load_view( 'index' );
     }

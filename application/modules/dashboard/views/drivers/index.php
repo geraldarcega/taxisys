@@ -1,15 +1,63 @@
+<?php $search = $this->input->get('search'); $column = $this->input->get('column'); $limit = $this->input->get('limit'); ?>
     <main class="mainContainer">
         <div class="row">
             <article class="col-xs-12">
-                <div id="filter_wrapper" class="panel panel-primary" style="margin-bottom:10px;display:none;">
-                    <div class="panel-heading">
-                        Primary Panel
-                    </div>
-                    <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                    </div>
-                    <div class="panel-footer">
-                        Panel Footer
+                <div id="filter_wrapper" style="margin-bottom:10px;display:none;">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Filter
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal" method="get" action="">
+                                <div class="form-group">
+                                    <div class="row">               
+                                        <div class="col-xs-6">
+                                            <label for="column" class="col-xs-2 control-label">Search</label>
+                                            <div class="col-xs-10">
+                                                <input type="text" class="form-control" id="search" placeholder="Search here.." <?php echo $column == 'status' ? 'style="display:none;"' : 'name="search"'; ?> value="<?php echo $search; ?>">
+                                                <select class="form-control" id="search" <?php echo $column == 'status' ? 'name="search"' : 'style="display:none;"'; ?>>
+                                                    <option value="1" <?php echo $search == '1' ? 'selected' : ''; ?>>On Duty</option>
+                                                    <option value="2" <?php echo $search == '2' ? 'selected' : ''; ?>>Off Duty</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label for="column" class="col-xs-1 control-label">In</label>
+                                            <div class="col-xs-11">
+                                                <select class="form-control" id="column" name="column">
+                                                    <option value="plate_number" <?php echo $column == 'plate_num' ? 'selected' : ''; ?>>Plate #</option>
+                                                    <option value="name" <?php echo $column == 'name' ? 'selected' : ''; ?>>Name</option>
+                                                    <option value="status" <?php echo $column == 'status' ? 'selected' : ''; ?>>Status</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">               
+                                        <div class="col-xs-6">
+                                            <label for="column" class="col-xs-2 control-label">Limit</label>
+                                            <div class="col-xs-4">
+                                                <select class="form-control" id="limit" name="limit">
+                                                    <option value="10" <?php echo $limit == '10' ? 'selected' : ''; ?>>Default (10)</option>
+                                                    <option value="20" <?php echo $limit == '20' ? 'selected' : ''; ?>>20</option>
+                                                    <option value="30" <?php echo $limit == '30' ? 'selected' : ''; ?>>30</option>
+                                                    <option value="40" <?php echo $limit == '40' ? 'selected' : ''; ?>>40</option>
+                                                    <option value="50" <?php echo $limit == '50' ? 'selected' : ''; ?>>50</option>
+                                                    <option value="all" <?php echo $limit == 'all' ? 'selected' : ''; ?>>All</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12" style="text-align: center;">
+                                        <button type="submit" class="btn btn-primary">Filter</button>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-danger" onclick="remove_filter('<?=uri_string()?>')">Remove Filter</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <table class="table table-striped tablesorter" id="tbl_drivers">
@@ -45,11 +93,12 @@
                         <?php } ?>
                         <?php } else { ?>
                         <tr>
-                            <td colspan="6"><div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> No records found!</div></td>
+                            <td colspan="7"><div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> No records found!</div></td>
                         </tr>
                         <?php } ?>
                     </tbody>
                 </table>
+                <?=isset($pagination) ? $pagination : '';?>
             </article>
         </div>
     </main>

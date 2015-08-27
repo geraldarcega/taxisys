@@ -8,15 +8,25 @@ class Drivers_model extends CI_Model {
     }
 
     public function read($filter = array(), $limit = null, $offset = null, $one = false) {
+        if( count($filter) )
+            $this->db->filter( $filter );
+
+        return $this->db
+                    ->select( 'd.*, u.id unit_id, u.plate_number' )
+                    ->join( 'units u', 'd.unit_id = u.id', 'left' )
+                    ->where( 'd.deleted_at IS NULL', null, false )
+                    ->order_by( 'u.plate_number', 'DESC' )
+                    ->get( $this->table.' d', $limit, $offset );
+    }
+
+    public function count($filter = array()) {
     	if( count($filter) )
     		$this->db->filter( $filter );
 
     	return $this->db
-    				->select( 'd.*, u.id unit_id, u.plate_number' )
                     ->join( 'units u', 'd.unit_id = u.id', 'left' )
                     ->where( 'd.deleted_at IS NULL', null, false )
-                    ->order_by( 'u.plate_number', 'DESC' )
-                    ->get( $this->table.' d' );
+                    ->count_all_results( $this->table.' d' );
     }
 
     public function create( $db_data ) {

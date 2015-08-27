@@ -2074,6 +2074,12 @@ class CI_DB_active_record extends CI_DB_driver {
                     case 'lk':
                         $this->like($field, $v);
                         break;
+                    case 'or_lk':
+                        $this->or_like($field, $v);
+                        break;
+                    case 'or_wh':
+                        $this->or_where($field, $v);
+                        break;
                 }
             }
         }

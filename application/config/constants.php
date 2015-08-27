@@ -92,6 +92,8 @@ define('DAY_FRI', 5);
 define('DAY_SAT', 6);
 define('DAY_SUN', 7);
 
+define('LIMIT', 10);
+
 /* End of file constants.php */
 
 /* Location: ./application/config/constants.php */

@@ -2,12 +2,7 @@ $(function() {
     $('#side-menu').metisMenu();
     $(".bs-switch").not("[data-switch-no-init]").bootstrapSwitch();
 
-    // $.get( base_url+"static/drivers/filter.html", function( data ) {
-    //     $('#filter').popover({
-    //                              'html' : true
-    //                             ,'content' : data
-    //                         })
-    // })
+    // $.get( base_url+"static/filter.html", function( data ) { $('#filter_wrapper').html(data) })
     
     $('.BSswitch').bootstrapSwitch();
 });
@@ -91,4 +86,21 @@ function dateAdd(date, interval, units) {
     default       :  ret = undefined;  break;
   }
   return ret;
+}
+
+function show_filter(){
+    if( $('#filter_wrapper').is(':visible') )
+    {
+        $('#filter_wrapper').slideUp('fast');
+        $('#filter').html('<i class="fa fa-filter"></i> Filter')
+    }
+    else
+    {
+        $('#filter_wrapper').slideDown('slow');
+        $('#filter').html('<i class="fa fa-times-circle"></i> Close Filter')
+    }
+}
+
+function remove_filter( uri ) {
+    window.location = base_url+uri
 }

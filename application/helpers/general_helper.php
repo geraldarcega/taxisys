@@ -163,4 +163,36 @@
 		$interval = array( 1 => 'Odometer', 2 => 'Month/s', 3 => 'Week/s' );
 		return @$interval[ $type ];
 	}
+
+	# setup pagination
+	function setup_pagination( $base_url, $query_string = false, $total = 0, $page = 0, $limit = LIMIT,  $uri_segment = 3, $num_links = 3 ) 	{
+		$ci =& get_instance();
+		$ci->load->library('pagination');
+
+		if( !$query_string )
+			$config['uri_segment'] = $uri_segment;
+		else
+			$config['query_string_segment'] = 'page';
+
+		$config['base_url'] = $base_url;
+		$config['page_query_string'] = $query_string;
+		$config['base_url'] = $base_url;
+		$config['total_rows'] = $total;
+		$config['per_page'] = $limit;
+		$config['num_links'] = $num_links;
+		$config['full_tag_open'] = '<div class="pull-right pagination">';
+		$config['full_tag_close'] = '</div>';
+		$config['cur_tag_open'] = '<a class="active">';
+		$config['cur_tag_close'] = '</a>';
+		$config['prev_link'] = '<i class="fa fa-chevron-left"></i>';
+		$config['prev_tag_open'] = '<a class="prev">';
+		$config['prev_tag_close'] = '</a>';
+		$config['next_link'] = '<i class="fa fa-chevron-right"></i>';
+		$config['next_tag_open'] = '<a class="">';
+		$config['next_tag_close'] = '</a>';
+
+		$ci->pagination->initialize($config); 
+
+		return $ci->pagination->create_links();
+	}
 ?>
