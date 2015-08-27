@@ -53,7 +53,8 @@
                     <?php if( $this->_class == 'drivers' ) { ?>
                     <div class="pull-right" style="margin-right:5px;">
                         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#driversModal" data-backdrop="static"><i class="fa fa-plus-square"></i> NEW DRIVER</button>
-                        <button type="button" class="btn btn-default" id="filter" data-container="body" data-toggle="popover" data-placement="bottom"><i class="fa fa-filter"></i> Filter</button>
+                        <button type="button" class="btn btn-default" onclick="show_filter()" id="filter"><i class="fa fa-filter"></i> Filter</button>
+                        <!-- <button type="button" class="btn btn-default" id="filter" data-container="body" data-toggle="popover" data-placement="bottom"><i class="fa fa-filter"></i> Filter</button> -->
                     </div>
                     <?php } ?>
 

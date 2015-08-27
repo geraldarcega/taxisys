@@ -2,12 +2,12 @@ $(function() {
     $('#side-menu').metisMenu();
     $(".bs-switch").not("[data-switch-no-init]").bootstrapSwitch();
 
-    $.get( base_url+"static/drivers/filter.html", function( data ) {
-        $('#filter').popover({
-                                 'html' : true
-                                ,'content' : data
-                            })
-    })
+    // $.get( base_url+"static/drivers/filter.html", function( data ) {
+    //     $('#filter').popover({
+    //                              'html' : true
+    //                             ,'content' : data
+    //                         })
+    // })
     
     $('.BSswitch').bootstrapSwitch();
 });

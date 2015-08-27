@@ -113,3 +113,16 @@ function remove( id, archive ) {
 	    });
 	}
 }
+
+function show_filter(){
+    if( $('#filter_wrapper').is(':visible') )
+    {
+        $('#filter_wrapper').slideUp('slow');
+        $('#filter').html('<i class="fa fa-filter"></i> Filter')
+    }
+    else
+    {
+        $('#filter_wrapper').slideDown('slow');
+        $('#filter').html('<i class="fa fa-times-circle"></i> Close Filter')
+    }
+}

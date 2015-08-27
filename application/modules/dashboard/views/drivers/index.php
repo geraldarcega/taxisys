@@ -1,9 +1,17 @@
     <main class="mainContainer">
         <div class="row">
             <article class="col-xs-12">
-                <!-- <div style="text-align: center;margin-bottom: 16px;">
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#driversModal">ADD NEW DRIVER</button>
-                </div> -->
+                <div id="filter_wrapper" class="panel panel-primary" style="margin-bottom:10px;display:none;">
+                    <div class="panel-heading">
+                        Primary Panel
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                    </div>
+                    <div class="panel-footer">
+                        Panel Footer
+                    </div>
+                </div>
                 <table class="table table-striped tablesorter" id="tbl_drivers">
                     <thead style="border-bottom: 3px solid #BDBDBD;background-color: #fff;">
                         <tr>
