@@ -122,7 +122,7 @@ $(document).ready(function() {
     })
 
     if( $("#top_message").length )
-        $("#top_message").fadeOut(6000)
+        $("#top_message").fadeOut(9000)
 });
 
 $('#unitsModal').on('show.bs.modal', function (e) {
@@ -326,7 +326,7 @@ function archive(id, plate_number) {
 		$.ajax({
 	        type: 'POST',
 	        url: dashboard_url+'/units/ajax',
-	        data: { 'action' : 'archive', 'unit_id' : id },
+	        data: { 'action' : 'archive', 'unit_id' : id, 'plate_number' : plate_number },
 	        dataType: "JSON",
 	        beforeSend: function() {
 	            $('#archive_'+id+' i').removeClass('fa-archive').addClass('fa-spin fa-cog')
