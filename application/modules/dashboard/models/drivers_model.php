@@ -52,7 +52,7 @@ class Drivers_model extends CI_Model {
         if( isset($db_data['unit']) )
         	$db_data['unit_id'] = $db_data['unit'] != '' ? $db_data['unit'] : null;
         
-        if( $db_data['action'] == 'remove' )
+        if( @$db_data['action'] == 'remove' )
         	$db_data['deleted_at'] = date('Y-m-d H:i:s');
 
         unset($db_data['driver_id']);

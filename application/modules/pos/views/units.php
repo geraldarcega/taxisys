@@ -12,13 +12,13 @@
 			</div>
 			<!-- thisDay -->
 			<?php if( $units[$val]->num_rows() ) { $i=0; ?>
-			<?php foreach ($units[$val]->result() as $unit) { $pos_data[$unit->unit_id] = $unit; ?>
+			<?php foreach ($units[$val]->result() as $unit) { $unit_id = ( is_null($unit->unit_id) ? 0 : $unit->unit_id ); $pos_data[$unit_id] = $unit; ?>
 			<?php if( ($i % 6) == 0 ){ ?>
 			<div class="row">
 			<?php } ?>
 				<div class="col col-md-2">
-					<div class="panel <?php echo unitStatusClass($unit->unit_status); ?>" id="taxi_<?=$unit->unit_id?>">
-						<a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" data-type="<?=$unit->unit_status?>" data-coding="<?=constant("DAY_{$day}") == $unit->coding_day ? 'yes' : 'no';?>" data-backdrop="static">
+					<div class="panel <?php echo unitStatusClass($unit->unit_status); ?>" id="taxi_<?=$unit_id?>">
+						<a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit_id?>" data-type="<?=$unit->unit_status?>" data-coding="<?=constant("DAY_{$day}") == $unit->coding_day ? 'yes' : 'no';?>" data-backdrop="static">
 							<div class="updateEditbtn">
 								UPDATE<i class="fa fa-angle-right"></i>
 							</div> <!-- updateEditbtn -->
@@ -79,7 +79,7 @@
 							<select class="form-control" id="select_driver" name="select_driver" required>
 								<option value="">----</option>
                                 <?php if( $drivers->num_rows() ) { ?>
-                                <?php foreach ($drivers->result() as $driver) { $drivers_data[$driver->unit_id][$driver->id] = $driver; ?>
+                                <?php foreach ($drivers->result() as $driver) { $drivers_data[( is_null($driver->unit_id) ? 0 : $driver->unit_id )][$driver->id] = $driver; ?>
                                 <option value="<?=$driver->id?>"><?=$driver->first_name?> <?=$driver->last_name?></option>
                                 <?php } ?>
                                 <?php } ?>

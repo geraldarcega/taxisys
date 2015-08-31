@@ -548,8 +548,9 @@ table.dataTable thead .sorting:after {
 .maintenance-info {
   background-color: #fff;
 }
-
-/*overrides form-control font color*/
-.form-control {
-  color: #000;
+#top_message {
+  position: fixed;
+  bottom: 0px;
+  right: 20px;
+  z-index: 9999;
 }

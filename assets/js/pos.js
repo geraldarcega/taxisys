@@ -182,7 +182,6 @@ function cancel_pos() {
                 $('#btnModalUnitCancel').button('loading')
             },
             success: function(data){
-            	console.log(data)
             	$('#btnModalUnitCancel').button('reset')
 				$('#old_status').val( $('#status').val() )
 

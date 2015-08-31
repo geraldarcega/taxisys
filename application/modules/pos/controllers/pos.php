@@ -115,6 +115,8 @@ class Pos extends MY_Framework
                     );
             if( $check->num_rows() )
             {
+                setcookie('ts', strtotime(date('Y-m-d H:i:s')), time()+300, "/", '.'.$_SERVER['HTTP_HOST']);
+
                 $this->session->set_userdata( 'user_info', $check->row() );
                 
                 $r = $this->session->userdata('r') != '' ? urldecode($this->session->userdata('r')) : base_url('pos');
@@ -139,6 +141,11 @@ class Pos extends MY_Framework
         $this->session->sess_destroy();
 
         redirect( pos_url( 'login' ) );
+    }
+
+    public function keep_alive( )
+    {
+        if( !isset( $_COOKIE['ts'] ) ) { setcookie('ts', strtotime(date('Y-m-d H:i:s')), time()+300, "/", '.'.$_SERVER['HTTP_HOST']); echo "OK";}
     }
 
 }
