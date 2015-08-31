@@ -120,6 +120,9 @@ $(document).ready(function() {
             }
         });
     })
+
+    if( $("#top_message").length )
+        $("#top_message").fadeOut(6000)
 });
 
 $('#unitsModal').on('show.bs.modal', function (e) {
