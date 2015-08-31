@@ -20,6 +20,7 @@ class Units_model extends CI_Model {
     
     return $this->db
                 ->select( $this->fields )
+                ->where( 'u.deleted_at IS NULL', null, false )
                 ->join( 'drivers d', 'd.unit_id = u.id', 'left' )
                 ->group_by( 'u.id' )
                 ->get( $this->table.' u' );

@@ -321,8 +321,8 @@ function archive(id, plate_number) {
 	if( ans )
 	{
 		$.ajax({
-	        type: $('#frmModalMaintenance').attr('method'),
-	        url: $('#frmModalMaintenance').attr('action'),
+	        type: 'POST',
+	        url: dashboard_url+'/units/ajax',
 	        data: { 'action' : 'archive', 'unit_id' : id },
 	        dataType: "JSON",
 	        beforeSend: function() {

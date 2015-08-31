@@ -234,7 +234,7 @@ class Units extends MY_Framework
                     	$msg = array( 'success' => 0 );
                     }
                     
-                    echo json_encode( array('success' => $success, 'data' => $maintenance) );
+                    echo json_encode( $msg );
                     break;
                     
                 default:
