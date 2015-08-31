@@ -186,7 +186,7 @@ function cancel_pos() {
 				$('#old_status').val( $('#status').val() )
 
 				if( $('#select_driver').val() != '' )
-					$('#taxi_'+current_data.unit_id+' .panel-nametag').html( drivers_json[$('#select_driver').val()].nickname )
+					$('#taxi_'+current_data.unit_id+' .panel-nametag').html( drivers_json[current_unit][$('#select_driver').val()].nickname )
 					
 				$('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
 				$('#'+data.taxi).hide()
