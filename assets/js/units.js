@@ -22,7 +22,7 @@ $(document).ready(function() {
     $('#year_model').datetimepicker({format: "YYYY",viewMode: "years"});
     
     $('#franchise_until').on('dp.change', function(e){
-        var renew_by = readableDate(dateAdd(e.date._d, 'day', 8))
+        var renew_by = readableDate(dateAdd(e.date._d, 'month', -8))
         $('#renew_by').val( renew_by )
     })
 
