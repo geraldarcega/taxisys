@@ -34,6 +34,7 @@
                             		<a href="<?=dashboard_url('units/maintenance/scheduled/'.$unit->unit_id)?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a> &nbsp;
 	                                <?php /*<a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a> &nbsp; */ ?>
 	                                <a href="javascript:show_odometer('<?=$unit->unit_id?>');" rel="tooltip" data-original-title="Odometer"><i class="fa fa-tachometer"></i></a> &nbsp;
+                                    <a href="javascript:show_odometer('<?=$unit->unit_id?>');" rel="tooltip" data-original-title="Odometer History"><i class="fa fa-history"></i></a> &nbsp;
 	                                <a id="archive_<?=$unit->unit_id?>" href="javascript:archive('<?=$unit->unit_id?>', '<?=strtoupper($unit->plate_number)?>');" rel="tooltip" data-original-title="Archive"><i class="fa fa-archive"></i></a>
                             	</div>
                             	<div id="input_odometer_<?=$unit->unit_id?>" style="width: 130px;display: none;">
@@ -43,7 +44,7 @@
 					                        <button class="btn btn-primary btn-sm btnUpdateOdo" type="button" data-id="<?=$unit->unit_id?>" data-loading-text="Saving">Update</button>
 					                    </span>
 					                </div>
-                            		<a style="float: right;margin-top: -25px;margin-right: -15px;" href="javascript:show_odometer('<?=$unit->unit_id?>');" rel="tooltip" data-original-title="Close"><i class="fa fa-times"></i></a>
+                                    <a style="float: right;margin-top: -25px;margin-right: -15px;" href="javascript:show_odometer('<?=$unit->unit_id?>');" rel="tooltip" data-original-title="Close"><i class="fa fa-times"></i></a>
                             	</div>
                             </td>
                         </tr>

@@ -225,7 +225,7 @@ class Units extends MY_Framework
 					$archived = $this->units_model->archive( $this->input->post('unit_id') );
                     if( $archived )
                     {
-                    	$this->session->set_flashdata('msg', array( 'text' => '<strong><i class="fa fa-database"></i> Success!</strong> Unit\'s details has been updated.', 'class' => 'alert-success' ));
+                    	$this->session->set_flashdata('msg', array( 'text' => '<strong><i class="fa fa-archive"></i> Success!</strong> Unit '.$this->input->post('plate_number').' has been archived.', 'class' => 'alert-success' ));
                     	$msg = array( 'success' => 1 );
                     }
                     else
