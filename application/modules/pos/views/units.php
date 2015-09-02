@@ -5,7 +5,6 @@
 	$day = $day == 'THU' ? $day.'R' : $day;
 ?>
 	<main class="mainContainer" id="garage_wrapper">
-		<h1>Gilbert is Home!</h1>
 		<?php foreach ( $groups as $key => $val ) { ?>
 		<div class="Units">
 			<div class="thisDay">
