@@ -198,7 +198,8 @@ function cancel_pos() {
 
 				if( $('#select_driver').val() != '' )
 					$('#taxi_'+current_data.unit_id+' .panel-nametag').html( drivers_json[$('#select_driver').val()].nickname )
-					
+				
+                show_payment_fields( 2, $('#select_driver').val(), data.element.data_type )
 				$('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
 				$('#'+data.taxi).hide()
 					 .removeClass('panel-green')
