@@ -55,6 +55,7 @@ class Pos extends MY_Framework
                     // $this->pos_model->create_log( $this->input->post() );
                     $this->drivers_model->assign( $this->input->post('select_driver'), $this->input->post('unit_id'), $driver_stats );
                     $this->units_model->update_status( $this->input->post('unit_id'), $this->input->post('status') );
+                    $msg = array( 'success' => 1 );
                     $msg = array( 'text' => '<strong>Success!</strong> Unit is now '.unitStatus($this->input->post('status')), 'class' => 'alert-success' );
                     break;
 
@@ -87,9 +88,9 @@ class Pos extends MY_Framework
 
             $old_status = $this->input->post('old_status');
             $new_status = $this->input->post('status');
-            if( $new_status != $old_status ){
+            // if( $new_status != $old_status ){
                 $element = array( 'div' => unitStatusWrapper($new_status), 'old_class' => unitStatusClass($old_status), 'new_class' => unitStatusClass($new_status), 'data_type' => $new_status );
-            }
+            // }
 
             $return = array( 'taxi' => 'taxi_'.$this->input->post('unit_id'), 'element' => @$element, 'msg' => $msg );
             echo json_encode($return);

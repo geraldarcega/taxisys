@@ -66,10 +66,12 @@
 					<input type="hidden" name="old_driver" id="old_driver" value="">
 					<input type="hidden" name="old_status" id="old_status" value="">
 					<input type="hidden" name="coding_day" id="coding_day" value="">
+					<input type="hidden" name="late_payment" id="late_payment" value="0">
 
 					<div class="form-group">
 						<label for="date" class="col-xs-3 control-label">Date</label>
 						<div class="col-xs-9">
+                            <input type='text' class="form-control unit-field open-datetimepicker" id="actual_date" name="actual_date" style="display:none;" placeholder="Enter actual date"/>
 							<span id="date_now" style="padding-top: 7px; display: inline-block;"><?php echo date('M d, Y'); ?></span>
 						</div>
 					</div>
@@ -137,6 +139,7 @@
 				</form>
 			</div>
 			<div class="modal-footer">
+				<button id="btnModalUnitLate" type="button" class="btn btn-warning" onclick="show_payment_fields( 0, null, null);">Late Payment</button>
 				<button id="btnModalUnitsave" type="button" class="btn btn-primary" onclick="$('#frmModalPOS').submit();" data-loading-text="Saving...">Save</button>
 				<button id="btnModalUnitCancel" type="button" class="btn btn-danger onduty-input" onclick="cancel_pos();" data-loading-text="Cancelling..." >Cancel</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

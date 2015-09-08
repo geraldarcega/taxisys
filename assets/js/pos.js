@@ -3,6 +3,8 @@ var current_unit
 
 $(document).ready( function(){
     init()
+    
+    $('#actual_date').datetimepicker({ 'format': 'MMM DD, YYYY' });
 
     $('#pos_alert').hide()
 
@@ -98,20 +100,24 @@ $('#unitsModal').on('show.bs.modal', function (e) {
     	
         switch( data_type ) {
             case '2':
-            	$('.onduty-input').hide()
-                $('#select_driver').show()
-                $('#driver').hide()
+                $('#btnModalUnitLate').attr('onclick', 'show_payment_fields( 0, '+current_data.driver_id+', '+data_type+');')
+                show_payment_fields( 2, current_data.driver_id, data_type)
+            	// $('.onduty-input').hide()
+             //    $('#select_driver').show()
+             //    $('#driver').hide()
                 
-                if( current_data.driver_id )
-                {
-                    $('#old_driver').val( current_data.driver_id )
-                    $('#select_driver').val( current_data.driver_id )
-                }
+             //    if( current_data.driver_id )
+             //    {
+             //        $('#old_driver').val( current_data.driver_id )
+             //        $('#select_driver').val( current_data.driver_id )
+             //    }
 
-                $('#status option[value="1"]').show()
-                $('#status').val(data_type)
-                $('#old_status').val( data_type )
-                $('#action').val('s_update')
+             //    $('#status option[value="1"]').show()
+             //    $('#status').val(data_type)
+             //    $('#old_status').val( data_type )
+             //    $('#action').val('s_update')
+             //    $('#btnModalUnitLate').show()
+
                 break;
             case '3':
             	$('#maintenance_notification', this).show()
@@ -120,10 +126,12 @@ $('#unitsModal').on('show.bs.modal', function (e) {
             	$('.modal-footer', this).hide()
                 break;
             default:
+                $('#btnModalUnitLate').attr('onclick', 'show_payment_fields( 0, '+current_data.driver_id+', 0);')
+                show_payment_fields( 1, current_data.driver_id, 0 )
 //                $('#select_driver').hide()
-            	$('#old_driver').val( current_data.driver_id )
-            	$('#select_driver').val(current_data.driver_id)
-                $('.onduty-input').show()
+            	// $('#old_driver').val( current_data.driver_id )
+            	// $('#select_driver').val(current_data.driver_id)
+             //    $('.onduty-input').show()
 //                $('#driver').show()
 //                if( current_data.driver_id )
 //                {
@@ -131,9 +139,10 @@ $('#unitsModal').on('show.bs.modal', function (e) {
 //                    $('#driver').html(current_data.first_name+' '+current_data.last_name)
 //                }
                 
-                $('#status option[value="1"]').hide()
-                $('#status').val('')
-                $('#action').val('u_update')
+                // $('#btnModalUnitLate').hide()
+                // $('#status option[value="1"]').hide()
+                // $('#status').val('')
+                // $('#action').val('u_update')
         }
         
         if( data_type == "1" && data_coding === "yes" )
@@ -228,4 +237,66 @@ function generate_drivers_select( ) {
 
 	$('#select_driver option:first').after( assigned )
 	$('#select_driver optgroup:first').after( reserved )
+}
+
+function show_payment_fields( type, driver_id, data_type ) {
+    var is_visible = $('.onduty-input').is(':hidden');
+    var condition = type == 0 ? is_visible : type == 1 ? 'onduty' : 'garrage';
+
+    if( condition == true || condition == 'onduty' ) {
+        $('#old_driver').val( driver_id )
+        $('#select_driver').val(driver_id)
+        $('.onduty-input').show()
+        
+        $('#status option[value="1"]').hide()
+        $('#status').val('')
+        $('#action').val('u_update')
+
+        if( condition != 'onduty' )
+        {
+            $('#btnModalUnitLate').show()
+            $('#btnModalUnitLate').html('Cancel Late Payment')
+            $('#late_payment').val('1')
+            $('#actual_date').show()
+            $('#date_now').hide()
+        }
+        else
+        {
+            $('#actual_date').hide()
+            $('#date_now').show()
+            $('#btnModalUnitLate').hide()
+            $('#late_payment').val('0')
+        }
+    }
+    else
+    {
+        $('.onduty-input').hide()
+        $('#select_driver').show()
+        $('#driver').hide()
+        
+        if( driver_id )
+        {
+            $('#old_driver').val( driver_id )
+            $('#select_driver').val( driver_id )
+        }
+
+        $('#status option[value="1"]').show()
+        $('#status').val(data_type)
+        $('#old_status').val( data_type )
+        $('#action').val('s_update')
+
+        $('#actual_date').hide()
+        $('#date_now').show()
+        if( condition != 'onduty' )
+        {
+            $('#btnModalUnitLate').show()
+            $('#btnModalUnitLate').html('Late Payment')
+            $('#late_payment').val('1')
+        }
+        else
+        {
+            $('#btnModalUnitLate').hide()
+            $('#late_payment').val('0')
+        }
+    }
 }

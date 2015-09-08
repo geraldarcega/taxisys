@@ -246,33 +246,63 @@ class Units extends MY_Framework
             redirect( dashboard_url(), '301' );
     }
     
-   public function get_unit_details( $unit_id ) {
-   	# Unit data
-   	$unit = $this->units_model->read( array( 'wh|u.id' => $unit_id ) );
-   	
-   	if( $unit->num_rows() > 0 )
-   	{
-   		$unit = $unit->row_array();
-   		$unit ['maintenance'] ['ongoing'] = $this->get_unit_maintenance_by_status (
-   				$unit_id,
-   				Maintenance_model::STATUS_ONGOING
-   		);
-   		$unit ['maintenance'] ['past'] = $this->get_unit_maintenance_by_status (
-   				$unit_id,
-   				Maintenance_model::STATUS_DONE,
-   				array (),
-   				1,
-   				'unit_id,maintenance_id',
-   				array (
-   						'desc' => array (
-   								'prefered_date',
-   								'prefered_time'
-   						)
-   				)
-   		);
-   		return $unit;
-   	}
-   	else
-   		return false;
-   }
+    public function get_unit_details( $unit_id ) {
+        # Unit data
+        $unit = $this->units_model->read( array( 'wh|u.id' => $unit_id ) );
+
+        if( $unit->num_rows() > 0 )
+        {
+            $unit = $unit->row_array();
+            $unit ['maintenance'] ['ongoing'] = $this->get_unit_maintenance_by_status (
+                $unit_id,
+                Maintenance_model::STATUS_ONGOING
+            );
+            $unit ['maintenance'] ['past'] = $this->get_unit_maintenance_by_status (
+                $unit_id,
+                Maintenance_model::STATUS_DONE,
+                array (),
+                1,
+                'unit_id,maintenance_id',
+                array (
+                    'desc' => array (
+                        'prefered_date',
+                        'prefered_time'
+                    )
+                )
+            );
+            return $unit;
+        }
+        else
+            return false;
+    }
+    
+    public function redo( $unit_id ) {
+        # Unit data
+        $unit = $this->units_model->read( array( 'wh|u.id' => $unit_id ) );
+
+        if( $unit->num_rows() > 0 )
+        {
+            $unit = $unit->row_array();
+            $unit ['maintenance'] ['ongoing'] = $this->get_unit_maintenance_by_status (
+                $unit_id,
+                Maintenance_model::STATUS_ONGOING
+            );
+            $unit ['maintenance'] ['past'] = $this->get_unit_maintenance_by_status (
+                $unit_id,
+                Maintenance_model::STATUS_DONE,
+                array (),
+                1,
+                'unit_id,maintenance_id',
+                array (
+                    'desc' => array (
+                        'prefered_date',
+                        'prefered_time'
+                    )
+                )
+            );
+            return $unit;
+        }
+        else
+            return false;
+    }
 }
