@@ -69,7 +69,7 @@ function show_alert_msg(msg, success) {
         $('#top_message').addClass('alert-danger').removeClass('alert-info')
 
     $('#top_message span.msg').html(msg)
-    $('#top_message').slideDown().delay(1000).slideUp()
+    $('#top_message').slideDown().delay(10000).slideUp()
 }
 
 function dateAdd(date, interval, units) {

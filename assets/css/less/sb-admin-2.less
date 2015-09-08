@@ -491,8 +491,9 @@ table.dataTable thead .sorting:after {
 // Custom Colored Panels
 
 .huge {
-    font-size: 12px;
+    font-size: 15px;
     display: inline-block;
+    font-weight: bold;
 }
 
 .panel {
@@ -670,4 +671,16 @@ table.dataTable thead .sorting:after {
     bottom: 0px;
     right: 20px;
     z-index: 9999;
+    -webkit-box-shadow: 4px 3px 10px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 3px 10px 1px rgba(0,0,0,0.75);
+    box-shadow: 4px 3px 10px 1px rgba(0,0,0,0.75);
+}
+
+.panel-pos{
+    cursor: pointer;
+    &:hover{
+        -webkit-box-shadow: 0px 10px 10px -3px rgba(0,0,0,0.38);
+        -moz-box-shadow: 0px 10px 10px -3px rgba(0,0,0,0.38);
+        box-shadow: 0px 10px 10px -3px rgba(0,0,0,0.38);
+    }
 }

@@ -17,17 +17,17 @@
 			<div class="row">
 			<?php } ?>
 				<div class="col col-md-2">
-					<div class="panel <?php echo unitStatusClass($unit->unit_status); ?>" id="taxi_<?=$unit_id?>">
+					<div class="panel panel-pos <?php echo unitStatusClass($unit->unit_status); ?>" id="taxi_<?=$unit_id?>" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit_id?>" data-type="<?=$unit->unit_status?>" data-coding="<?=constant("DAY_{$day}") == $unit->coding_day ? 'yes' : 'no';?>" data-backdrop="static">
+						<?php /*
 						<a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit_id?>" data-type="<?=$unit->unit_status?>" data-coding="<?=constant("DAY_{$day}") == $unit->coding_day ? 'yes' : 'no';?>" data-backdrop="static">
 							<div class="updateEditbtn">
 								UPDATE<i class="fa fa-angle-right"></i>
 							</div> <!-- updateEditbtn -->
-						</a>
+						</a> */ ?>
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-12 dash-units">
-									<i class="fa fa-taxi"></i>
-									<div class="huge"><?=strtoupper($unit->plate_number)?></div>
+									<div class="huge"><i class="fa fa-taxi"></i> <?=strtoupper($unit->plate_number)?></div>
 								</div>
 							</div>
 						</div>
@@ -79,7 +79,7 @@
 							<select class="form-control" id="select_driver" name="select_driver" required>
 								<option value="">----</option>
                                 <?php if( $drivers->num_rows() ) { ?>
-                                <?php foreach ($drivers->result() as $driver) { $drivers_data[( is_null($driver->unit_id) ? 0 : $driver->unit_id )][$driver->id] = $driver; ?>
+                                <?php foreach ($drivers->result() as $driver) { $drivers_data[$driver->id] = $driver; ?>
                                 <option value="<?=$driver->id?>"><?=$driver->first_name?> <?=$driver->last_name?></option>
                                 <?php } ?>
                                 <?php } ?>
