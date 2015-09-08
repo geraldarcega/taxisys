@@ -35,7 +35,7 @@ $(document).ready( function(){
                     success: function(data){
                     	$('#btnModalUnitsave').button('reset')
 						$('#old_status').val( $('#status').val() )
-						$('#taxi_'+current_data.unit_id+' .panel-nametag').html( drivers_json[current_unit][$('#select_driver').val()].nickname )
+						$('#taxi_'+current_data.unit_id+' .panel-nametag').html( drivers_json[$('#select_driver').val()].nickname )
 						$('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
 						$('#'+data.taxi).hide()
 							 .removeClass(data.element.old_class)
@@ -155,6 +155,8 @@ $('#unitsModal').on('hidden.bs.modal', function (e) {
 	$('#maintenance_notification a', this).attr('href', '')
 	$('#frmModalPOS').show()
 	$('.modal-footer', this).show()
+
+    $('.tooltip').tooltip('hide')
 })
 
 function init() {
@@ -186,7 +188,7 @@ function cancel_pos() {
 				$('#old_status').val( $('#status').val() )
 
 				if( $('#select_driver').val() != '' )
-					$('#taxi_'+current_data.unit_id+' .panel-nametag').html( drivers_json[current_unit][$('#select_driver').val()].nickname )
+					$('#taxi_'+current_data.unit_id+' .panel-nametag').html( drivers_json[$('#select_driver').val()].nickname )
 					
 				$('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
 				$('#'+data.taxi).hide()
@@ -213,14 +215,14 @@ function generate_drivers_select( ) {
 	
 	var assigned = '<optgroup label="Assigned">'
 	var reserved = '<optgroup label="Reserved">'
-	$.each( drivers_json, function( i, drivers ){
-		$.each( drivers, function( key, v ){
+	// $.each( drivers_json, function( i, drivers ){
+		$.each( drivers_json, function( key, v ){
 			if( current_unit == v.unit_id )
 				assigned += '<option value="'+v.id+'" '+(current_data.driver_id == v.id ? 'selected' : '')+'>'+v.first_name+' '+v.last_name+'</option>'
 			else
 				reserved += '<option value="'+v.id+'">'+v.first_name+' '+v.last_name+'</option>'
 		})
-	})
+	// })
 	assigned += '</optgroup>'
 	reserved += '</optgroup>'
 
