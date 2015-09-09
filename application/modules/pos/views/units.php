@@ -88,7 +88,7 @@
                             </select>
 						</div>
 					</div>
-					<div class="form-group onduty-input">
+					<div class="form-group onduty-input payment-input">
 						<label for="rate_type" class="col-xs-3 control-label">Rate</label>
 						<div class="col-xs-9" id="rate_input">
 							<div class="btn-group" data-toggle="buttons">
@@ -102,19 +102,19 @@
 							<label class="label label-info coding">Coding</label>
 						</div>
 					</div>
-					<div class="form-group onduty-input">
+					<div class="form-group onduty-input payment-input">
 						<label for="boundary" class="col-xs-3 control-label">Boundary</label>
 						<div class="col-xs-9">
 							<input type="number" class="form-control" id="boundary" name="boundary" placeholder="1500" maxlength="5" required>
 						</div>
 					</div>
-					<div class="form-group onduty-input">
+					<div class="form-group onduty-input payment-input">
 						<label for="drivers_fund" class="col-xs-3 control-label">Driver's fund</label>
 						<div class="col-xs-9">
 							<input type="number" class="form-control" id="drivers_fund" name="drivers_fund" maxlength="3" placeholder="50">
 						</div>
 					</div>
-					<div class="form-group onduty-input">
+					<div class="form-group onduty-input payment-input">
 						<label for="short" class="col-xs-3 control-label">Short</label>
 						<div class="col-xs-9">
 							<input type="number" class="form-control" id="short" name="short" maxlength="5">
@@ -141,7 +141,7 @@
 			<div class="modal-footer">
 				<button id="btnModalUnitLate" type="button" class="btn btn-warning" onclick="show_payment_fields( 0, null, null);">Late Payment</button>
 				<button id="btnModalUnitsave" type="button" class="btn btn-primary" onclick="$('#frmModalPOS').submit();" data-loading-text="Saving...">Save</button>
-				<button id="btnModalUnitCancel" type="button" class="btn btn-danger onduty-input" onclick="cancel_pos();" data-loading-text="Cancelling..." >Cancel</button>
+				<button id="btnModalUnitCancel" type="button" class="btn btn-danger onduty-input" onclick="void_pos();" data-loading-text="Loading..." >Void</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>

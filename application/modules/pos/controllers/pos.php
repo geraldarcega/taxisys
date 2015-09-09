@@ -61,13 +61,9 @@ class Pos extends MY_Framework
 
                 case 'u_update':
                     $return = $this->pos_model->create($this->input->post(), $this->userdata->id);
-                    $msg = array( 'text' => '<strong>Well done!</strong> Trasaction saved!', 'class' => 'alert-success' );
-                    if( $return > 0 )
-                    {
-                        $msg = array( 'success' => 1 );
-                    }
-                    else
-                        $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Ooops!</strong> Driver '.$this->input->post('fname').' '.$this->input->post('lname').' is already exists.' );
+
+                    $alert_msg = $this->input->post('late_payment') == 1 ? 'Late payment' : 'Trasaction';
+                    $msg = array( 'success' => 1, 'text' => '<strong>Well done!</strong> '.$alert_msg.' saved!', 'class' => 'alert-success' );
                     break;
 
                 case 'cancel':
@@ -75,10 +71,7 @@ class Pos extends MY_Framework
                     if( $this->input->post('driver_id') != "" )
                     	$this->drivers_model->update( array( 'driver_id' => $this->input->post('driver_id'), 'status' => 2 ) );
                     
-                    if( $return > 0 )
-                        $msg = array( 'text' => '<strong>Well done!</strong> Trasaction cancelled!', 'class' => 'alert-success' );
-                    else
-                        $msg = array( 'success' => 0, 'msg' => '<strong><i class="fa fa-exclamation-triangle"></i> Ooops!</strong> Driver '.$this->input->post('fname').' '.$this->input->post('lname').' is already exists.' );
+                    $msg = array( 'text' => '<strong>Well done!</strong> Trasaction voided!', 'class' => 'alert-success' );
                     break;
 
                 default:

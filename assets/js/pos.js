@@ -37,8 +37,8 @@ $(document).ready( function(){
                     success: function(data){
                     	$('#btnModalUnitsave').button('reset')
 						$('#old_status').val( $('#status').val() )
-						$('#taxi_'+current_data.unit_id+' .panel-nametag').html( drivers_json[$('#select_driver').val()].nickname )
-						$('#'+data.taxi+' a.panel-side-link').attr('data-type', data.element.data_type)
+						$('#'+data.taxi+' .panel-nametag').html( drivers_json[$('#select_driver').val()].nickname )
+						$('#'+data.taxi).attr('data-type', data.element.data_type)
 						$('#'+data.taxi).hide()
 							 .removeClass(data.element.old_class)
 							 .addClass(data.element.new_class)
@@ -177,10 +177,12 @@ function init() {
     
     $('#rate_input .btn-group').show();
 	$('#rate_input .coding').hide()
+
+    $('#rate_coding').remove()
 }
 
-function cancel_pos() {
-	var ans = confirm('Cancel this transaction?')
+function void_pos() {
+	var ans = confirm('Void this transaction?')
 
     if( ans )
     {
@@ -240,13 +242,15 @@ function generate_drivers_select( ) {
 }
 
 function show_payment_fields( type, driver_id, data_type ) {
-    var is_visible = $('.onduty-input').is(':hidden');
+    var is_visible = $('.payment-input').is(':hidden');
     var condition = type == 0 ? is_visible : type == 1 ? 'onduty' : 'garrage';
+    
+    $('#rate_coding').remove()
 
     if( condition == true || condition == 'onduty' ) {
         $('#old_driver').val( driver_id )
         $('#select_driver').val(driver_id)
-        $('.onduty-input').show()
+        $('.payment-input').show()
         
         $('#status option[value="1"]').hide()
         $('#status').val('')
@@ -259,18 +263,21 @@ function show_payment_fields( type, driver_id, data_type ) {
             $('#late_payment').val('1')
             $('#actual_date').show()
             $('#date_now').hide()
+            $('#btnModalUnitCancel').hide()
+            $('#rate_input .btn-group').append('<label id="rate_coding" class="btn btn-primary"> <input type="radio" name="rate_type" id="rate_type2" value="2" autocomplete="off">Coding</label>')
         }
         else
         {
             $('#actual_date').hide()
             $('#date_now').show()
             $('#btnModalUnitLate').hide()
+            $('#btnModalUnitCancel').show()
             $('#late_payment').val('0')
         }
     }
     else
     {
-        $('.onduty-input').hide()
+        $('.payment-input').hide()
         $('#select_driver').show()
         $('#driver').hide()
         
@@ -292,6 +299,7 @@ function show_payment_fields( type, driver_id, data_type ) {
             $('#btnModalUnitLate').show()
             $('#btnModalUnitLate').html('Late Payment')
             $('#late_payment').val('1')
+            $('#btnModalUnitCancel').hide()
         }
         else
         {

@@ -38,7 +38,7 @@ class Pos_model extends CI_Model {
 
     # Late encode boundary
     if( $db_data['late_payment'] == 1 )
-      $pos_data['actual_date'] = $db_data['actual_date'];
+      $pos_data['actual_date'] = dateFormat($db_data['actual_date']);
 
     $pos_data['unit_id']  	= $db_data['unit_id'];
     $pos_data['amount']   	= $db_data['boundary'];
@@ -48,7 +48,7 @@ class Pos_model extends CI_Model {
     if( $db_data['short'] > 0 )
       $pos_data['short'] = $db_data['short'];
 
-    $driver_data['driver_id'] 	= $pos_data['driver_id'] = $db_data['old_driver'];
+    $driver_data['driver_id'] 	= $pos_data['driver_id'] = $db_data['select_driver'];
     $driver_data['in']          = $db_data['drivers_fund'] != '' ? $db_data['drivers_fund'] : 0;
     $driver_data['out']         = $db_data['short'] != '' ? $db_data['short'] : 0;
 
