@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Drivers_model extends CI_Model {
-	private $table = 'drivers';
+    private $table = 'drivers';
 
     function __construct(){
         parent::__construct();
@@ -62,6 +62,17 @@ class Drivers_model extends CI_Model {
 		
         if( isset( $db_data['birthday'] ) )
         	$db_data['birthday'] = dateFormat( $db_data['birthday'] );
+
+        if( isset( $db_data['deleted_at'] ) )
+        {
+            $driver_unit = $this->db
+                ->where('id', $driver_id)
+                ->where('unit_id IS NOT NULL', null, false)
+                ->count_all_results( $this->table );
+
+            if( $driver_unit > 0 )
+                $db_data['unit_id'] = null;
+        }
 
         $this->db
              ->where( 'id', $driver_id )

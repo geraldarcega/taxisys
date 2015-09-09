@@ -177,10 +177,10 @@ class Maintenance_model extends CI_Model {
 		if( !empty($sort) )
 			$this->db->sort( $sort );
 		
-		return $this->db
+		$this->db
 					->select('um.*, c.id calendar_id, c.date_from, c.time_from, c.date_to, c.time_to, c.status, c.allday')
 					->join($this->calendar.' c', 'c.unit_maintenance_id = um.id', 'left')
-					->get( $this->units.' um', $limit, $offset );
+					->get( $this->units.' um', $limit, $offset ); echo $this->db->last_query();exit();
 	}
 	
 	public function check_maintenance_parts($maintenance_id, $parts_id = null) {

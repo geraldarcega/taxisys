@@ -4,7 +4,7 @@ var current_unit
 $(document).ready( function(){
     init()
     
-    $('#actual_date').datetimepicker({ 'format': 'MMM DD, YYYY' });
+    $('#actual_date').datetimepicker({ 'format': 'MMM DD, YYYY' })    
 
     $('#pos_alert').hide()
 
@@ -179,6 +179,8 @@ function init() {
 	$('#rate_input .coding').hide()
 
     $('#rate_coding').remove()
+
+    $('#actual_date').val( $('#date_now').html() );
 }
 
 function void_pos() {
@@ -256,20 +258,20 @@ function show_payment_fields( type, driver_id, data_type ) {
         $('#status').val('')
         $('#action').val('u_update')
 
+        $('#actual_date').show()
+        $('#date_now').hide()
+
         if( condition != 'onduty' )
         {
             $('#btnModalUnitLate').show()
             $('#btnModalUnitLate').html('Cancel Late Payment')
             $('#late_payment').val('1')
-            $('#actual_date').show()
-            $('#date_now').hide()
+
             $('#btnModalUnitCancel').hide()
             $('#rate_input .btn-group').append('<label id="rate_coding" class="btn btn-primary"> <input type="radio" name="rate_type" id="rate_type2" value="2" autocomplete="off">Coding</label>')
         }
         else
         {
-            $('#actual_date').hide()
-            $('#date_now').show()
             $('#btnModalUnitLate').hide()
             $('#btnModalUnitCancel').show()
             $('#late_payment').val('0')
@@ -308,3 +310,10 @@ function show_payment_fields( type, driver_id, data_type ) {
         }
     }
 }
+
+$('#status').on('change', function(){
+    if( $(this).val() == '3' )
+    {
+        console.log('asd')
+    }
+})

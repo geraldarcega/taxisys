@@ -74,12 +74,13 @@ class Units extends MY_Framework
 
     public function get_unit_maintenance( $unit_id, $maintenance_id )
     {
-    	$maintenance = $this->maintenance_model->get_unit_maintenance( 
-    		 array( 'wh|unit_id' => $unit_id, 'wh|maintenance_id' => $maintenance_id )
+    	echo $maintenance = $this->maintenance_model->get_unit_maintenance( 
+    		 array( 'wh|um.unit_id' => $unit_id, 'wh|maintenance_id' => $maintenance_id )
     		,1
     		,null
     		,'unit_id, maintenance_id'
     	);
+        exit();
     	if( $maintenance->num_rows() > 0 )
     		return $maintenance->result_array();
     	else

@@ -132,8 +132,14 @@
 							<select id="status" name="status" class="form-control" required>
 								<option value="<?=UNIT_DUTY?>">On-duty</option>
 								<option value="<?=UNIT_GARAGE?>">On-garage</option>
-								<?php /*<option value="<?=UNIT_MAINTENANCE?>">On-maintenance</option>*/ ?>
+								<option value="<?=UNIT_MAINTENANCE?>">On-maintenance</option>*
 							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="remarks" class="col-xs-3 control-label">Maintenance</label>
+						<div class="col-xs-9">
+							<?php debug(Modules::run( 'dashboard/maintenance/get_maintenance', array( 'wh|is_scheduled' => 1 ), true )); ?>
 						</div>
 					</div>
 				</form>
