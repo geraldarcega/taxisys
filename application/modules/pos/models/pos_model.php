@@ -36,6 +36,10 @@ class Pos_model extends CI_Model {
     if( $db_data['coding_day'] == $day )
       $pos_data['rate_type'] = BTYPE_CODING;
 
+    # Late encode boundary
+    if( $db_data['late_payment'] == 1 )
+      $pos_data['actual_date'] = $db_data['actual_date'];
+
     $pos_data['unit_id']  	= $db_data['unit_id'];
     $pos_data['amount']   	= $db_data['boundary'];
     $pos_data['remarks']	= $db_data['remarks'];
