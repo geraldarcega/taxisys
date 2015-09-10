@@ -136,12 +136,14 @@
 							</select>
 						</div>
 					</div>
+					<?php /*
 					<div class="form-group">
 						<label for="remarks" class="col-xs-3 control-label">Maintenance</label>
 						<div class="col-xs-9">
 							<?php //debug(Modules::run( 'dashboard/maintenance/get_maintenance', array( 'wh|is_scheduled' => 1 ), true )); ?>
 						</div>
 					</div>
+					*/ ?>
 				</form>
 			</div>
 			<div class="modal-footer">
