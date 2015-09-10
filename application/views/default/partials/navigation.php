@@ -1,6 +1,12 @@
 <!-- Navigation -->
 <div class="navbar navbar-default navbar-static-top ts-navbar" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#ts_navigation" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
         <a class="navbar-brand" href=""><i class="fa fa-taxi"></i> TAXI SYSTEM</a>
     </div>
     <!-- /.navbar-header -->
@@ -225,7 +231,7 @@
     <!-- /.navbar-top-links -->
 
     <div class="navbar-default sidebar" role="navigation">
-        <div class="sidebar-nav navbar-collapse">
+        <div id="ts_navigation" class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
 <!--             	<li class="sidebar-search">
                     <span style="color: #fff;">Garage:</label>

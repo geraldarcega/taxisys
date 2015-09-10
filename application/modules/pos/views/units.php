@@ -16,7 +16,7 @@
 			<?php if( ($i % 6) == 0 ){ ?>
 			<div class="row">
 			<?php } ?>
-				<div class="col col-md-2">
+				<div class="col col-lg-2 col-sm-6">
 					<div class="panel panel-pos <?php echo unitStatusClass($unit->unit_status); ?>" id="taxi_<?=$unit_id?>" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit_id?>" data-type="<?=$unit->unit_status?>" data-coding="<?=constant("DAY_{$day}") == $unit->coding_day ? 'yes' : 'no';?>" data-backdrop="static">
 						<?php /*
 						<a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit_id?>" data-type="<?=$unit->unit_status?>" data-coding="<?=constant("DAY_{$day}") == $unit->coding_day ? 'yes' : 'no';?>" data-backdrop="static">
