@@ -98,8 +98,8 @@
 								<label class="btn btn-primary"> <input type="radio" name="rate_type" id="rate_type4" value="<?=BTYPE_HOLIDAY?>" autocomplete="off">
 									Holiday
 								</label>
+								<label id="coding" class="btn btn-primary"> <input type="radio" name="rate_type" id="rate_type2" value="2" autocomplete="off">Coding</label>
 							</div>
-							<label class="label label-info coding">Coding</label>
 						</div>
 					</div>
 					<div class="form-group onduty-input payment-input">

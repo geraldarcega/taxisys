@@ -145,12 +145,11 @@ $('#unitsModal').on('show.bs.modal', function (e) {
                 // $('#action').val('u_update')
         }
         
-        if( data_type == "1" && data_coding === "yes" )
-    	{
-    		$('#rate_input .btn-group').hide();
-    		$('#rate_type input[type="radio"]').prop('checked', false)
-    		$('#rate_input .coding').show()
-    	}
+        if( data_type == "1" && data_coding === "yes" ){
+            console.log('asd')
+            $('#rate_type2').prop('checked', true)
+    		$('#coding').button('toggle')
+        }
 
         $('#unitsModalLabel').html('UNIT: '+current_data.plate_number.toUpperCase())
         $('#unit_id').val(data_id)
@@ -177,8 +176,6 @@ function init() {
     
     $('#rate_input .btn-group').show();
 	$('#rate_input .coding').hide()
-
-    $('#rate_coding').remove()
 
     $('#actual_date').val( $('#date_now').html() );
 }
@@ -246,8 +243,6 @@ function generate_drivers_select( ) {
 function show_payment_fields( type, driver_id, data_type ) {
     var is_visible = $('.payment-input').is(':hidden');
     var condition = type == 0 ? is_visible : type == 1 ? 'onduty' : 'garrage';
-    
-    $('#rate_coding').remove()
 
     if( condition == true || condition == 'onduty' ) {
         $('#old_driver').val( driver_id )
@@ -268,7 +263,6 @@ function show_payment_fields( type, driver_id, data_type ) {
             $('#late_payment').val('1')
 
             $('#btnModalUnitCancel').hide()
-            $('#rate_input .btn-group').append('<label id="rate_coding" class="btn btn-primary"> <input type="radio" name="rate_type" id="rate_type2" value="2" autocomplete="off">Coding</label>')
         }
         else
         {
