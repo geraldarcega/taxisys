@@ -110,26 +110,17 @@ class Maintenance_model extends CI_Model {
 					->get( $this->mparts );
 	}
 
-	public function add_unit_maintenance( $db_data )
+	public function add_unit_maintenance( $unit_id, $maintenance_id, $odometer, $notes, $date_from )
 	{
-		$db_data ['odometer'] = $db_data ['m_odometer'];
+		$db_data ['unit_id'] = $unit_id;
+		$db_data ['maintenance_id'] = $maintenance_id;
+		$db_data ['notes'] = $notes;
+		$db_data ['odometer'] = $odometer;
 		$db_data ['created_by'] = $this->user_id;
 		
-		$date_from = strtotime ( $db_data ['date_from'] );
-		if( $date_from >= strtotime( date('M d, Y') ) )
+		$date_from = strtotime ( $date_from );
+		if( $date_from <= strtotime( date('M d, Y') ) )
 			$db_data ['status'] = 1;
-
-		unset ( $db_data ['action'] );
-		unset ( $db_data ['unit_maintenance_id'] );
-		unset ( $db_data ['uns_maintenance'] );
-		unset ( $db_data ['m_odometer'] );
-		unset ( $db_data ['status'] );
-		unset ( $db_data ['multi_day'] );
-		unset ( $db_data ['allday'] );
-		unset ( $db_data ['date_from'] );
-		unset ( $db_data ['time_from'] );
-		unset ( $db_data ['date_to'] );
-		unset ( $db_data ['time_to'] );
 		
 		$this->db->insert( $this->units, $db_data );
 	
@@ -177,10 +168,10 @@ class Maintenance_model extends CI_Model {
 		if( !empty($sort) )
 			$this->db->sort( $sort );
 		
-		$this->db
+		return $this->db
 					->select('um.*, c.id calendar_id, c.date_from, c.time_from, c.date_to, c.time_to, c.status, c.allday')
 					->join($this->calendar.' c', 'c.unit_maintenance_id = um.id', 'left')
-					->get( $this->units.' um', $limit, $offset ); echo $this->db->last_query();exit();
+					->get( $this->units.' um', $limit, $offset );
 	}
 	
 	public function check_maintenance_parts($maintenance_id, $parts_id = null) {

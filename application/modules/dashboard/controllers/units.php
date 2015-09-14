@@ -157,30 +157,18 @@ class Units extends MY_Framework
                     break;
                 
                 case 'apply_maintenance':
-                    $new = $this->maintenance_model->add_unit_maintenance($this->input->post());
-                    if( $new ) {
-                    	$date_from = strtotime ( $this->input->post('date_from') );
-                    	if( $date_from >= strtotime( date('M d, Y') ) )
-                    		$this->units_model->update_status($this->input->post('unit_id'), UNIT_MAINTENANCE);
-                    	
-                    	# save to sched to calendar
-                    	$this->calendar_model->create(
-	                    	 $this->input->post('unit_id')
-	                    	,$new
-	                    	,$this->input->post('allday')
-	                    	,$this->input->post('date_from')
-	                    	,$this->input->post('time_from')
-	                    	,$this->input->post('date_to')
-	                    	,$this->input->post('time_to')
-	                    );;
-                    	
-                    	$this->session->set_flashdata('msg', array('class' => 'alert-success', 'text' => '<strong><i class="fa fa-database"></i> Success!</strong> Unit is now under maintenance.') );
-                    	$msg = array( 'success' => 1 );
-                    }
-                    else
-                    	$msg = array( 'success' => 0, 'alert' => array('class' => 'alert-warning', 'text' => 'Failed! There\'s something wrong with the system, contact administrator.') );
-                    
-                    echo json_encode( $msg );
+                    echo json_encode( $this->apply_maintenance(
+                             $this->input->post('unit_id')
+                            ,$this->input->post('maintenance_id')
+                            ,$this->input->post('m_odometer')
+                            ,$this->input->post('notes')
+                            ,$this->input->post('date_from')
+                            ,$this->input->post('time_from')
+                            ,$this->input->post('date_to')
+                            ,$this->input->post('time_to')
+                            ,$this->input->post('allday')
+                        )
+                    );
                     break;
                 
                 case 'update_applied_maintenance':
@@ -305,5 +293,38 @@ class Units extends MY_Framework
         }
         else
             return false;
+    }
+
+    public function apply_maintenance( $unit_id, $maintenance_id, $odometer, $notes = null, $date_from = null, $time_from = null, $date_to = null, $time_to = null, $allday = 1 )
+    {
+        $now = date('M d, Y');
+        $_from = is_null($date_from) ? $now : $date_from;
+
+        $new = $this->maintenance_model->add_unit_maintenance($unit_id, $maintenance_id, $odometer, $notes, $_from);
+        if( $new ) {
+            $_from_diff = strtotime ( $_from );
+            if( $_from_diff >= strtotime( $now ) )
+                $this->units_model->update_status( $unit_id, UNIT_MAINTENANCE );
+
+            # save to sched to calendar
+            $this->calendar_model->create(
+                 $unit_id
+                ,$new
+                ,$allday
+                ,$_from
+                ,$time_from
+                ,$date_to
+                ,$time_to
+            );
+            
+            if( !is_null($date_from) )
+                $this->session->set_flashdata('msg', array('class' => 'alert-success', 'text' => '<strong><i class="fa fa-database"></i> Success!</strong> Unit is now under maintenance.') );
+
+            $msg = array( 'success' => 1 );
+        }
+        else
+            $msg = array( 'success' => 0, 'alert' => array('class' => 'alert-warning', 'text' => 'Failed! There\'s something wrong with the system, contact administrator.') );
+
+        return $msg;
     }
 }

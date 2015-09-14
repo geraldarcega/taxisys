@@ -17,13 +17,7 @@
 			<div class="row">
 			<?php } ?>
 				<div class="col col-lg-2 col-sm-6">
-					<div class="panel panel-pos <?php echo unitStatusClass($unit->unit_status); ?>" id="taxi_<?=$unit_id?>" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit_id?>" data-type="<?=$unit->unit_status?>" data-coding="<?=constant("DAY_{$day}") == $unit->coding_day ? 'yes' : 'no';?>" data-backdrop="static">
-						<?php /*
-						<a class="panel-side-link" href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit_id?>" data-type="<?=$unit->unit_status?>" data-coding="<?=constant("DAY_{$day}") == $unit->coding_day ? 'yes' : 'no';?>" data-backdrop="static">
-							<div class="updateEditbtn">
-								UPDATE<i class="fa fa-angle-right"></i>
-							</div> <!-- updateEditbtn -->
-						</a> */ ?>
+					<div class="panel panel-pos <?php echo unitStatusClass($unit->unit_status); ?>" id="taxi_<?=$unit_id?>" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit_id?>" data-type="<?=$unit->unit_status?>" data-coding="<?=constant("DAY_{$day}") == $unit->coding_day ? 'yes' : 'no';?>" data-odometer="<?=$unit->odometer?>" data-backdrop="static">
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-12 dash-units">
@@ -67,6 +61,7 @@
 					<input type="hidden" name="old_status" id="old_status" value="">
 					<input type="hidden" name="coding_day" id="coding_day" value="">
 					<input type="hidden" name="late_payment" id="late_payment" value="0">
+					<input type="hidden" name="odometer" id="odometer" value="0">
 
 					<div class="form-group">
 						<label for="date" class="col-xs-3 control-label">Date</label>
@@ -136,14 +131,83 @@
 							</select>
 						</div>
 					</div>
-					<?php /*
-					<div class="form-group">
-						<label for="remarks" class="col-xs-3 control-label">Maintenance</label>
+					<div id="maintenance_opt" class="form-group">
+						<label for="remarks" class="col-xs-3 control-label">Select Maintenance</label>
 						<div class="col-xs-9">
-							<?php //debug(Modules::run( 'dashboard/maintenance/get_maintenance', array( 'wh|is_scheduled' => 1 ), true )); ?>
+							<table class="table">
+								<thead>
+									<tr>
+										<th></th>
+										<th>Name</th>
+										<th>Interval</th>
+										<th>Price</th>
+										<th>&nbsp;</th>
+									</tr>
+								</thead>
+								<tbody>
+							<?php
+								$maintenance = Modules::run( 'dashboard/maintenance/get_maintenance', array( 'wh|is_scheduled' => 1 ), true );
+								if( count($maintenance) )
+								{
+									foreach ($maintenance as $key => $value) {
+							?>
+								<tr>
+									<td><input type="radio" name="maintenance_id" id="maintenance_<?php echo $value['id']; ?>" value="<?php echo $value['id']; ?>" required></td>
+									<td><?php echo $value['name']; ?></td>
+									<td><?php echo $value['interval_value']; ?></td>
+									<td><?php echo $value['price']; ?></td>
+									<td>
+										<a id="m_info_link_<?php echo $value['id']; ?>" href="javascript:show_maintenance_info('<?php echo $value['id']; ?>');" rel="tooltip" data-original-title="Info"><i class="fa fa-info-circle"></i></a>
+									</td>
+								</tr>
+								<tr id="maintenance_info_<?php echo $value['id']; ?>" class="maintenance-info" style="display: none;">
+		                        	<td colspan="4">
+		                        		<h4>Parts Included</h4>
+		                        		<table class="table table-condensed">
+		                        			<thead>
+		                        				<tr>
+		                        					<th>Name</th>
+		                        					<th>Count</th>
+		                        				</tr>
+		                        			</thead>
+		                        			<tbody>
+		                        				<?php 
+		                        					if( count($value['parts']) > 0 ){
+		                        						for ( $i=0; $i < count($value['parts']); $i++) {
+	                        					?>
+		                        				<tr>
+		                        					<td><?php echo $value['parts'][$i]['name']; ?></td>
+		                        					<td><?php echo $value['parts'][$i]['count']; ?></td>
+		                        				</tr>
+		                        				<?php } } else { ?>
+		                        				<tr>
+		                        					<td colspan="2">
+		                        						<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> No parts included!</div>
+		                        					</td>
+		                        				</tr>
+		                        				<?php } ?>
+		                        			</tbody>
+		                        		</table>
+		                        	</td>
+		                        </tr>
+							<?php
+									}
+								}
+								else
+								{
+							?>
+								<tr>
+									<td colspan="4">
+										<div class="alert alert-info">No maintenance found!</div>
+									</td>
+								</tr>
+							<?php
+								}
+							?>
+								</tbody>
+							</table>
 						</div>
 					</div>
-					*/ ?>
 				</form>
 			</div>
 			<div class="modal-footer">

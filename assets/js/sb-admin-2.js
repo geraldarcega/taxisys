@@ -104,3 +104,15 @@ function show_filter(){
 function remove_filter( uri ) {
     window.location = base_url+uri
 }
+
+function show_maintenance_info(maintenance_id) {
+    if( !$('#maintenance_info_'+maintenance_id).is(':visible') )
+    {
+        $('.maintenance-info').hide()
+        $('#m_info_link_'+maintenance_id+' i').removeClass('fa-info-circle').addClass('fa-times-circle')
+    }
+    else
+        $('#m_info_link_'+maintenance_id+' i').removeClass('fa-times-circle').addClass('fa-info-circle')
+
+    $('#maintenance_info_'+maintenance_id).slideToggle()
+}

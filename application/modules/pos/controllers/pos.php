@@ -54,9 +54,12 @@ class Pos extends MY_Framework
                     
                     // $this->pos_model->create_log( $this->input->post() );
                     $this->drivers_model->assign( $this->input->post('select_driver'), $this->input->post('unit_id'), $driver_stats );
-                    $this->units_model->update_status( $this->input->post('unit_id'), $this->input->post('status') );
-                    $msg = array( 'success' => 1 );
-                    $msg = array( 'text' => '<strong>Success!</strong> Unit is now '.unitStatus($this->input->post('status')), 'class' => 'alert-success' );
+                    if( $this->input->post('status') == '3' )
+                        Modules::run('dashboard/units/apply_maintenance', $this->input->post('unit_id'), $this->input->post('maintenance_id'), $this->input->post('odometer'), 'Via POS' );
+                    else
+                        $this->units_model->update_status( $this->input->post('unit_id'), $this->input->post('status') );
+                    
+                    $msg = array( 'success' => 1, 'text' => '<strong>Success!</strong> Unit is now '.unitStatus($this->input->post('status')), 'class' => 'alert-success' );
                     break;
 
                 case 'u_update':
