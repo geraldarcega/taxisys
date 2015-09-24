@@ -32,7 +32,7 @@
                             	<div id="units_opt_<?php echo $unit->unit_id; ?>">
                             		<a href="#unitsModal" data-toggle="modal" data-target="#unitsModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Details"><i class="fa fa-eye"></i></a> &nbsp;
                             		<a href="<?=dashboard_url('units/maintenance/scheduled/'.$unit->unit_id)?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a> &nbsp;
-	                                <?php /*<a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Maintenance"><i class="fa fa-wrench"></i></a> &nbsp; */ ?>
+	                                <a href="#expensesModal" data-toggle="modal" data-target="#expensesModal" data-id="<?=$unit->unit_id?>" rel="tooltip" data-original-title="Expenses"><i class="fa fa-money"></i></a> &nbsp;
 	                                <a href="javascript:show_odometer('<?=$unit->unit_id?>');" rel="tooltip" data-original-title="Odometer"><i class="fa fa-tachometer"></i></a> &nbsp;
                                     <a href="javascript:show_odometer('<?=$unit->unit_id?>');" rel="tooltip" data-original-title="Odometer History"><i class="fa fa-history"></i></a> &nbsp;
 	                                <a id="archive_<?=$unit->unit_id?>" href="javascript:archive('<?=$unit->unit_id?>', '<?=strtoupper($unit->plate_number)?>');" rel="tooltip" data-original-title="Archive"><i class="fa fa-archive"></i></a>
@@ -245,6 +245,137 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnModalUnitsave" onclick="$('#frmModalUnits').submit()" data-loading-text="Saving..." class="btn btn-primary" autocomplete="off">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Expense Modal -->
+<div class="modal fade" id="expensesModal" tabindex="-1" role="dialog" aria-labelledby="expensesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="expensesModalLabel">EXPENSES</h4>
+            </div>
+            <div class="modal-body">
+                <div id="failed_msg" class="alert alert-danger" role="alert" style="display:none;">
+                    <span></span>
+                </div>
+                <form class="form-horizontal" id="frmModalUnitExpense" method="post" action="<?=dashboard_url('units/ajax')?>">
+                    <input type="hidden" name="action" id="action" value="create">
+                    <input type="hidden" name="unit_id" id="unit_id" value="">
+                    <div class="form-group">
+                        <label for="registration_date" class="col-xs-3 control-label">Date</label>
+                        <div class="col-xs-6">
+                            <div class="input-group date" id="registration_date_dp">
+                                <input type='text' class="form-control unit-field open-datetimepicker" id="registration_date" name="registration_date" required/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg_rate" class="col-xs-3 control-label">Category</label>
+                        <div class="col-xs-6">
+                            <select id="coding_day" name="coding_day" class="form-control unit-field" required>
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-3">
+                            <button type="button" class="btn btn-primary">Add New</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg_rate" class="col-xs-3 control-label">Sub Category</label>
+                        <div class="col-xs-6">
+                            <select id="coding_day" name="coding_day" class="form-control unit-field" required>
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-3">
+                            <button type="button" class="btn btn-primary">Add New</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg_rate" class="col-xs-3 control-label">Plate #</label>
+                        <div class="col-xs-6">
+                            <select id="coding_day" name="coding_day" class="form-control unit-field" required>
+                                <option value="">-----</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg_rate" class="col-xs-3 control-label">Driver</label>
+                        <div class="col-xs-9">
+                            <select id="coding_day" name="coding_day" class="form-control unit-field" required>
+                                <option value="">N/A</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg_rate" class="col-xs-3 control-label">Item</label>
+                        <div class="col-xs-6">
+                            <select id="coding_day" name="coding_day" class="form-control unit-field" required>
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-3">
+                            <button type="button" class="btn btn-primary">Add New</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg_rate" class="col-xs-3 control-label">Quantity</label>
+                        <div class="col-xs-2">
+                            <input type="number" class="form-control unit-field" id="reg_rate" name="reg_rate" required>
+                        </div>
+                        <label for="reg_rate" class="col-xs-1 control-label">Unit</label>
+                        <div class="col-xs-6">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <select id="coding_day" name="coding_day" class="form-control unit-field" required>
+                                        <option value="">N/A</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-6">
+                                    <button type="button" class="btn btn-primary">Add New</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="reg_rate" class="col-xs-3 control-label">Amount</label>
+                        <div class="col-xs-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <b>Php</b>
+                                </span>
+                                <input type="number" class="form-control unit-field" id="reg_rate" name="reg_rate" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg_rate" class="col-xs-3 control-label">Receipt</label>
+                        <div class="col-xs-6">
+                            <select id="coding_day" name="coding_day" class="form-control unit-field" required>
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-3">
+                            <button type="button" class="btn btn-primary">Add New</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg_rate" class="col-xs-3 control-label">Remarks</label>
+                        <div class="col-xs-8">
+                            <textarea class="form-control" rows="5"></textarea>
                         </div>
                     </div>
                 </form>
