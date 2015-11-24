@@ -282,13 +282,6 @@ function apply_maintenance() {
 	}
 }
 
-function show_maintenance_info(maintenance_id) {
-	if( !$('#maintenance_info_'+maintenance_id).is(':visible') )
-		$('.maintenance-info').hide()
-
-	$('#maintenance_info_'+maintenance_id).slideToggle()
-}
-
 function complete_maintenance( id ){
 	return false;
 }

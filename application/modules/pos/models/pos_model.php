@@ -84,6 +84,7 @@ class Pos_model extends CI_Model {
     unset($db_data['old_driver']);
     unset($db_data['select_driver']);
     unset($db_data['old_status']);
+    unset($db_data['odometer']);
 
     $this->db
          ->where( 'unit_id', $unit_id )

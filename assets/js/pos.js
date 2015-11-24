@@ -37,7 +37,16 @@ $(document).ready( function(){
                     success: function(data){
                     	$('#btnModalUnitsave').button('reset')
 						$('#old_status').val( $('#status').val() )
-						$('#'+data.taxi+' .panel-nametag').html( drivers_json[$('#select_driver').val()].nickname )
+
+                        var nickname
+                        try {
+                            nickname = drivers_json[$('#select_driver').val()].nickname
+                        }
+                        catch(e) {
+                            nickname = 'No Driver'
+                        }
+
+						$('#'+data.taxi+' .panel-nametag').html( nickname )
 						$('#'+data.taxi).attr('data-type', data.element.data_type)
 						$('#'+data.taxi).hide()
 							 .removeClass(data.element.old_class)
@@ -88,6 +97,7 @@ $('#unitsModal').on('show.bs.modal', function (e) {
     var data_id   = e.relatedTarget.attributes[4]['value']
     var data_type = e.relatedTarget.attributes[5]['value']
     var data_coding = e.relatedTarget.attributes[6]['value']
+    var data_odometer = e.relatedTarget.attributes[7]['value']
     
     current_unit = data_id
     current_data = (typeof pos_json[data_id] !== "undefined") ? pos_json[data_id] : '';
@@ -102,21 +112,6 @@ $('#unitsModal').on('show.bs.modal', function (e) {
             case '2':
                 $('#btnModalUnitLate').attr('onclick', 'show_payment_fields( 0, '+current_data.driver_id+', '+data_type+');')
                 show_payment_fields( 2, current_data.driver_id, data_type)
-            	// $('.onduty-input').hide()
-             //    $('#select_driver').show()
-             //    $('#driver').hide()
-                
-             //    if( current_data.driver_id )
-             //    {
-             //        $('#old_driver').val( current_data.driver_id )
-             //        $('#select_driver').val( current_data.driver_id )
-             //    }
-
-             //    $('#status option[value="1"]').show()
-             //    $('#status').val(data_type)
-             //    $('#old_status').val( data_type )
-             //    $('#action').val('s_update')
-             //    $('#btnModalUnitLate').show()
 
                 break;
             case '3':
@@ -128,21 +123,6 @@ $('#unitsModal').on('show.bs.modal', function (e) {
             default:
                 $('#btnModalUnitLate').attr('onclick', 'show_payment_fields( 0, '+current_data.driver_id+', 0);')
                 show_payment_fields( 1, current_data.driver_id, 0 )
-//                $('#select_driver').hide()
-            	// $('#old_driver').val( current_data.driver_id )
-            	// $('#select_driver').val(current_data.driver_id)
-             //    $('.onduty-input').show()
-//                $('#driver').show()
-//                if( current_data.driver_id )
-//                {
-//                    $('#old_driver').val( current_data.driver_id )
-//                    $('#driver').html(current_data.first_name+' '+current_data.last_name)
-//                }
-                
-                // $('#btnModalUnitLate').hide()
-                // $('#status option[value="1"]').hide()
-                // $('#status').val('')
-                // $('#action').val('u_update')
         }
         
         if( data_type == "1" && data_coding === "yes" ){
@@ -154,6 +134,7 @@ $('#unitsModal').on('show.bs.modal', function (e) {
         $('#unitsModalLabel').html('UNIT: '+current_data.plate_number.toUpperCase())
         $('#unit_id').val(data_id)
         $('#coding_day').val(current_data.coding_day)
+        $('#odometer').val(data_odometer)
         $('#boundary').prop('placeholder', current_data.reg_rate)
     }
 })
@@ -175,7 +156,8 @@ function init() {
     $('#frmModalPOS #select_driver').val('')
     
     $('#rate_input .btn-group').show();
-	$('#rate_input .coding').hide()
+    $('#rate_input .coding').hide()
+	$('#maintenance_opt').hide()
 
     $('#actual_date').val( $('#date_now').html() );
 }
@@ -307,7 +289,7 @@ function show_payment_fields( type, driver_id, data_type ) {
 
 $('#status').on('change', function(){
     if( $(this).val() == '3' )
-    {
-        console.log('asd')
-    }
+        $('#maintenance_opt').slideDown()
+    else
+        $('#maintenance_opt').slideUp()
 })

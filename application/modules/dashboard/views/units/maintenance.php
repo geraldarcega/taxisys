@@ -73,7 +73,7 @@
                             		?>
                             	</td>
 	                            <td>
-	                            	<a href="javascript:show_maintenance_info('<?php echo $maintain['id']; ?>');" rel="tooltip" data-original-title="Info"><i class="fa fa-info-circle"></i></a> &nbsp;
+	                            	<a id="m_info_link_<?php echo $maintain['id']; ?>" href="javascript:show_maintenance_info('<?php echo $maintain['id']; ?>');" rel="tooltip" data-original-title="Info"><i class="fa fa-info-circle"></i></a> &nbsp;
 	                            	<?php if( $unit->unit_status != UNIT_DUTY ) { ?>
 	                            	<a href="#maintenanceModal" data-toggle="modal" data-target="#maintenanceModal" data-id="<?php echo $maintain['id']; ?>" rel="tooltip" rel="tooltip" data-original-title="<?php echo isset($unit->maintenance['ongoing'][ $unit_id ][ $maintain['id'] ]) ? 'On-going' : 'Apply';?>">
 	                            		<?php echo !isset($unit->maintenance['ongoing'][ $unit_id ][ $maintain['id'] ]) ? '<i class="fa fa-caret-square-o-right"></i>' : '<i class="fa fa-gears"></i>';?>
